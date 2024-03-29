@@ -1,44 +1,33 @@
 package refactoring.pa;
 
 public class ArithmeticProgression {
-	
-	private int firstTerm;
+
+	private int firstElement;
 	private int ratio;
-	
-	public ArithmeticProgression(int firsTerm, int ratio) {
-		this.firstTerm=firsTerm;
-		this.ratio=ratio;
-		
+
+	public ArithmeticProgression(int firstElement, int ratio) {
+		this.firstElement = firstElement;
+		this.ratio = ratio;
+
 	}
-	public int termOfIndex(int index)
-	{
-		return firstTerm + (index-1) * ratio;
+
+	public int elementAt(int position) {
+		return firstElement + ratio * (position - 1);
 	}
-	
-	//--------------------------------------------------------------------
-	public int sumOfAllTerms(int numberOfTerms)
-	{
-		int lastTerm = termOfIndex(numberOfTerms);
-		
-		return ( ((firstTerm + lastTerm) * numberOfTerms) / 2);
-	}
-	
-	public int [] sequences(int numberOfTerms) {
-		
-		int[] sequence = new int [numberOfTerms];
-		
-		for(int i=0; i<numberOfTerms; i++) {
-			sequence[i] = termOfIndex(i);
+
+	public int[] sequences(int size) {
+
+		int[] sequence = new int[size];
+
+		for (int i = 0; i < sequence.length; i++) {
+			sequence[i] = elementAt(i);
 		}
-		
+
 		return sequence;
 	}
-	
-	//--------------------------------------------------------------------
-	static public 
-	int determineRatio(int firstTerm, int lastTerm, int numberOfTerms)
-	{
-		return (lastTerm - firstTerm) / (numberOfTerms - 1);
+
+	public int sumUntilElementAt(int position) {
+		return ((firstElement + elementAt(position) * position) /2 );
 	}
 
 }

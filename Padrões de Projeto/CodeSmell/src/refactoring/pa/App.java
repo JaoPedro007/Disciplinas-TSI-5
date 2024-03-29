@@ -1,24 +1,31 @@
 package refactoring.pa;
 
 public class App {
+	
+	private ArithmeticProgression pA = null;
+	private TextUserInterface textUserInterface = new TextUserInterface();
+	
+	public void createArithmeticProgression()
+	{
+		int firstTerm = this.textUserInterface.readFirstTerm();
+		int ratio = this.textUserInterface.readRatio();
+		this.pA = new ArithmeticProgression(firstTerm, ratio);
+	}
+	
+	public void printArithmeticProgressionData()
+	{
+		int numberOfTerms = textUserInterface.readNumberOfTerms();
+		int [] sequences = pA.sequences(numberOfTerms);
+		int sum = pA.sumUntilElementAt(numberOfTerms);
+		
+		textUserInterface.printTerms(sequences);
+		textUserInterface.printSumOfTerms(numberOfTerms, sum);
+	}
 
 	public static void main(String[] args) {
-		
-		ArithmeticProgression artithmeticProgression = new ArithmeticProgression();
-		TextUserInterface textUserInterface = new TextUserInterface();
-		
-		int firstTerm, reason, numberOfTerms;
-		
-		firstTerm = artithmeticProgression.readFirstTerm();
-		reason = artithmeticProgression.readCommonDifference();
-		numberOfTerms = artithmeticProgression.readNumberOfTerms();
-		
-		textUserInterface.printAllTerms(firstTerm, reason, numberOfTerms);
-		
-		int sum = artithmeticProgression.sumOfAllTerms(firstTerm, reason, numberOfTerms);
-		System.out.println("A soma �: " + sum);
-		
-		textUserInterface.console.close();
+		App app = new App();
+		app.createArithmeticProgression();
+		app.printArithmeticProgressionData();
 
 	}
 
