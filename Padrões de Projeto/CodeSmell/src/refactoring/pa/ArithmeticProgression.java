@@ -19,15 +19,15 @@ public class ArithmeticProgression {
 
 		int[] sequence = new int[size];
 
-		for (int i = 0; i < sequence.length; i++) {
-			sequence[i] = elementAt(i);
+		for (int i = 1; i <= size; i++) {
+			sequence[i - 1] = elementAt(i);
 		}
 
 		return sequence;
 	}
 
 	public int sumUntilElementAt(int position) {
-		return ((firstElement + elementAt(position) * position) /2 );
+		return (position / 2) * (2 * firstElement + (position - 1) * ratio);
 	}
 
 }
