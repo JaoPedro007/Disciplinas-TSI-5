@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PetShop</string>
+    <string name="lbl_cao">Dog</string>
+    <string name="lbl_gato">Cat</string>
+    <string name="lbl_passaro">Bird</string>
+    <string name="lbl_reptil">Reptile</string>
+    <string name="lbl_nome_animal">Pet\'s Name</string>
+    <string name="lbl_raca_animal">Pet\'s breed</string>
+    <string name="lbl_idade_animal">Pet\'s age (months)</string>
+    <string name="lbl_nome_tutor">Tutor\'s name</string>
+    <string name="lbl_fone_tutor">Tutor\'s phone</string>
+    <string name="btn_confirmar">Confirm</string>
+</resources>

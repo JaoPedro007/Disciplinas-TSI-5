@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">PetShop</string>
+    <string name="lbl_cao">Cão</string>
+    <string name="lbl_gato">Gato</string>
+    <string name="lbl_passaro">Pássaro</string>
+    <string name="lbl_reptil">Réptil</string>
+    <string name="lbl_nome_animal">Nome do Animal</string>
+    <string name="lbl_raca_animal">Raça do Animal</string>
+    <string name="lbl_idade_animal">Idade do Animal (meses)</string>
+    <string name="lbl_nome_tutor">Nome do Tutor</string>
+    <string name="lbl_fone_tutor">Fone do Tutor</string>
+    <string name="btn_confirmar">Confirmar</string>
+</resources>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+
+<LinearLayout
+    android:layout_width="0sp"
+    android:layout_height="wrap_content"
+    android:layout_weight="6"
+    android:orientation="vertical"
+    android:background="@drawable/borda_item_lista">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+
+        android:id="@+id/item_descricao_categoria"
+        android:text="Categoria"
+        android:textSize="20sp"/>
+
+</LinearLayout>
+
+
+
+</LinearLayout>

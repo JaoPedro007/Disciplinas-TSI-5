@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".AtendimentoActivity">
+
+    <TextView
+        android:id="@+id/txt_nome_animal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/txt_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/ed_nome_profissional"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nome do profissional" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="0sp"
+        android:layout_weight="2"
+        android:id="@+id/ed_registro"
+        android:hint="Registro de antendimento"
+        android:lineBreakWordStyle="phrase"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Confirmar"
+        android:onClick="registrar"
+        android:layout_gravity="right"/>
+</LinearLayout>
