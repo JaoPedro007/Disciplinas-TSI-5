@@ -1,0 +1,23 @@
+Respostas Lista 01
+
+1 - b) Falso
+
+2 - b) Bloquear detalhes de dados privados de clientes e permitir acesso apenas aos quatro
+últimos dígitos dos números de identidade ou número de conta
+
+3 - e) Todos os anteriores
+
+4 - a) Verdadeiro
+
+5 - a) Verdadeiro
+
+6 - 
+6.1. Disponibilidade
+6.2. Integridade
+6.3. Confidencialidade
+6.4. Irretratabilidade ou Não Repúdio
+6.5. Autenticidade
+
+7 - Em relação a confidencialidade, ao que se refere as informações pessoais, como dados bancarios do cliente, compras etc, seria importante utilizar a criptografia das informações.
+A integridade das informações se daria por cópias de segurança e somas de verificação. 
+E a Disponibilidade seria garantida através de uma redundância, ou seja, eu poderia ter 2 cópias da minha aplicação rodando em servidores que estão em diferentes locais, poderia também aplicar redundância computacional como o RAID, e é claro, proteção física com uma infraestrutura para manter a informação mesmo com possíveis impedimentos físicos;
