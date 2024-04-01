@@ -10,7 +10,6 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,13 +17,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.LinkedList;
 
-import kotlin.jvm.Throws;
-
 public class MainActivity extends AppCompatActivity {
 
     class CategoriaAdapter extends ArrayAdapter<Categoria>{
         public CategoriaAdapter(){
-            super(MainActivity.this, android.R.layout.simple_list_item_1, cadastro);        }
+            super(MainActivity.this, android.R.layout.simple_list_item_1, cadastro);
+        }
 
         @Override
         public View getView(int position, View reciclada, ViewGroup grupo){
@@ -95,8 +93,6 @@ public class MainActivity extends AppCompatActivity {
         dados.putSerializable("LISTA_CATEGORIAS", cadastro);
         dados.putInt("SELECIONADO", selecionado);
     }
-
-
 
     public void adicionar(View view){
         Categoria novaCategoria = new Categoria(
