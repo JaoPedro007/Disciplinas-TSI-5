@@ -15,13 +15,13 @@
             android:layout_width="match_parent"
             android:layout_height="60sp"
             android:textStyle="bold"
-            android:id="@+id/descricao_despesa"
+            android:id="@+id/descricao_conta"
             android:textSize="30sp"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:id="@+id/data_valor_despesa"
+            android:id="@+id/data_valor_conta"
             android:textSize="20sp"/>
 
 

@@ -15,9 +15,16 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    EditText descricaoCategoria;
+    ListView listaCategorias;
+    LinkedList<Categoria> cadastro;
+    CategoriaAdapter adapter;
+    int selecionado = -1;
 
     class CategoriaAdapter extends ArrayAdapter<Categoria>{
         public CategoriaAdapter(){
@@ -32,8 +39,19 @@ public class MainActivity extends AppCompatActivity {
             }
             Categoria categoria = cadastro.get(position);
 
+            String total="";
+            List<Conta> contas = categoria.getContas();
+            for (Conta conta : contas) {
+                total = String.valueOf(conta.getValorConta());
+                total += conta.getValorConta();
+
+            }
+
+
             ((TextView) reciclada.findViewById(R.id.item_descricao_categoria))
                     .setText(categoria.getDescricao());
+            ((TextView) reciclada.findViewById(R.id.item_valor_contas))
+                    .setText(total);
             if (position == selecionado){
                 reciclada.setBackgroundColor(Color.LTGRAY);
             }else{
@@ -42,16 +60,11 @@ public class MainActivity extends AppCompatActivity {
             return reciclada;
         }
     }
-    EditText descricaoCategoria;
-    ListView listaCategorias;
-    LinkedList <Categoria> cadastro;
-    CategoriaAdapter adapter;
-    int selecionado = -1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
         descricaoCategoria = (EditText) findViewById(R.id.descricaoCategoria);
@@ -75,14 +88,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
                 Categoria categoria = cadastro.get(position);
-                String descricao = categoria.getDescricao();
                 try {
-                    Intent it = new Intent(MainActivity.this, DetalhesCategoriaActivity.class);
-                    it.putExtra("descricao", descricao);
-                    startActivity(it);
-                    return true;
+                    Intent it = new Intent(MainActivity.this, ContaActivity.class);
+                    it.putExtra("descricaoCategoria", categoria.getDescricao());
+                    startActivityForResult(it, 1234);
                 }catch (Exception ex){
-
                 }
                 return false;
             }
@@ -100,6 +110,20 @@ public class MainActivity extends AppCompatActivity {
         cadastro.add(novaCategoria);
         adapter.notifyDataSetChanged();
         descricaoCategoria.setText("");
+
+    }
+    @Override
+    public void onActivityResult(int requisicao, int resposta, Intent dados){
+        super.onActivityResult(requisicao, resposta, dados);
+        if(requisicao == 1234 && resposta == RESULT_OK){
+            Conta conta = (Conta) dados.getSerializableExtra("conta");
+            if(selecionado >=0 && selecionado < cadastro.size()){
+                Categoria categoria = cadastro.get(selecionado);
+                categoria.adicionarConta(conta);
+                adapter.notifyDataSetChanged();
+            }
+
+        }
 
     }
 
