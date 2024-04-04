@@ -70,9 +70,8 @@ public class ContaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conta);
 
-        Intent origem = getIntent();
-        String descricaoCategoria = origem.getStringExtra("descricaoCategoria");
-        ((TextView) findViewById(R.id.descricaoCategoria)).setText(descricaoCategoria);
+        Categoria categoria = (Categoria) getIntent().getSerializableExtra("categoria");
+        ((TextView) findViewById(R.id.descricaoCategoria)).setText(categoria.getDescricao());
 
         cadastro = new LinkedList<>();
         if(savedInstanceState != null){
@@ -84,6 +83,8 @@ public class ContaActivity extends AppCompatActivity {
         listaContas = (ListView) findViewById(R.id.listaContas);
         vencimentoConta = (EditText) findViewById(R.id.vencimentoConta);
 
+        adapter = new ContaAdapter();
+        listaContas.setAdapter(adapter);
         vencimentoConta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,8 +103,9 @@ public class ContaActivity extends AppCompatActivity {
         Conta novaConta = new Conta(
                 descricaoConta.getText().toString(),
                 Double.parseDouble(valorConta.getText().toString()),
-                dataSelecionada, this.categoria);
+                dataSelecionada, categoria);
 
+        categoria.adicionarConta(novaConta);
         Intent itResult = new Intent();
         itResult.putExtra("conta", novaConta);
         setResult(RESULT_OK, itResult);

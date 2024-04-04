@@ -22,7 +22,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     EditText descricaoCategoria;
     ListView listaCategorias;
-    LinkedList<Categoria> cadastro;
+    ArrayList<Categoria> cadastro;
     CategoriaAdapter adapter;
     int selecionado = -1;
 
@@ -70,9 +70,9 @@ public class MainActivity extends AppCompatActivity {
         descricaoCategoria = (EditText) findViewById(R.id.descricaoCategoria);
         listaCategorias = (ListView) findViewById(R.id.listaCategorias);
 
-        cadastro = new LinkedList<>();
+        cadastro = new ArrayList<>();
         if(savedInstanceState != null){
-            cadastro = (LinkedList<Categoria>) savedInstanceState.getSerializable("LISTA_CATEGORIAS");
+            cadastro = (ArrayList<Categoria>) savedInstanceState.getSerializable("LISTA_CATEGORIAS");
             selecionado = savedInstanceState.getInt("SELECIONADO", -1);
         }
         adapter = new CategoriaAdapter();
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
                 Categoria categoria = cadastro.get(position);
                 try {
                     Intent it = new Intent(MainActivity.this, ContaActivity.class);
-                    it.putExtra("descricaoCategoria", categoria.getDescricao());
+                    it.putExtra("categoria", categoria);
                     startActivityForResult(it, 1234);
                 }catch (Exception ex){
                 }
