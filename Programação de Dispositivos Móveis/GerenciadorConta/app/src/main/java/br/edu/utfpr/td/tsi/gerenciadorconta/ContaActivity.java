@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
@@ -28,7 +29,7 @@ public class ContaActivity extends AppCompatActivity {
     EditText valorConta;
     EditText vencimentoConta;
     ListView listaContas;
-    LinkedList<Conta> cadastro;
+    ArrayList<Conta> cadastro;
     Date dataSelecionada;
     Categoria categoria;
     int selecionado = -1;
@@ -73,10 +74,10 @@ public class ContaActivity extends AppCompatActivity {
         categoria = (Categoria) getIntent().getSerializableExtra("categoria");
         ((TextView) findViewById(R.id.descricaoCategoria)).setText(categoria.getDescricao());
 
-
-        cadastro = new LinkedList<>();
+        cadastro = new ArrayList<>();
+        cadastro.addAll(categoria.getContas());
         if(savedInstanceState != null){
-            cadastro = (LinkedList<Conta>) savedInstanceState.getSerializable("LISTA_CONTAS");
+            cadastro = (ArrayList<Conta>) savedInstanceState.getSerializable("LISTA_CONTAS");
             selecionado = savedInstanceState.getInt("SELECIONADO", -1);
         }
         descricaoConta = (EditText) findViewById(R.id.descricaoConta);
@@ -87,6 +88,8 @@ public class ContaActivity extends AppCompatActivity {
 
         adapter = new ContaAdapter();
         listaContas.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+
         vencimentoConta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,15 +111,15 @@ public class ContaActivity extends AppCompatActivity {
                 dataSelecionada,
                 categoria);
 
+
         categoria.adicionarConta(novaConta);
         cadastro.add(novaConta);
-            adapter.notifyDataSetChanged();
-
-            limparCampos();
+        adapter.notifyDataSetChanged();
 
         Intent itResult = new Intent();
         itResult.putExtra("conta", novaConta);
         setResult(RESULT_OK, itResult);
+        limparCampos();
 
     }
 

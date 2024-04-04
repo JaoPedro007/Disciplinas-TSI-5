@@ -26,16 +26,15 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Categoria> cadastro;
     CategoriaAdapter adapter;
     int selecionado = -1;
-    double valor=0.00;
 
-    class CategoriaAdapter extends ArrayAdapter<Categoria>{
-        public CategoriaAdapter(){
+    class CategoriaAdapter extends ArrayAdapter<Categoria> {
+        public CategoriaAdapter() {
             super(MainActivity.this, android.R.layout.simple_list_item_1, cadastro);
         }
 
         @Override
-        public View getView(int position, View reciclada, ViewGroup grupo){
-            if(reciclada == null){
+        public View getView(int position, View reciclada, ViewGroup grupo) {
+            if (reciclada == null) {
                 reciclada = getLayoutInflater().inflate(
                         R.layout.item_lista, null);
             }
@@ -45,10 +44,10 @@ public class MainActivity extends AppCompatActivity {
             ((TextView) reciclada.findViewById(R.id.item_descricao_categoria))
                     .setText(categoria.getDescricao());
             ((TextView) reciclada.findViewById(R.id.item_valor_contas))
-                    .setText("R$ "+ valor);
-            if (position == selecionado){
+                    .setText("R$ " + categoria.getValorTotal());
+            if (position == selecionado) {
                 reciclada.setBackgroundColor(Color.LTGRAY);
-            }else{
+            } else {
                 reciclada.setBackgroundColor(Color.WHITE);
             }
             return reciclada;
@@ -65,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         listaCategorias = (ListView) findViewById(R.id.listaCategorias);
 
         cadastro = new ArrayList<>();
-        if(savedInstanceState != null){
+        if (savedInstanceState != null) {
             cadastro = (ArrayList<Categoria>) savedInstanceState.getSerializable("LISTA_CATEGORIAS");
             selecionado = savedInstanceState.getInt("SELECIONADO", -1);
         }
@@ -87,41 +86,45 @@ public class MainActivity extends AppCompatActivity {
                     it.putExtra("categoria", categoria);
                     startActivityForResult(it, 1234);
                     return true;
-                }catch (Exception ex){
+                } catch (Exception ex) {
                 }
                 return false;
             }
         });
     }
-    public void onSaveInstanceState(Bundle dados){
+
+    public void onSaveInstanceState(Bundle dados) {
         super.onSaveInstanceState(dados);
         dados.putSerializable("LISTA_CATEGORIAS", cadastro);
         dados.putInt("SELECIONADO", selecionado);
     }
 
-    public void adicionar(View view){
-        Categoria novaCategoria = new Categoria(
-                descricaoCategoria.getText().toString()
-                );
+    public void adicionar(View view) {
+        Categoria novaCategoria = new Categoria(descricaoCategoria.getText().toString());
         cadastro.add(novaCategoria);
         adapter.notifyDataSetChanged();
         descricaoCategoria.setText("");
 
     }
+
     @Override
-    public void onActivityResult(int requisicao, int resposta, Intent dados){
+    public void onActivityResult(int requisicao, int resposta, Intent dados) {
         super.onActivityResult(requisicao, resposta, dados);
-        if(requisicao == 1234 && resposta == RESULT_OK){
+        if (requisicao == 1234 && resposta == RESULT_OK) {
             Conta conta = (Conta) dados.getSerializableExtra("conta");
-                Categoria categoria = conta.getCategoria();
 
-                valor += categoria.getValorTotal();
-                adapter.notifyDataSetChanged();
+            for (Categoria categoria : cadastro) {
+                if (categoria.getDescricao().equals(conta.getCategoria().getDescricao())) {
+                    categoria.adicionarConta(conta);
+                    categoria.setValorTotal(categoria.getValorTotal() + conta.getValorConta());
+                    break;
+                }
             }
-
+            adapter.notifyDataSetChanged();
         }
 
-
-
     }
+
+
+}
 

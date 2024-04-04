@@ -6,14 +6,14 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Categoria implements Serializable {
-    double valorTotal=0.00;
-
     private String descricao;
-
-    private List<Conta> contas = new ArrayList<>();
+    private ArrayList<Conta> contas;
+    private double valorTotal;
 
     public Categoria(String descricao) {
-        this.descricao=descricao;
+        this.descricao = descricao;
+        this.contas = new ArrayList<>();
+        this.valorTotal = 0.00;
     }
 
     public String getDescricao() {
@@ -28,13 +28,8 @@ public class Categoria implements Serializable {
         return contas;
     }
 
-    public void setContas(List<Conta> contas) {
-        this.contas = contas;
-    }
-
-    public void adicionarConta(Conta conta){
+    public void adicionarConta(Conta conta) {
         contas.add(conta);
-        valorTotal += conta.getValorConta();
     }
 
     public double getValorTotal() {
@@ -44,6 +39,4 @@ public class Categoria implements Serializable {
     public void setValorTotal(double valorTotal) {
         this.valorTotal = valorTotal;
     }
-
-
 }
