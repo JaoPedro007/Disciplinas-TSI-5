@@ -39,15 +39,11 @@ public class MainActivity extends AppCompatActivity {
             }
             Categoria categoria = cadastro.get(position);
 
-            double valor = 0.00;
-            for(Conta conta: categoria.getContas()){
-                valor += conta.getValorConta();
-            }
 
             ((TextView) reciclada.findViewById(R.id.item_descricao_categoria))
                     .setText(categoria.getDescricao());
             ((TextView) reciclada.findViewById(R.id.item_valor_contas))
-                    .setText("R$ "+ String.valueOf(valor));
+                    .setText("R$ "+ String.valueOf(categoria.getValorTotalContas()));
             if (position == selecionado){
                 reciclada.setBackgroundColor(Color.LTGRAY);
             }else{
@@ -88,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
                     Intent it = new Intent(MainActivity.this, ContaActivity.class);
                     it.putExtra("categoria", categoria);
                     startActivityForResult(it, 1234);
+                    return true;
                 }catch (Exception ex){
                 }
                 return false;
@@ -113,8 +110,7 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requisicao, resposta, dados);
         if(requisicao == 1234 && resposta == RESULT_OK){
             Conta conta = (Conta) dados.getSerializableExtra("conta");
-            if(selecionado >=0 && selecionado < cadastro.size()){
-                Categoria categoria = cadastro.get(selecionado);
+                Categoria categoria = conta.getCategoria();
                 categoria.adicionarConta(conta);
                 adapter.notifyDataSetChanged();
             }
@@ -123,5 +119,3 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-}
