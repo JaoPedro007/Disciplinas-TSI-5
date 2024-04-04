@@ -39,19 +39,15 @@ public class MainActivity extends AppCompatActivity {
             }
             Categoria categoria = cadastro.get(position);
 
-            String total="";
-            List<Conta> contas = categoria.getContas();
-            for (Conta conta : contas) {
-                total = String.valueOf(conta.getValorConta());
-                total += conta.getValorConta();
-
+            double valor = 0.00;
+            for(Conta conta: categoria.getContas()){
+                valor += conta.getValorConta();
             }
-
 
             ((TextView) reciclada.findViewById(R.id.item_descricao_categoria))
                     .setText(categoria.getDescricao());
             ((TextView) reciclada.findViewById(R.id.item_valor_contas))
-                    .setText(total);
+                    .setText("R$ "+ String.valueOf(valor));
             if (position == selecionado){
                 reciclada.setBackgroundColor(Color.LTGRAY);
             }else{
