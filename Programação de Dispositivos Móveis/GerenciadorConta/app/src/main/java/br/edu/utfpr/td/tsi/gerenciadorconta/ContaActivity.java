@@ -73,6 +73,7 @@ public class ContaActivity extends AppCompatActivity {
         categoria = (Categoria) getIntent().getSerializableExtra("categoria");
         ((TextView) findViewById(R.id.descricaoCategoria)).setText(categoria.getDescricao());
 
+
         cadastro = new LinkedList<>();
         if(savedInstanceState != null){
             cadastro = (LinkedList<Conta>) savedInstanceState.getSerializable("LISTA_CONTAS");
@@ -80,8 +81,9 @@ public class ContaActivity extends AppCompatActivity {
         }
         descricaoConta = (EditText) findViewById(R.id.descricaoConta);
         valorConta = (EditText) findViewById(R.id.valorConta);
-        listaContas = (ListView) findViewById(R.id.listaContas);
         vencimentoConta = (EditText) findViewById(R.id.vencimentoConta);
+
+        listaContas = (ListView) findViewById(R.id.listaContas);
 
         adapter = new ContaAdapter();
         listaContas.setAdapter(adapter);
@@ -106,17 +108,16 @@ public class ContaActivity extends AppCompatActivity {
                 dataSelecionada,
                 categoria);
 
-            categoria.adicionarConta(novaConta);
-            cadastro.add(novaConta);
+        categoria.adicionarConta(novaConta);
+        cadastro.add(novaConta);
             adapter.notifyDataSetChanged();
 
             limparCampos();
 
-
         Intent itResult = new Intent();
         itResult.putExtra("conta", novaConta);
         setResult(RESULT_OK, itResult);
-        finish();
+
     }
 
     private void showDatePickerDialog() {

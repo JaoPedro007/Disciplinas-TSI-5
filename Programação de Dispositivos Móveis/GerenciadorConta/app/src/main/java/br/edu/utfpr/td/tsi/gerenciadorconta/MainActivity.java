@@ -3,6 +3,7 @@ package br.edu.utfpr.td.tsi.gerenciadorconta;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Categoria> cadastro;
     CategoriaAdapter adapter;
     int selecionado = -1;
+    double valor=0.00;
 
     class CategoriaAdapter extends ArrayAdapter<Categoria>{
         public CategoriaAdapter(){
@@ -43,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
             ((TextView) reciclada.findViewById(R.id.item_descricao_categoria))
                     .setText(categoria.getDescricao());
             ((TextView) reciclada.findViewById(R.id.item_valor_contas))
-                    .setText("R$ "+ String.valueOf(categoria.getValorTotalContas()));
+                    .setText("R$ "+ valor);
             if (position == selecionado){
                 reciclada.setBackgroundColor(Color.LTGRAY);
             }else{
@@ -99,7 +101,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void adicionar(View view){
         Categoria novaCategoria = new Categoria(
-                descricaoCategoria.getText().toString());
+                descricaoCategoria.getText().toString()
+                );
         cadastro.add(novaCategoria);
         adapter.notifyDataSetChanged();
         descricaoCategoria.setText("");
@@ -111,11 +114,14 @@ public class MainActivity extends AppCompatActivity {
         if(requisicao == 1234 && resposta == RESULT_OK){
             Conta conta = (Conta) dados.getSerializableExtra("conta");
                 Categoria categoria = conta.getCategoria();
-                categoria.adicionarConta(conta);
+
+                valor += categoria.getValorTotal();
                 adapter.notifyDataSetChanged();
             }
 
         }
+
+
 
     }
 
