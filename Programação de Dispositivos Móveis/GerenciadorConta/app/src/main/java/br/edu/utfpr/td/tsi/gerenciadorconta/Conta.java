@@ -7,11 +7,10 @@ public class Conta implements Serializable {
 
     public Conta(String descricaoConta, double valorConta, Date vencimentoConta, Categoria categoria) {
         this.descricaoConta = descricaoConta;
-        this.valorConta=valorConta;
-        this.vencimentoConta=vencimentoConta;
-        this.categoria=categoria;
+        this.valorConta = valorConta;
+        this.vencimentoConta = vencimentoConta;
+        this.categoria = categoria;
     }
-
     private Categoria categoria;
     private String descricaoConta;
     private double valorConta;

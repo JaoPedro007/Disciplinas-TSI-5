@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import org.w3c.dom.Text;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -48,13 +49,17 @@ public class ContaActivity extends AppCompatActivity {
             Conta conta = cadastro.get(position);
 
             TextView descricaoConta = reciclada.findViewById(R.id.descricao_conta);
-            TextView dataValorConta = reciclada.findViewById(R.id.data_valor_conta);
+            TextView dataVencimentoConta = reciclada.findViewById(R.id.data_vencimento_conta);
+            TextView valorConta = reciclada.findViewById(R.id.valor_conta);
+
 
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
             String dataFormatada = dateFormat.format(conta.getVencimentoConta());
 
             descricaoConta.setText(conta.getDescricaoConta());
-            dataValorConta.setText(dataFormatada + " - " + conta.getValorConta());
+            dataVencimentoConta.setText(dataFormatada);
+            valorConta.setText("R$ " + conta.getValorConta());
+
 
             if (position == selecionado){
                 reciclada.setBackgroundColor(Color.LTGRAY);
@@ -111,13 +116,13 @@ public class ContaActivity extends AppCompatActivity {
                 dataSelecionada,
                 categoria);
 
-
         categoria.adicionarConta(novaConta);
+
         cadastro.add(novaConta);
         adapter.notifyDataSetChanged();
 
         Intent itResult = new Intent();
-        itResult.putExtra("conta", novaConta);
+        itResult.putExtra("lista_contas", (Serializable) categoria.getContas());
         setResult(RESULT_OK, itResult);
         limparCampos();
 

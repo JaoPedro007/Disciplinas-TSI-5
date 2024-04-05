@@ -9,6 +9,8 @@ public class Categoria implements Serializable {
     private String descricao;
     private ArrayList<Conta> contas;
     private double valorTotal;
+    private int quantidadeContas=0;
+
 
     public Categoria(String descricao) {
         this.descricao = descricao;
@@ -34,6 +36,9 @@ public class Categoria implements Serializable {
 
     public double getValorTotal() {
         return valorTotal;
+    }
+    public int getQuantidadeContas(){
+        return quantidadeContas = contas.size();
     }
 
     public void setValorTotal(double valorTotal) {

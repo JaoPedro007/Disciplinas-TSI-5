@@ -45,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
                     .setText(categoria.getDescricao());
             ((TextView) reciclada.findViewById(R.id.item_valor_contas))
                     .setText("R$ " + categoria.getValorTotal());
+            ((TextView) reciclada.findViewById(R.id.item_quantidade_contas))
+                    .setText(String.valueOf(categoria.getQuantidadeContas()));
             if (position == selecionado) {
                 reciclada.setBackgroundColor(Color.LTGRAY);
             } else {
@@ -107,23 +109,31 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @Override
     public void onActivityResult(int requisicao, int resposta, Intent dados) {
         super.onActivityResult(requisicao, resposta, dados);
         if (requisicao == 1234 && resposta == RESULT_OK) {
-            Conta conta = (Conta) dados.getSerializableExtra("conta");
+            ArrayList<Conta> contasCategoria = (ArrayList<Conta>) dados.getSerializableExtra("lista_contas");
 
             for (Categoria categoria : cadastro) {
-                if (categoria.getDescricao().equals(conta.getCategoria().getDescricao())) {
-                    categoria.adicionarConta(conta);
-                    categoria.setValorTotal(categoria.getValorTotal() + conta.getValorConta());
+                if (categoria.getDescricao().equals(contasCategoria.get(0).getCategoria().getDescricao())) {
+                    categoria.getContas().clear();
+
+                    for (Conta conta : contasCategoria) {
+                        categoria.adicionarConta(conta);
+                    }
+                    double valorTotal = 0.0;
+                    for (Conta conta : categoria.getContas()) {
+                        valorTotal += conta.getValorConta();
+                    }
+                    categoria.setValorTotal(valorTotal);
+
                     break;
                 }
             }
             adapter.notifyDataSetChanged();
         }
-
     }
+
 
 
 }
