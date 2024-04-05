@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     ListView listaCategorias;
     ArrayList<Categoria> cadastro;
     CategoriaAdapter adapter;
+    boolean editando = false;
     int selecionado = -1;
 
     class CategoriaAdapter extends ArrayAdapter<Categoria> {
@@ -101,33 +103,70 @@ public class MainActivity extends AppCompatActivity {
         dados.putInt("SELECIONADO", selecionado);
     }
 
-    public void adicionar(View view) {
-        Categoria novaCategoria = new Categoria(descricaoCategoria.getText().toString());
-        cadastro.add(novaCategoria);
-        adapter.notifyDataSetChanged();
+    public void confirmar(View view) {
+        if(editando){
+            String novaDescricao = descricaoCategoria.getText().toString();
+            cadastro.get(selecionado).setDescricao(novaDescricao);
+            adapter.notifyDataSetChanged();
+            editando = false;
+            Toast.makeText(MainActivity.this, "Descrição da categoria atualizada com sucesso", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            Categoria novaCategoria = new Categoria(descricaoCategoria.getText().toString());
+            if(novaCategoria.getDescricao().isEmpty()){
+                Toast.makeText(MainActivity.this, "Informe uma descrição", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                cadastro.add(novaCategoria);
+                adapter.notifyDataSetChanged();
+            }
+        }
         descricaoCategoria.setText("");
 
     }
+
+    public void editar(View view) {
+        if (selecionado != -1) {
+            descricaoCategoria.setText(cadastro.get(selecionado).getDescricao());
+            editando=true;
+        } else {
+            Toast.makeText(MainActivity.this, "Nenhuma categoria selecionada para editar", Toast.LENGTH_SHORT).show();
+        }
+    }
+    public void remover(View view) {
+        if (selecionado != -1) {
+            cadastro.remove(cadastro.get(selecionado));
+            adapter.notifyDataSetChanged();
+            descricaoCategoria.setText("");
+            selecionado = -1;
+            Toast.makeText(MainActivity.this, "Categoria removida com sucesso", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(MainActivity.this, "Nenhuma categoria selecionada para remover", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
     public void onActivityResult(int requisicao, int resposta, Intent dados) {
         super.onActivityResult(requisicao, resposta, dados);
         if (requisicao == 1234 && resposta == RESULT_OK) {
             ArrayList<Conta> contasCategoria = (ArrayList<Conta>) dados.getSerializableExtra("lista_contas");
 
-            for (Categoria categoria : cadastro) {
-                if (categoria.getDescricao().equals(contasCategoria.get(0).getCategoria().getDescricao())) {
-                    categoria.getContas().clear();
+            if (!contasCategoria.isEmpty()) {
+                for (Categoria categoria : cadastro) {
+                    if (categoria.getDescricao().equals(contasCategoria.get(0).getCategoria().getDescricao())) {
+                        categoria.getContas().clear();
 
-                    for (Conta conta : contasCategoria) {
-                        categoria.adicionarConta(conta);
-                    }
-                    double valorTotal = 0.0;
-                    for (Conta conta : categoria.getContas()) {
-                        valorTotal += conta.getValorConta();
-                    }
-                    categoria.setValorTotal(valorTotal);
+                        for (Conta conta : contasCategoria) {
+                            categoria.adicionarConta(conta);
+                        }
+                        double valorTotal = 0.0;
+                        for (Conta conta : categoria.getContas()) {
+                            valorTotal += conta.getValorConta();
+                        }
+                        categoria.setValorTotal(valorTotal);
 
-                    break;
+                        break;
+                    }
                 }
             }
             adapter.notifyDataSetChanged();

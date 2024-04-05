@@ -6,11 +6,13 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -95,6 +97,13 @@ public class ContaActivity extends AppCompatActivity {
         listaContas.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
+        listaContas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                selecionado = position;
+                adapter.notifyDataSetChanged();
+            }
+        });
         vencimentoConta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,24 +118,22 @@ public class ContaActivity extends AppCompatActivity {
         dados.putSerializable("LISTA_CONTAS", cadastro);
         dados.putInt("SELECIONADO", selecionado);
     }
-    public void adicionar(View view){
+    public void confirmar(View view) {
         Conta novaConta = new Conta(
                 descricaoConta.getText().toString(),
                 Double.parseDouble(valorConta.getText().toString()),
                 dataSelecionada,
                 categoria);
 
-        categoria.adicionarConta(novaConta);
-
         cadastro.add(novaConta);
         adapter.notifyDataSetChanged();
 
         Intent itResult = new Intent();
-        itResult.putExtra("lista_contas", (Serializable) categoria.getContas());
+        itResult.putExtra("lista_contas", cadastro);
         setResult(RESULT_OK, itResult);
         limparCampos();
-
     }
+
 
     private void showDatePickerDialog() {
         final Calendar calendar = Calendar.getInstance();
