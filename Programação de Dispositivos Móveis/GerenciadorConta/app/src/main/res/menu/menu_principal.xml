@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:title="Confirmar"
+        android:icon="@mipmap/ic_adicionar"
+        app:showAsAction="always"
+        android:onClick="confirmar"/>
+    <item
+        android:title="Remover"
+        android:icon="@mipmap/ic_remover"
+        app:showAsAction="always"
+        android:onClick="remover"/>
+
+    <item
+        android:title="Editar"
+        android:icon="@mipmap/ic_editar"
+        app:showAsAction="always"
+        android:onClick="editar"/>
+</menu>

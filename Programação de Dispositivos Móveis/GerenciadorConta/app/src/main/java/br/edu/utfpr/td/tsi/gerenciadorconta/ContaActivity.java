@@ -4,6 +4,8 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -19,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import org.w3c.dom.Text;
 
 import java.io.Serializable;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -36,15 +39,18 @@ public class ContaActivity extends AppCompatActivity {
     Date dataSelecionada;
     Categoria categoria;
     int selecionado = -1;
+    boolean editando = false;
+    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
 
-    class ContaAdapter extends ArrayAdapter<Conta>{
-        public ContaAdapter(){
+
+    class ContaAdapter extends ArrayAdapter<Conta> {
+        public ContaAdapter() {
             super(ContaActivity.this, android.R.layout.simple_list_item_1, cadastro);
         }
 
         @Override
-        public View getView(int position, View reciclada, ViewGroup grupo){
-            if(reciclada == null){
+        public View getView(int position, View reciclada, ViewGroup grupo) {
+            if (reciclada == null) {
                 reciclada = getLayoutInflater().inflate(
                         R.layout.item_lista_contas, null);
             }
@@ -54,8 +60,6 @@ public class ContaActivity extends AppCompatActivity {
             TextView dataVencimentoConta = reciclada.findViewById(R.id.data_vencimento_conta);
             TextView valorConta = reciclada.findViewById(R.id.valor_conta);
 
-
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
             String dataFormatada = dateFormat.format(conta.getVencimentoConta());
 
             descricaoConta.setText(conta.getDescricaoConta());
@@ -63,9 +67,9 @@ public class ContaActivity extends AppCompatActivity {
             valorConta.setText("R$ " + conta.getValorConta());
 
 
-            if (position == selecionado){
+            if (position == selecionado) {
                 reciclada.setBackgroundColor(Color.LTGRAY);
-            }else{
+            } else {
                 reciclada.setBackgroundColor(Color.WHITE);
             }
             return reciclada;
@@ -83,7 +87,7 @@ public class ContaActivity extends AppCompatActivity {
 
         cadastro = new ArrayList<>();
         cadastro.addAll(categoria.getContas());
-        if(savedInstanceState != null){
+        if (savedInstanceState != null) {
             cadastro = (ArrayList<Conta>) savedInstanceState.getSerializable("LISTA_CONTAS");
             selecionado = savedInstanceState.getInt("SELECIONADO", -1);
         }
@@ -113,27 +117,97 @@ public class ContaActivity extends AppCompatActivity {
 
 
     }
-    public void onSaveInstanceState(Bundle dados){
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu m) {
+        getMenuInflater().inflate(R.menu.menu_principal, m);
+        return true;
+    }
+
+    public void onSaveInstanceState(Bundle dados) {
         super.onSaveInstanceState(dados);
         dados.putSerializable("LISTA_CONTAS", cadastro);
         dados.putInt("SELECIONADO", selecionado);
     }
-    public void confirmar(View view) {
-        Conta novaConta = new Conta(
-                descricaoConta.getText().toString(),
-                Double.parseDouble(valorConta.getText().toString()),
-                dataSelecionada,
-                categoria);
 
-        cadastro.add(novaConta);
-        adapter.notifyDataSetChanged();
+    public void confirmar(MenuItem mi) {
+        confirmar((View) null);
+    }
+
+    public void confirmar(View view) {
+        if (editando) {
+            if (editando) {
+                cadastro.get(selecionado).setDescricaoConta(descricaoConta.getText().toString());
+                cadastro.get(selecionado).setValorConta(Double.parseDouble(valorConta.getText().toString()));
+                try {
+                    cadastro.get(selecionado).setVencimentoConta(dateFormat.parse(vencimentoConta.getText().toString()));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                adapter.notifyDataSetChanged();
+                editando = false;
+                Toast.makeText(ContaActivity.this, "Descrição da categoria atualizada com sucesso", Toast.LENGTH_SHORT).show();
+            }
+
+        } else {
+            String descricao = descricaoConta.getText().toString();
+            String valorString = valorConta.getText().toString();
+
+
+            if (descricao.isEmpty() || valorString.isEmpty() || dataSelecionada == null) {
+                Toast.makeText(ContaActivity.this, "Por favor, preencha todos os campos", Toast.LENGTH_SHORT).show();
+            } else {
+                Double valor = Double.parseDouble(valorString);
+                Conta novaConta = new Conta(
+                        descricao,
+                        valor,
+                        dataSelecionada,
+                        categoria);
+
+                cadastro.add(novaConta);
+                adapter.notifyDataSetChanged();
+            }
+        }
 
         Intent itResult = new Intent();
         itResult.putExtra("lista_contas", cadastro);
+
         setResult(RESULT_OK, itResult);
+
         limparCampos();
     }
 
+    public void editar(MenuItem mi) {
+        editar((View) null);
+    }
+
+    public void editar(View view) {
+        if (selecionado != -1) {
+            descricaoConta.setText(cadastro.get(selecionado).getDescricaoConta());
+            valorConta.setText(String.valueOf(cadastro.get(selecionado).getValorConta()));
+            vencimentoConta.setText(dateFormat.format(cadastro.get(selecionado).getVencimentoConta()));
+
+            editando = true;
+        } else {
+            Toast.makeText(ContaActivity.this, "Nenhuma conta selecionada para editar", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void remover(MenuItem mi) {
+        remover((View) null);
+    }
+
+    public void remover(View view) {
+        if (selecionado != -1) {
+            cadastro.remove(cadastro.get(selecionado));
+            adapter.notifyDataSetChanged();
+            limparCampos();
+            selecionado = -1;
+            Toast.makeText(ContaActivity.this, "Conta removida com sucesso", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(ContaActivity.this, "Nenhuma Conta selecionada para remover", Toast.LENGTH_SHORT).show();
+        }
+    }
 
     private void showDatePickerDialog() {
         final Calendar calendar = Calendar.getInstance();
@@ -154,7 +228,7 @@ public class ContaActivity extends AppCompatActivity {
         datePickerDialog.show();
     }
 
-    private void limparCampos(){
+    private void limparCampos() {
         descricaoConta.setText("");
         valorConta.setText("");
         vencimentoConta.setText("");

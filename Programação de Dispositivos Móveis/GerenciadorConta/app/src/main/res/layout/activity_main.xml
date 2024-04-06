@@ -8,7 +8,6 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-
     <EditText
         android:id="@+id/descricaoCategoria"
         android:layout_width="match_parent"
@@ -38,6 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Editar"
+            android:layout_marginEnd="5sp"
             android:onClick="editar"/>
         <Button
             android:layout_width="wrap_content"

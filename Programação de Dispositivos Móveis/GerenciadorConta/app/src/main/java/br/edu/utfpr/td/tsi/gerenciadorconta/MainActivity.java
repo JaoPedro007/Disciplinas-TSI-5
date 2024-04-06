@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -103,20 +105,27 @@ public class MainActivity extends AppCompatActivity {
         dados.putInt("SELECIONADO", selecionado);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu m) {
+        getMenuInflater().inflate(R.menu.menu_principal, m);
+        return true;
+    }
+
+    public void confirmar(MenuItem mi){
+        confirmar((View) null);
+    }
     public void confirmar(View view) {
-        if(editando){
+        if (editando) {
             String novaDescricao = descricaoCategoria.getText().toString();
             cadastro.get(selecionado).setDescricao(novaDescricao);
             adapter.notifyDataSetChanged();
             editando = false;
             Toast.makeText(MainActivity.this, "Descrição da categoria atualizada com sucesso", Toast.LENGTH_SHORT).show();
-        }
-        else {
+        } else {
             Categoria novaCategoria = new Categoria(descricaoCategoria.getText().toString());
-            if(novaCategoria.getDescricao().isEmpty()){
+            if (novaCategoria.getDescricao().isEmpty()) {
                 Toast.makeText(MainActivity.this, "Informe uma descrição", Toast.LENGTH_SHORT).show();
-            }
-            else {
+            } else {
                 cadastro.add(novaCategoria);
                 adapter.notifyDataSetChanged();
             }
@@ -124,14 +133,20 @@ public class MainActivity extends AppCompatActivity {
         descricaoCategoria.setText("");
 
     }
-
+    public void editar(MenuItem mi){
+        editar((View) null);
+    }
     public void editar(View view) {
         if (selecionado != -1) {
             descricaoCategoria.setText(cadastro.get(selecionado).getDescricao());
-            editando=true;
+            editando = true;
         } else {
             Toast.makeText(MainActivity.this, "Nenhuma categoria selecionada para editar", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void remover(MenuItem mi){
+        remover((View) null);
     }
     public void remover(View view) {
         if (selecionado != -1) {
@@ -172,7 +187,6 @@ public class MainActivity extends AppCompatActivity {
             adapter.notifyDataSetChanged();
         }
     }
-
 
 
 }
