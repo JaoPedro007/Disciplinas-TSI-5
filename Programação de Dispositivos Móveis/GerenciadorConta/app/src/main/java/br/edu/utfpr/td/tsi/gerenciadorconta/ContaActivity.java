@@ -146,7 +146,7 @@ public class ContaActivity extends AppCompatActivity {
                 }
                 adapter.notifyDataSetChanged();
                 editando = false;
-                Toast.makeText(ContaActivity.this, "Descrição da categoria atualizada com sucesso", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ContaActivity.this, R.string.conta_atualizada, Toast.LENGTH_SHORT).show();
             }
 
         } else {
@@ -155,7 +155,7 @@ public class ContaActivity extends AppCompatActivity {
 
 
             if (descricao.isEmpty() || valorString.isEmpty() || dataSelecionada == null) {
-                Toast.makeText(ContaActivity.this, "Por favor, preencha todos os campos", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ContaActivity.this, R.string.preencha_todos_campos, Toast.LENGTH_SHORT).show();
             } else {
                 Double valor = Double.parseDouble(valorString);
                 Conta novaConta = new Conta(
@@ -189,7 +189,7 @@ public class ContaActivity extends AppCompatActivity {
 
             editando = true;
         } else {
-            Toast.makeText(ContaActivity.this, "Nenhuma conta selecionada para editar", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ContaActivity.this, R.string.nenhuma_conta_selecionada_editar, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -203,9 +203,9 @@ public class ContaActivity extends AppCompatActivity {
             adapter.notifyDataSetChanged();
             limparCampos();
             selecionado = -1;
-            Toast.makeText(ContaActivity.this, "Conta removida com sucesso", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ContaActivity.this, R.string.conta_removida, Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(ContaActivity.this, "Nenhuma Conta selecionada para remover", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ContaActivity.this, R.string.nenhuma_conta_selecionada_remover, Toast.LENGTH_SHORT).show();
         }
     }
 

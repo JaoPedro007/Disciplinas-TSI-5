@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:hint="Conta de luz" />
+            android:hint="@string/descricao_da_conta" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginTop="10dp"
-                android:hint="R$ 1000.00 " />
+                android:hint="@string/valor_da_conta"/>
 
             <EditText
                 android:id="@+id/vencimentoConta"
@@ -47,7 +47,7 @@
                 android:focusable="false"
                 android:clickable="true"
                 android:layout_marginTop="10dp"
-                android:hint="Vencimento"/>
+                android:hint="@string/vencimento"/>
 
         </LinearLayout>
 
@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:onClick="confirmar"
-            android:text="Ok" />
+            android:text="@string/ok" />
     </LinearLayout>
 
     <LinearLayout
@@ -80,14 +80,14 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Editar"
+                android:text="@string/editar"
                 android:layout_marginEnd="5dp"
                 android:onClick="editar"/>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Remover"
+                android:text="@string/remover"
                 android:onClick="remover"/>
         </LinearLayout>
     </LinearLayout>

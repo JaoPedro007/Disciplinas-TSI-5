@@ -20,14 +20,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:hint="Categoria: " />
+            android:hint="@string/categoria" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:onClick="confirmar"
-            android:text="Confirmar" />
+            android:text="@string/confirmar" />
     </LinearLayout>
 
     <!-- Layout para a parte direita (60% da tela) -->
@@ -52,14 +52,14 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Editar"
+                android:text="@string/editar"
                 android:layout_marginEnd="5dp"
                 android:onClick="editar"/>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Remover"
+                android:text="@string/remover"
                 android:onClick="remover"/>
         </LinearLayout>
     </LinearLayout>

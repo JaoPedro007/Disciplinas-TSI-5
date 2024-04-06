@@ -120,11 +120,11 @@ public class MainActivity extends AppCompatActivity {
             cadastro.get(selecionado).setDescricao(novaDescricao);
             adapter.notifyDataSetChanged();
             editando = false;
-            Toast.makeText(MainActivity.this, "Descrição da categoria atualizada com sucesso", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, R.string.categoria_atualizada, Toast.LENGTH_SHORT).show();
         } else {
             Categoria novaCategoria = new Categoria(descricaoCategoria.getText().toString());
             if (novaCategoria.getDescricao().isEmpty()) {
-                Toast.makeText(MainActivity.this, "Informe uma descrição", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, R.string.descricao_categoria_vazia, Toast.LENGTH_SHORT).show();
             } else {
                 cadastro.add(novaCategoria);
                 adapter.notifyDataSetChanged();
@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
             descricaoCategoria.setText(cadastro.get(selecionado).getDescricao());
             editando = true;
         } else {
-            Toast.makeText(MainActivity.this, "Nenhuma categoria selecionada para editar", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, R.string.nenhuma_categoria_selecionada_editar, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -154,9 +154,9 @@ public class MainActivity extends AppCompatActivity {
             adapter.notifyDataSetChanged();
             descricaoCategoria.setText("");
             selecionado = -1;
-            Toast.makeText(MainActivity.this, "Categoria removida com sucesso", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, R.string.categoria_removida, Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(MainActivity.this, "Nenhuma categoria selecionada para remover", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, R.string.nenhuma_categoria_selecionada_remover, Toast.LENGTH_SHORT).show();
         }
     }
 

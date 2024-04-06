@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Account Manager</string>
+    <string name="categoria">Category</string>
+    <string name="confirmar">Confirm</string>
+    <string name="editar">Edit</string>
+    <string name="remover">Remove</string>
+    <string name="descricao_da_conta">Account description</string>
+    <string name="valor_da_conta">Account value</string>
+    <string name="vencimento">Due date</string>
+    <string name="ok">OK</string>
+    <string name="conta_atualizada">Account updated successfully</string>
+    <string name="preencha_todos_campos">Please fill in all fields</string>
+    <string name="nenhuma_conta_selecionada_editar">No account selected for editing</string>
+    <string name="nenhuma_conta_selecionada_remover">No account selected for removing</string>
+    <string name="conta_removida">Account removed successfully</string>
+    <string name='categoria_removida'>"Category removed successfully."</string>
+    <string name='categoria_atualizada'>Category description updated successfully</string>
+    <string name='descricao_categoria_vazia'>Please provide a category description.</string>
+    <string name='nenhuma_categoria_selecionada_editar'>No category selected for editing</string>
+    <string name='nenhuma_categoria_selecionada_remover'>No category selected for removing</string>
+
+
+</resources>

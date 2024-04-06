@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">Gerenciador Conta</string>
+    <string name="categoria">Categoria:</string>
+    <string name="confirmar">Confirmar</string>
+    <string name="editar">Editar</string>
+    <string name="remover">Remover</string>
+    <string name="descricao_da_conta">Descrição da conta</string>
+    <string name="valor_da_conta">Valor da conta</string>
+    <string name="vencimento">Vencimento</string>
+    <string name="ok">OK</string>
+    <string name="conta_atualizada">Conta atualizada com sucesso</string>
+    <string name="preencha_todos_campos">Por favor, preencha todos os campos</string>
+    <string name="nenhuma_conta_selecionada_editar">Nenhuma conta selecionada para editar</string>
+    <string name="nenhuma_conta_selecionada_remover">Nenhuma conta selecionada para remover</string>
+    <string name="conta_removida">Conta removida com sucesso</string>
+    <string name='categoria_removida'>"Categoria removida com sucesso"</string>
+    <string name='categoria_atualizada'>Descrição da categoria atualizada com sucesso</string>
+    <string name='descricao_categoria_vazia'>Informe uma descrição da categoria</string>
+    <string name='nenhuma_categoria_selecionada_editar'>Nenhuma categoria selecionada para editar</string>
+    <string name='nenhuma_categoria_selecionada_remover'>Nenhuma categoria selecionada para remover</string>
+
 </resources>
