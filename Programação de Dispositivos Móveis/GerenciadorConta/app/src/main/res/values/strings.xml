@@ -21,5 +21,10 @@
     <string name='erro_parse_numero'>Digite apenas números no campo valor</string>
     <string name='categoria_existente'>Já existe uma categoria com esse nome</string>
     <string name="conta_existente">Já existe uma conta com esse nome</string>
+    <string name='confirmar_remocao'>Confirmar Remoção</string>
+    <string name='confirmar_remocao_conta'>Tem certeza de que deseja remover esta conta?</string>
+    <string name='confirmar_remocao_categoria'>Tem certeza de que deseja remover esta categoria?</string>
+    <string name='sim'>Sim</string>
+    <string name="cancelar">Cancelar</string>
 
 </resources>

@@ -200,16 +200,16 @@ public class ContaActivity extends AppCompatActivity {
     public void remover(View view) {
         if (selecionado != -1) {
             AlertDialog.Builder builder = new AlertDialog.Builder(ContaActivity.this);
-            builder.setTitle("Confirmar Remoção");
-            builder.setMessage("Tem certeza de que deseja remover esta conta?");
-            builder.setPositiveButton("Sim", (dialog, which) -> {
+            builder.setTitle(R.string.confirmar_remocao);
+            builder.setMessage(R.string.confirmar_remocao_conta);
+            builder.setPositiveButton(R.string.sim, (dialog, which) -> {
                 cadastro.remove(selecionado);
                 adapter.notifyDataSetChanged();
                 limparCampos();
                 selecionado = -1;
                 Toast.makeText(ContaActivity.this, R.string.conta_removida, Toast.LENGTH_SHORT).show();
             });
-            builder.setNegativeButton("Cancelar", null);
+            builder.setNegativeButton(R.string.cancelar, null);
             builder.show();
         } else {
             Toast.makeText(ContaActivity.this, R.string.nenhuma_conta_selecionada_remover, Toast.LENGTH_LONG).show();

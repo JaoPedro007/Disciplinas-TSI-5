@@ -22,6 +22,12 @@
     <string name='erro_parse_numero'>Enter only numbers in the value field</string>
     <string name='categoria_existente'>A category with that name already exists</string>
     <string name="conta_existente">An account with that name already exists</string>
+    <string name='confirmar_remocao'>Confirm Removal</string>
+    <string name='confirmar_remocao_conta'>Are you sure you want to remove this account?</string>
+    <string name='confirmar_remocao_categoria'>Are you sure you want to remove this category?</string>
+    <string name='sim'>Yes</string>
+    <string name="cancelar">Cancel</string>
+
 
 
 </resources>

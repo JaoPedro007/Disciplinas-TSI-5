@@ -183,16 +183,16 @@ public class MainActivity extends AppCompatActivity {
     public void remover(View view) {
         if (selecionado != -1) {
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-            builder.setTitle("Confirmar Remoção");
-            builder.setMessage("Tem certeza de que deseja remover esta categoria?");
-            builder.setPositiveButton("Sim", (dialog, which) -> {
+            builder.setTitle(R.string.confirmar_remocao);
+            builder.setMessage(R.string.confirmar_remocao_categoria);
+            builder.setPositiveButton(R.string.sim, (dialog, which) -> {
                 cadastro.remove(selecionado);
                 adapter.notifyDataSetChanged();
                 descricaoCategoria.setText("");
                 selecionado = -1;
                 Toast.makeText(MainActivity.this, R.string.categoria_removida, Toast.LENGTH_SHORT).show();
             });
-            builder.setNegativeButton("Cancelar", null);
+            builder.setNegativeButton(R.string.cancelar, null);
             builder.show();
         } else {
             Toast.makeText(MainActivity.this, R.string.nenhuma_categoria_selecionada_remover, Toast.LENGTH_SHORT).show();
