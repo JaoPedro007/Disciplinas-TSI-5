@@ -9,16 +9,12 @@ class SecondDegreeEquationTest {
 
 	@Test
 	void shouldInstantiateCorrectly() {
-
-		// given
 		float a = 1;
 		float b = 2;
 		float c = 3;
 
-		// do /act
 		SecondDegreeEquation equation = new SecondDegreeEquation(a, b, c);
 
-		// check
 		float obtained;
 
 		obtained = equation.getA();
@@ -69,56 +65,141 @@ class SecondDegreeEquationTest {
 		float a;
 		float b;
 		float c;
-
-		a = 2;
-		b = 2;
-		c = 3;
-		eq = new SecondDegreeEquation(a, b, c);
-
 		boolean expected = false;
-		boolean obtained = eq.hasRealSolution();
+		boolean obtained;
+
+		a = 2; b = 2; c = 3;
+		eq = new SecondDegreeEquation(a, b, c);
+		obtained = eq.hasRealSolution();
 		assertEquals(expected, obtained);
 
-		a = 2;
-		b = 2;
-		c = -3;
+		a = -2; b = 2; c = 3;
+		eq = new SecondDegreeEquation(a, b, c);
+		expected = true;
+		obtained = eq.hasRealSolution();
+		assertEquals(expected, obtained);
+		
+		a = 1; b = -2; c = 1;
+		eq = new SecondDegreeEquation(a, b, c);
+		expected = true;
+		obtained = eq.hasRealSolution();
+		assertEquals(expected, obtained);
+		
+		a = 1; b = -3; c = 2;
 		eq = new SecondDegreeEquation(a, b, c);
 		expected = true;
 		obtained = eq.hasRealSolution();
 		assertEquals(expected, obtained);
 
-		a = -2;
-		b = 2;
-		c = 3;
+		
+		a = 2; b = -4; c = -3;
 		eq = new SecondDegreeEquation(a, b, c);
 		expected = true;
 		obtained = eq.hasRealSolution();
 		assertEquals(expected, obtained);
+		
 
-		a = 2;
-		b = 4;
-		c = 3;
+		a = 2; b = 2; c = -3;
+		eq = new SecondDegreeEquation(a, b, c);
+		expected = true;
+		obtained = eq.hasRealSolution();
+		assertEquals(expected, obtained);
+		
+		a = 2; b = 4; c = 3;
 		eq = new SecondDegreeEquation(a, b, c);
 		expected = false;
 		obtained = eq.hasRealSolution();
 		assertEquals(expected, obtained);
 
-		a = 2;
-		b = -4;
-		c = -3;
-		eq = new SecondDegreeEquation(a, b, c);
-		expected = true;
-		obtained = eq.hasRealSolution();
-		assertEquals(expected, obtained);
 
-		a = -2;
-		b = 4;
-		c = 3;
+		a = -2; b = 4; c = 3;
 		eq = new SecondDegreeEquation(a, b, c);
 		expected = true;
 		obtained = eq.hasRealSolution();
 		assertEquals(expected, obtained);
 
 	}
+	
+	@Test
+	void shouldCorrectlyDetermineNumberOfRealSolutions() {
+	    float a;
+	    float b;
+	    float c;	    
+	    int expected;
+	    int obtained;
+	    SecondDegreeEquation eq;
+
+
+	    a = 2; b = 2; c = 3;
+	    eq = new SecondDegreeEquation(a, b, c);
+	    expected = 0;
+	    obtained = eq.howManyRealSolutions();
+	    assertEquals(expected, obtained);
+	    
+	    a = -2; b = -4; c = -3;
+	    eq = new SecondDegreeEquation(a, b, c);
+	    expected = 0;
+	    obtained = eq.howManyRealSolutions();
+	    assertEquals(expected, obtained);
+	    
+	    a = 1; b = 4; c = 4;
+	    eq = new SecondDegreeEquation(a, b, c);
+	    expected = 1;
+	    obtained = eq.howManyRealSolutions();
+	    assertEquals(expected, obtained);
+	    
+	    a = -1; b = 2; c = -1;
+	    eq = new SecondDegreeEquation(a, b, c);
+	    expected = 1;
+	    obtained = eq.howManyRealSolutions();
+	    assertEquals(expected, obtained);
+
+	    
+	    a = 2; b = 2; c = -3;
+	    eq = new SecondDegreeEquation(a, b, c);
+	    expected = 2;
+	    obtained = eq.howManyRealSolutions();
+	    assertEquals(expected, obtained);
+	    
+	    a = -2; b = 2; c = 3;
+	    eq = new SecondDegreeEquation(a, b, c);
+	    expected = 2;
+	    obtained = eq.howManyRealSolutions();
+	    assertEquals(expected, obtained);
+
+	}
+	
+	@Test
+	void shouldCorrectlyDetermineRealSolutions() {
+	    float a = 2;
+	    float b = 2;
+	    float c = 3;
+	    SecondDegreeEquation eq; 
+	    
+	    eq = new SecondDegreeEquation(a, b, c);
+	    float[] expected1 = {};
+	    float[] obtained1 = eq.getRealSolutions();
+	    assertArrayEquals(expected1, obtained1, 0.0001f);
+
+	    a = -2; b = -4; c = -3;
+	    eq = new SecondDegreeEquation(a, b, c);
+	    float[] expected2 = {};
+	    float[] obtained2 = eq.getRealSolutions();
+	    assertArrayEquals(expected2, obtained2, 0.0001f);
+
+	    a = 1; b = -2; c = 1;
+	    eq = new SecondDegreeEquation(a, b, c);
+	    float[] expected3 = {1}; 
+	    float[] obtained3 = eq.getRealSolutions();
+	    assertArrayEquals(expected3, obtained3, 0.0001f);
+
+	    a = -1; b = 2; c = -1;
+	    eq = new SecondDegreeEquation(a, b, c);
+	    float[] expected4 = {1}; 
+	    float[] obtained4 = eq.getRealSolutions();
+	    assertArrayEquals(expected4, obtained4, 0.0001f);
+	}
+
+
 
 }
