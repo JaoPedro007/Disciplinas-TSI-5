@@ -3,17 +3,17 @@
   <groupId>examples</groupId>
   <artifactId>designPatterns</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>Padrões de Projeto</name>
-  <description>Exemplos de padrões de projeto</description>
-  
+  <name>Padrões de projeto</name>
   <dependencies>
-	  
+	  <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
 	<dependency>
 	    <groupId>org.junit.jupiter</groupId>
 	    <artifactId>junit-jupiter-api</artifactId>
-	    <version>5.10.2</version>
+	    <version>5.10.0</version>
 	    <scope>test</scope>
-	</dependency>	 
-	 
+	</dependency>
+
+	  
   </dependencies>
+  <description>Exemplos de padrões de projeto</description>
 </project>
