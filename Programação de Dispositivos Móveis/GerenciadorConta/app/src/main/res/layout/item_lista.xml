@@ -15,7 +15,7 @@
             android:id="@+id/item_descricao_categoria"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:text="Categoria"
+            android:text="@string/categoria"
             android:textSize="25sp"
             android:textStyle="bold" />
 
@@ -29,7 +29,7 @@
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:layout_weight="1"
-                android:text="Quantidade contas"
+                android:text="@string/quantidade_contas"
                 android:textSize="15sp" />
 
             <TextView
@@ -37,7 +37,7 @@
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:layout_weight="1"
-                android:text="Valor total"
+                android:text="@string/valor_total"
                 android:textSize="15sp" />
         </LinearLayout>
 

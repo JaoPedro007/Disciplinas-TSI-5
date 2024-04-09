@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Gerenciador Conta</string>
-    <string name="categoria">Categoria:</string>
+    <string name="categoria">Categoria</string>
     <string name="confirmar">Confirmar</string>
     <string name="editar">Editar</string>
     <string name="remover">Remover</string>
@@ -26,5 +26,7 @@
     <string name='confirmar_remocao_categoria'>Tem certeza de que deseja remover esta categoria?</string>
     <string name='sim'>Sim</string>
     <string name="cancelar">Cancelar</string>
+    <string name="quantidade_contas">Quantidade contas</string>
+    <string name="valor_total">Valor total</string>
 
 </resources>

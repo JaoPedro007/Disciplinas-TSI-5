@@ -27,6 +27,8 @@
     <string name='confirmar_remocao_categoria'>Are you sure you want to remove this category?</string>
     <string name='sim'>Yes</string>
     <string name="cancelar">Cancel</string>
+    <string name="quantidade_contas">Number of Accounts</string>
+    <string name="valor_total">Total Value</string>
 
 
 
