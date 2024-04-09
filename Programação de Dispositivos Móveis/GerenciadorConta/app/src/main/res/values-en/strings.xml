@@ -19,6 +19,9 @@
     <string name='descricao_categoria_vazia'>Please provide a category description.</string>
     <string name='nenhuma_categoria_selecionada_editar'>No category selected for editing</string>
     <string name='nenhuma_categoria_selecionada_remover'>No category selected for removing</string>
+    <string name='erro_parse_numero'>Enter only numbers in the value field</string>
+    <string name='categoria_existente'>A category with that name already exists</string>
+    <string name="conta_existente">An account with that name already exists</string>
 
 
 </resources>

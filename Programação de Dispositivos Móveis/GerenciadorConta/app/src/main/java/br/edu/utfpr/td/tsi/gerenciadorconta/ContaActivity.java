@@ -1,5 +1,6 @@
 package br.edu.utfpr.td.tsi.gerenciadorconta;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -18,15 +19,11 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import org.w3c.dom.Text;
-
-import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.Locale;
 
 public class ContaActivity extends AppCompatActivity {
@@ -40,6 +37,8 @@ public class ContaActivity extends AppCompatActivity {
     Categoria categoria;
     int selecionado = -1;
     boolean editando = false;
+    boolean contaExistente = false;
+
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
 
 
@@ -51,8 +50,7 @@ public class ContaActivity extends AppCompatActivity {
         @Override
         public View getView(int position, View reciclada, ViewGroup grupo) {
             if (reciclada == null) {
-                reciclada = getLayoutInflater().inflate(
-                        R.layout.item_lista_contas, null);
+                reciclada = getLayoutInflater().inflate(R.layout.item_lista_contas, null);
             }
             Conta conta = cadastro.get(position);
 
@@ -135,39 +133,41 @@ public class ContaActivity extends AppCompatActivity {
     }
 
     public void confirmar(View view) {
+        String descricao = descricaoConta.getText().toString();
+        String valorString = valorConta.getText().toString();
+
         if (editando) {
-            if (editando) {
-                cadastro.get(selecionado).setDescricaoConta(descricaoConta.getText().toString());
-                cadastro.get(selecionado).setValorConta(Double.parseDouble(valorConta.getText().toString()));
+            try {
+                cadastro.get(selecionado).setDescricaoConta(descricao);
+                cadastro.get(selecionado).setValorConta(Double.parseDouble(valorString));
+                cadastro.get(selecionado).setVencimentoConta(dateFormat.parse(vencimentoConta.getText().toString()));
+            } catch (ParseException e) {
+                Toast.makeText(ContaActivity.this, R.string.erro_parse_numero, Toast.LENGTH_LONG).show();
+                e.printStackTrace();
+            }
+            adapter.notifyDataSetChanged();
+            editando = false;
+            Toast.makeText(ContaActivity.this, R.string.conta_atualizada, Toast.LENGTH_SHORT).show();
+        } else {
+            if (descricao.isEmpty() || valorString.isEmpty() || dataSelecionada == null) {
+                Toast.makeText(ContaActivity.this, R.string.preencha_todos_campos, Toast.LENGTH_LONG).show();
+
+            } else if (contaExistente(descricao)) {
+                Toast.makeText(ContaActivity.this, R.string.conta_existente, Toast.LENGTH_LONG).show();
+            }
+            else {
                 try {
-                    cadastro.get(selecionado).setVencimentoConta(dateFormat.parse(vencimentoConta.getText().toString()));
-                } catch (ParseException e) {
+                    Double valor = Double.parseDouble(valorString);
+                    Conta novaConta = new Conta(descricao, valor, dataSelecionada, categoria);
+                    cadastro.add(novaConta);
+                    adapter.notifyDataSetChanged();
+                } catch (NumberFormatException e) {
+                    Toast.makeText(ContaActivity.this, R.string.erro_parse_numero, Toast.LENGTH_LONG).show();
                     e.printStackTrace();
                 }
-                adapter.notifyDataSetChanged();
-                editando = false;
-                Toast.makeText(ContaActivity.this, R.string.conta_atualizada, Toast.LENGTH_SHORT).show();
-            }
-
-        } else {
-            String descricao = descricaoConta.getText().toString();
-            String valorString = valorConta.getText().toString();
-
-
-            if (descricao.isEmpty() || valorString.isEmpty() || dataSelecionada == null) {
-                Toast.makeText(ContaActivity.this, R.string.preencha_todos_campos, Toast.LENGTH_SHORT).show();
-            } else {
-                Double valor = Double.parseDouble(valorString);
-                Conta novaConta = new Conta(
-                        descricao,
-                        valor,
-                        dataSelecionada,
-                        categoria);
-
-                cadastro.add(novaConta);
-                adapter.notifyDataSetChanged();
             }
         }
+
 
         Intent itResult = new Intent();
         itResult.putExtra("lista_contas", cadastro);
@@ -189,7 +189,7 @@ public class ContaActivity extends AppCompatActivity {
 
             editando = true;
         } else {
-            Toast.makeText(ContaActivity.this, R.string.nenhuma_conta_selecionada_editar, Toast.LENGTH_SHORT).show();
+            Toast.makeText(ContaActivity.this, R.string.nenhuma_conta_selecionada_editar, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -199,15 +199,23 @@ public class ContaActivity extends AppCompatActivity {
 
     public void remover(View view) {
         if (selecionado != -1) {
-            cadastro.remove(cadastro.get(selecionado));
-            adapter.notifyDataSetChanged();
-            limparCampos();
-            selecionado = -1;
-            Toast.makeText(ContaActivity.this, R.string.conta_removida, Toast.LENGTH_SHORT).show();
+            AlertDialog.Builder builder = new AlertDialog.Builder(ContaActivity.this);
+            builder.setTitle("Confirmar Remoção");
+            builder.setMessage("Tem certeza de que deseja remover esta conta?");
+            builder.setPositiveButton("Sim", (dialog, which) -> {
+                cadastro.remove(selecionado);
+                adapter.notifyDataSetChanged();
+                limparCampos();
+                selecionado = -1;
+                Toast.makeText(ContaActivity.this, R.string.conta_removida, Toast.LENGTH_SHORT).show();
+            });
+            builder.setNegativeButton("Cancelar", null);
+            builder.show();
         } else {
-            Toast.makeText(ContaActivity.this, R.string.nenhuma_conta_selecionada_remover, Toast.LENGTH_SHORT).show();
+            Toast.makeText(ContaActivity.this, R.string.nenhuma_conta_selecionada_remover, Toast.LENGTH_LONG).show();
         }
     }
+
 
     private void showDatePickerDialog() {
         final Calendar calendar = Calendar.getInstance();
@@ -215,16 +223,17 @@ public class ContaActivity extends AppCompatActivity {
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(ContaActivity.this,
-                new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        Calendar calendar = Calendar.getInstance();
-                        calendar.set(year, monthOfYear, dayOfMonth);
-                        dataSelecionada = calendar.getTime();
-                        vencimentoConta.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
-                    }
-                }, year, month, day);
+        DatePickerDialog datePickerDialog = new DatePickerDialog(ContaActivity.this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(year, monthOfYear, dayOfMonth);
+                dataSelecionada = calendar.getTime();
+                vencimentoConta.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+            }
+        }, year, month, day);
+        datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+
         datePickerDialog.show();
     }
 
@@ -233,4 +242,14 @@ public class ContaActivity extends AppCompatActivity {
         valorConta.setText("");
         vencimentoConta.setText("");
     }
+
+    private boolean contaExistente(String descricao) {
+        for (Conta conta : cadastro) {
+            if (conta.getDescricaoConta().equals(descricao)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

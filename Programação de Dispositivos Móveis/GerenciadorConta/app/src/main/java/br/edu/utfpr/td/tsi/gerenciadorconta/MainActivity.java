@@ -1,5 +1,6 @@
 package br.edu.utfpr.td.tsi.gerenciadorconta;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -39,18 +40,14 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public View getView(int position, View reciclada, ViewGroup grupo) {
             if (reciclada == null) {
-                reciclada = getLayoutInflater().inflate(
-                        R.layout.item_lista, null);
+                reciclada = getLayoutInflater().inflate(R.layout.item_lista, null);
             }
             Categoria categoria = cadastro.get(position);
 
 
-            ((TextView) reciclada.findViewById(R.id.item_descricao_categoria))
-                    .setText(categoria.getDescricao());
-            ((TextView) reciclada.findViewById(R.id.item_valor_contas))
-                    .setText("R$ " + categoria.getValorTotal());
-            ((TextView) reciclada.findViewById(R.id.item_quantidade_contas))
-                    .setText(String.valueOf(categoria.getQuantidadeContas()));
+            ((TextView) reciclada.findViewById(R.id.item_descricao_categoria)).setText(categoria.getDescricao());
+            ((TextView) reciclada.findViewById(R.id.item_valor_contas)).setText("R$ " + categoria.getValorTotal());
+            ((TextView) reciclada.findViewById(R.id.item_quantidade_contas)).setText(String.valueOf(categoria.getQuantidadeContas()));
             if (position == selecionado) {
                 reciclada.setBackgroundColor(Color.LTGRAY);
             } else {
@@ -97,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+
     }
 
     public void onSaveInstanceState(Bundle dados) {
@@ -110,56 +108,6 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_principal, m);
         return true;
     }
-
-    public void confirmar(MenuItem mi){
-        confirmar((View) null);
-    }
-    public void confirmar(View view) {
-        if (editando) {
-            String novaDescricao = descricaoCategoria.getText().toString();
-            cadastro.get(selecionado).setDescricao(novaDescricao);
-            adapter.notifyDataSetChanged();
-            editando = false;
-            Toast.makeText(MainActivity.this, R.string.categoria_atualizada, Toast.LENGTH_SHORT).show();
-        } else {
-            Categoria novaCategoria = new Categoria(descricaoCategoria.getText().toString());
-            if (novaCategoria.getDescricao().isEmpty()) {
-                Toast.makeText(MainActivity.this, R.string.descricao_categoria_vazia, Toast.LENGTH_SHORT).show();
-            } else {
-                cadastro.add(novaCategoria);
-                adapter.notifyDataSetChanged();
-            }
-        }
-        descricaoCategoria.setText("");
-
-    }
-    public void editar(MenuItem mi){
-        editar((View) null);
-    }
-    public void editar(View view) {
-        if (selecionado != -1) {
-            descricaoCategoria.setText(cadastro.get(selecionado).getDescricao());
-            editando = true;
-        } else {
-            Toast.makeText(MainActivity.this, R.string.nenhuma_categoria_selecionada_editar, Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    public void remover(MenuItem mi){
-        remover((View) null);
-    }
-    public void remover(View view) {
-        if (selecionado != -1) {
-            cadastro.remove(cadastro.get(selecionado));
-            adapter.notifyDataSetChanged();
-            descricaoCategoria.setText("");
-            selecionado = -1;
-            Toast.makeText(MainActivity.this, R.string.categoria_removida, Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(MainActivity.this, R.string.nenhuma_categoria_selecionada_remover, Toast.LENGTH_SHORT).show();
-        }
-    }
-
 
     public void onActivityResult(int requisicao, int resposta, Intent dados) {
         super.onActivityResult(requisicao, resposta, dados);
@@ -186,6 +134,80 @@ public class MainActivity extends AppCompatActivity {
             }
             adapter.notifyDataSetChanged();
         }
+    }
+
+    public void confirmar(MenuItem mi) {
+        confirmar((View) null);
+    }
+
+    public void confirmar(View view) {
+        String novaDescricao = descricaoCategoria.getText().toString();
+
+        if (editando) {
+            cadastro.get(selecionado).setDescricao(novaDescricao);
+            adapter.notifyDataSetChanged();
+            editando = false;
+            Toast.makeText(MainActivity.this, R.string.categoria_atualizada, Toast.LENGTH_SHORT).show();
+        } else {
+            if (novaDescricao.isEmpty()) {
+                Toast.makeText(MainActivity.this, R.string.descricao_categoria_vazia, Toast.LENGTH_SHORT).show();
+            } else if (categoriaExistente()) {
+                Toast.makeText(MainActivity.this, R.string.categoria_existente, Toast.LENGTH_LONG).show();
+            } else {
+                Categoria novaCategoria = new Categoria(novaDescricao);
+                cadastro.add(novaCategoria);
+                adapter.notifyDataSetChanged();
+            }
+        }
+        descricaoCategoria.setText("");
+    }
+
+
+    public void editar(MenuItem mi) {
+        editar((View) null);
+    }
+
+    public void editar(View view) {
+        if (selecionado != -1) {
+            descricaoCategoria.setText(cadastro.get(selecionado).getDescricao());
+            editando = true;
+        } else {
+            Toast.makeText(MainActivity.this, R.string.nenhuma_categoria_selecionada_editar, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void remover(MenuItem mi) {
+        remover((View) null);
+    }
+
+    public void remover(View view) {
+        if (selecionado != -1) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            builder.setTitle("Confirmar Remoção");
+            builder.setMessage("Tem certeza de que deseja remover esta categoria?");
+            builder.setPositiveButton("Sim", (dialog, which) -> {
+                cadastro.remove(selecionado);
+                adapter.notifyDataSetChanged();
+                descricaoCategoria.setText("");
+                selecionado = -1;
+                Toast.makeText(MainActivity.this, R.string.categoria_removida, Toast.LENGTH_SHORT).show();
+            });
+            builder.setNegativeButton("Cancelar", null);
+            builder.show();
+        } else {
+            Toast.makeText(MainActivity.this, R.string.nenhuma_categoria_selecionada_remover, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    private boolean categoriaExistente() {
+        String descricao = descricaoCategoria.getText().toString();
+        for (Categoria categoria : cadastro) {
+            if (categoria.getDescricao().equals(descricao)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 

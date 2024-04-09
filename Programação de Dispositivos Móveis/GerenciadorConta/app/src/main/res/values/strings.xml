@@ -18,5 +18,8 @@
     <string name='descricao_categoria_vazia'>Informe uma descrição da categoria</string>
     <string name='nenhuma_categoria_selecionada_editar'>Nenhuma categoria selecionada para editar</string>
     <string name='nenhuma_categoria_selecionada_remover'>Nenhuma categoria selecionada para remover</string>
+    <string name='erro_parse_numero'>Digite apenas números no campo valor</string>
+    <string name='categoria_existente'>Já existe uma categoria com esse nome</string>
+    <string name="conta_existente">Já existe uma conta com esse nome</string>
 
 </resources>
