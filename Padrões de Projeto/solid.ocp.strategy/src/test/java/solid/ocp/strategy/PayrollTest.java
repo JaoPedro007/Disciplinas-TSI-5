@@ -6,50 +6,44 @@ import org.junit.jupiter.api.Test;
 
 class PayrollTest {
 
-	@Test
-	void shouldReturnCalculateSalaryTeamLeaderCorrectly() {
-		//given
-		float hours = 10f;
-		TeamLeader teamLeader = new TeamLeader();
+	
+	void testPayrollWithCorrectlySalary(IEmployee employee, float hours, float expectedSalary) {
+		Payroll payroll = new Payroll(employee);
 		
-		//act
-		float obtained = teamLeader.calculateSalary(hours);
-
-		//check
-		float expected = 350f;
-		assertEquals(expected, obtained, 0.001);
+		float obtainedSalary = payroll.calculateSalary(hours);
+		
+		assertEquals(expectedSalary, obtainedSalary, 0.001);
+		
 	}
 	
-
-	@Test
-	void shouldReturnCalculateSalaryRecruiterCorrectly() {
-		//given
-		float hours = 10f;
-		Recruiter recruiter = new Recruiter();
-		
-		//act
-		float obtained = recruiter.calculateSalary(hours);
-
-		//check
-		float expected = 200f;
-		assertEquals(expected, obtained, 0.001);
-	}
 	
-
 	@Test
-	void shouldReturnCalculateSalaryDeveloperCorrectly() {
-		//given
-		float hours = 10f;
-		Developer developer = new Developer();
+	void shouldCalculateSalaryCorrectly() {
+		IEmployee employee;
+		float hours;
+		float expectedSalary;
 		
-		//act
-		float obtained = developer.calculateSalary(hours);
+		employee = new Developer();
+		hours = 10;
+		expectedSalary = 400f;
+		testPayrollWithCorrectlySalary(employee, hours, expectedSalary);
+		
+		employee = new TeamLeader();
+		hours = 10;
+		expectedSalary = 350f;
+		testPayrollWithCorrectlySalary(employee, hours, expectedSalary);
+		
+		employee = new Recruiter();
+		hours = 100.25f;
+		expectedSalary = ((hours * 20 ) + 500);
+		testPayrollWithCorrectlySalary(employee, hours, expectedSalary);
+		
+		employee = new Recruiter();
+		hours = 10;
+		expectedSalary = 200f;
+		testPayrollWithCorrectlySalary(employee, hours, expectedSalary);
 
-		//check
-		float expected = 400f;
-		assertEquals(expected, obtained, 0.001);
 	}
-
 
 
 }

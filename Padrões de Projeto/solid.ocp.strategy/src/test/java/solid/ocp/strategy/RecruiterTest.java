@@ -30,7 +30,7 @@ class RecruiterTest {
 		float obtained = recruiter.calculateSalary(hours);
 
 		//check
-		float expected = 3500f;
+		float expected = ((hours * 20 ) + 500);
 		assertEquals(expected, obtained, 0.001);
 	}
 	
