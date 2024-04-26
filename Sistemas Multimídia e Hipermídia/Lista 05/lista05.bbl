@@ -1,0 +1,31 @@
+\begin{thebibliography}{1}
+
+\bibitem{amorim2020comparaccao}
+Pedro~Rubbioli Amorim and Marco~AA Henriques.
+\newblock Uma compara{\c{c}}{\~a}o de desempenho de algoritmos para
+  criptografia p{\'o}s-qu{\^a}ntica.
+\newblock In {\em Anais Estendidos do XX Simp{\'o}sio Brasileiro em
+  Seguran{\c{c}}a da Informa{\c{c}}{\~a}o e de Sistemas Computacionais}, pages
+  256--269. SBC, 2020.
+
+\bibitem{de2020esquemas}
+Maria Zita~Fiqueli de~Abreu.
+\newblock {\em Esquemas De Assinatura Digital Lattice-based E
+  Experimenta{\c{c}}{\~a}o De Certificados H{\'\i}bridos Com Criptografia
+  P{\'o}s-qu{\^a}ntica}.
+\newblock PhD thesis, Universidade do Minho (Portugal), 2020.
+
+\bibitem{misoczki2008criptografia}
+Rafael Misoczki and Paulo~SLM Barreto.
+\newblock Criptografia p{\'o}s-qu{\^a}ntica com c{\'o}digos corretores de
+  erros.
+\newblock {\em VIII Simp{\'o}sio Brasileiro em Seguran{\c{c}}a da
+  Informa{\c{c}}{\~a}o e de Sistemas Computacionais}, 2008.
+
+\bibitem{prodesp}
+{Prodesp}.
+\newblock Criptografia pós-quântica.
+\newblock \url{https://solucoes.prodesp.sp.gov.br/criptografia-pos-quantica/}.
+\newblock Acessado em 25 de abril de 2024.
+
+\end{thebibliography}
