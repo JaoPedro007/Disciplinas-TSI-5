@@ -1,4 +1,4 @@
-package decorator;
+package writer;
 
 public enum Separator {
 	

@@ -10,6 +10,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
+import writer.CSVWriter;
+import writer.Separator;
+
 class CSVWriterTest {
 
 	@TempDir
@@ -20,10 +23,24 @@ class CSVWriterTest {
 		File tempDirPath = new File("file.test");
 		assertTrue(tempDirPath.isDirectory(), "Should be a directory");
 	}
+	
+	@Test
+	void shouldSetSeparator() {
+		assertDoesNotThrow(()->{
+			File csvFile = new File(tempDirPath, "csvTest.csv");
+			CSVWriter csvWriter = new CSVWriter(new FileWriter(csvFile));
+			csvWriter.close();
+			
+			Separator expected = Separator.COMMA;
+			csvWriter.setSeparator(expected);
+			Separator actual = csvWriter.getSeparator();
+			assertEquals(expected, actual);
+		});
+	}
 		
 	@Test
-	void shouldWriteSeparatorIntoFile() {
-		assertDoesNotThrow( ()-> {
+	void shouldWriteSeparator() {
+		assertDoesNotThrow(()->{
 			File csvFile = new File(tempDirPath, "csvTest.csv");
 			CSVWriter csvWriter = new CSVWriter(new FileWriter(csvFile));
 			csvWriter.setSeparator(Separator.PIPE);
@@ -31,7 +48,7 @@ class CSVWriterTest {
 			csvWriter.close();
 			
 			char expected = Separator.PIPE.asChar();
-			FileReader fileReader = new FileReader(csvFile);
+			FileReader fileReader = new FileReader (csvFile);
 			char actual = (char) fileReader.read();
 			fileReader.close();
 			
