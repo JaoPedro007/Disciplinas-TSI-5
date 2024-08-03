@@ -6,7 +6,7 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
-import writer.Separator;
+import separator.Separator;
 
 
 public class CSVReader extends Reader{
@@ -24,11 +24,6 @@ public class CSVReader extends Reader{
 	}
 
 	
-	
-	public String readLine() throws IOException{
-		return this.buffReader.readLine();
-	}
-	
 	public void setSeparator(Separator newSeparator) {
 		separator = newSeparator;
 	}
@@ -36,16 +31,12 @@ public class CSVReader extends Reader{
 	public Separator getSeparator() {
 		return this.separator;
 	}
-
-	public String[] readTokens() throws IOException{
-		String line = readLine();
-		if(line !=null) {
-			return line.split(Character.toString(separator.asChar()));
-		}
-		return new String[0];
+	
+	public String readLine() throws IOException{
+		return this.buffReader.readLine();
 	}
 	
-	public List<String[]> readAll() throws IOException{
+	public List<String[]> readLines() throws IOException{
 		List<String[]> allTokens = new ArrayList<String[]>();
 		String line;
 		while((line = readLine()) !=null) {
