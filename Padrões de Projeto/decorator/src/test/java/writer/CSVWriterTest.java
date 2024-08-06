@@ -1,4 +1,4 @@
-package decorator;
+package writer;
 
 import static org.junit.jupiter.api.Assertions.*;
 

@@ -4,7 +4,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -29,10 +32,15 @@ class CSVReaderTest {
     
 	//-------------------------------------------------------------------
 
-	@BeforeEach
-    void instantiateNewCSVReader()
-    {
-      csvReader = assertDoesNotThrow(()-> new CSVReader(new FileReader(csvFile)) );
+    @BeforeEach
+    void instantiateNewCSVReader() {
+        assertDoesNotThrow(() -> {
+            FileWriter writer = new FileWriter(csvFile);
+            writer.write("Ameixa\n");
+            writer.write("Banana,Morango\n");
+            writer.close();
+            csvReader = new CSVReader(new FileReader(csvFile));
+        });
     }
 	
 	//-------------------------------------------------------------------
@@ -44,42 +52,27 @@ class CSVReaderTest {
     }
 	//-------------------------------------------------------------------
 
-	@Test
-	void shouldReadLine() {
-		String expected = "Ameixa";
-		
-		assertDoesNotThrow(()->{
-			csvReader.readLine();
-		});
-
-		char[] buffer = readFileContent(csvFile);
-		String actual = new String(buffer);
-
-		assertTrue(actual.equals(expected));
-		
-	}
+    @Test
+    void shouldReadLine() {
+    	String expected = "Ameixa";
+        assertDoesNotThrow(() -> {
+            String actual = csvReader.readLine();
+            assertEquals(expected, actual);
+        });
+    }
+	
 	
 	//-------------------------------------------------------------------
 	
-	@Test
-	void shouldReadLines() {
-		
-	}
-	
-	
-	
-	private char[] readFileContent(File file)
-	{
-	   return  assertDoesNotThrow(()->
-	   {
-	      char[] buffer = new char[(int) file.length()];
-	      FileReader fileReader = new FileReader(file);
-	      int contentSize = fileReader.read(buffer);
-	      fileReader.close();
-	      
-	      return Arrays.copyOf(buffer, contentSize);
-	   });
-	}
+    @Test
+    void shouldReadLines() {
+        assertDoesNotThrow(() -> {
+            List<String[]> lines = csvReader.readLines();
+            assertEquals(2, lines.size());
+            assertArrayEquals(new String[]{"Ameixa"}, lines.get(0));
+            assertArrayEquals(new String[]{"Banana", "Morango"}, lines.get(1));
+        });
+    }
 	
    
 
