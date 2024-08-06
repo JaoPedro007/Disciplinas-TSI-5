@@ -32,23 +32,26 @@ public class CSVReader extends Reader{
 		return this.separator;
 	}
 	
-	public String readLine() throws IOException{
-		return this.buffReader.readLine();
-	}
-	
-	public List<String[]> readLines() throws IOException{
-		List<String[]> allTokens = new ArrayList<String[]>();
-		String line;
-		while((line = readLine()) !=null) {
-			allTokens.add(line.split(Character.toString(separator.asChar())));
-		}
-		return allTokens;
-		
-	}
+    public String[] readTokens() throws IOException {
+        String line = this.buffReader.readLine();
+        if (line != null) {
+            return line.split(Character.toString(separator.asChar()));
+        }
+        return null;
+    }
+    
+    public List<String[]> readAllTokens() throws IOException {
+        List<String[]> allTokens = new ArrayList<>();
+        String[] tokens;
+        while ((tokens = readTokens()) != null) {
+            allTokens.add(tokens);
+        }
+        return allTokens;
+    }
 	
 	@Override
 	public int read(char[] cbuf, int off, int len) throws IOException {
-		return this.buffReader.read(cbuf, off, len);
+        throw new UnsupportedOperationException("Operation not supported");
 	}
 
 	@Override

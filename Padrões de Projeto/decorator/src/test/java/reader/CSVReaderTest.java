@@ -53,11 +53,10 @@ class CSVReaderTest {
 	//-------------------------------------------------------------------
 
     @Test
-    void shouldReadLine() {
-    	String expected = "Ameixa";
+    void shouldReadTokens() {
         assertDoesNotThrow(() -> {
-            String actual = csvReader.readLine();
-            assertEquals(expected, actual);
+            String[] tokens = csvReader.readTokens();
+            assertArrayEquals(new String[]{"Ameixa"}, tokens);
         });
     }
 	
@@ -65,9 +64,9 @@ class CSVReaderTest {
 	//-------------------------------------------------------------------
 	
     @Test
-    void shouldReadLines() {
+    void shouldReadAllTokens() {
         assertDoesNotThrow(() -> {
-            List<String[]> lines = csvReader.readLines();
+            List<String[]> lines = csvReader.readAllTokens();
             assertEquals(2, lines.size());
             assertArrayEquals(new String[]{"Ameixa"}, lines.get(0));
             assertArrayEquals(new String[]{"Banana", "Morango"}, lines.get(1));
@@ -75,5 +74,4 @@ class CSVReaderTest {
     }
 	
    
-
 }
