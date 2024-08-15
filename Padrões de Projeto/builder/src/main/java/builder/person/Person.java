@@ -181,9 +181,9 @@ public class Person
 	
 	
 	public String getFullName() {
-		if(midleName.trim().isBlank()) {
-			return firstName + " " + lastName;
-		}
+	    if (midleName == null || midleName.isEmpty()) {
+	        return firstName + " " + lastName;
+	    }
 		return firstName + " " + midleName + " " + lastName;
 	}
 
