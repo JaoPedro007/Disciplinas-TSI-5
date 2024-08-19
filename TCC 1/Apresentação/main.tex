@@ -1,0 +1,115 @@
+\documentclass{beamer}
+\usetheme{Warsaw}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{styles/style}
+
+\title{Segurança em comunicações Pós-Quânticas}
+\author{João Pedro Rodrigues Leite}
+\date[Toledo, 2024]
+
+\institute{
+	Orientador: Prof. Dr. Fábio Engel de Camargo
+	\\Universidade Tecnológica Federal do Paraná ({\bf{UTFPR}})
+	\\Curso de Sistemas para Internet
+}
+
+% Adicionando a logo e estrutura na capa
+\titlegraphic{%
+	\begin{minipage}{0.5\textwidth}
+		\includegraphics[width=\linewidth]{figs/logo-utfpr.pdf}
+	\end{minipage}\hfill
+}
+
+\begin{document}
+	
+	\begin{frame}
+		\titlepage
+	\end{frame}
+	
+	\begin{frame}{Sumário}
+		\tableofcontents
+	\end{frame}
+	
+	\section{Contextualização}
+	\begin{frame}{Contextualização}
+		\begin{itemize}
+			\item Avanços significativos na computação quântica ameaçam a segurança da criptografia convencional.
+			\item Computadores quânticos podem realizar operações em paralelo, explorando superposição e emaranhamento.
+			\item Essa capacidade pode comprometer a confidencialidade e integridade das comunicações digitais.
+			\item A criptografia pós-quântica (CPQ) emerge como uma resposta a essas ameaças.
+		\end{itemize}
+	\end{frame}
+	
+	\begin{frame}{História da Computação Quântica}
+		\begin{itemize}
+			\item Anos 80: Richard Feynman propõe a ideia de um computador baseado em princípios quânticos.
+			\item 1985: David Deutsch formaliza o conceito de um computador quântico universal.
+			\item 1994: Peter Shor desenvolve um algoritmo quântico que ameaça a criptografia baseada em fatoração.
+			\item 1996: Lov Grover apresenta um algoritmo quântico eficiente para busca em bases de dados.
+		\end{itemize}
+	\end{frame}
+	
+	\section{Definição do Problema}
+	\begin{frame}{Definição do Problema}
+		\begin{itemize}
+			\item A estratégia "store now, decrypt later" é uma ameaça emergente.
+			\item Dados criptografados hoje podem ser vulneráveis a futuros avanços na computação quântica.
+			\item A necessidade de algoritmos que resistam a ataques quânticos é urgente.
+		\end{itemize}
+	\end{frame}
+	
+	\section{Objetivos}
+	\begin{frame}{Objetivo Geral}
+		\begin{itemize}
+			\item Estudar e apresentar os problemas e soluções de criptografia pós-quântica de uma maneira mais clara e objetiva, a fim de garantir a segurança das comunicações digitais.
+		\end{itemize}
+	\end{frame}
+	
+	\begin{frame}{Objetivos Específicos}
+		\begin{itemize}
+			\item Identificar os principais algoritmos de criptografia pós-quântica.
+			\item Analisar as bases teóricas e contextos de aplicação desses algoritmos.
+			\item Elaborar recomendações para desenvolvedores web sobre o uso de CPQ.
+		\end{itemize}
+	\end{frame}
+	
+	\section{Metodologia}
+	\begin{frame}{Metodologia}
+		\begin{itemize}
+			\item Revisão bibliográfica sobre algoritmos de criptografia pós-quântica.
+			\item Análise comparativa dos algoritmos em termos de desempenho e segurança.
+			\item Estudo de casos de aplicação de CPQ em ambientes reais.
+			\item Desenvolvimento de diretrizes para a adoção de CPQ em sistemas web.
+		\end{itemize}
+	\end{frame}
+	
+	\section{Resultados Esperados}
+	\begin{frame}{Resultados Esperados}
+		\begin{itemize}
+			\item Identificação dos algoritmos de CPQ mais promissores.
+			\item Análise detalhada das vantagens e limitações desses algoritmos.
+			\item Recomendações práticas para a implementação de CPQ em sistemas digitais.
+		\end{itemize}
+	\end{frame}
+	
+	\section{Cronograma}
+	\begin{frame}{Cronograma}
+		\begin{itemize}
+			\item Mês 1-2: Revisão bibliográfica
+			\item Mês 3-4: Análise dos algoritmos de CPQ
+			\item Mês 5: Estudo de casos
+			\item Mês 6: Redação e conclusão
+		\end{itemize}
+	\end{frame}
+	
+	\section{Conclusão}
+	\begin{frame}{Conclusão}
+		\begin{itemize}
+			\item A computação quântica representa uma ameaça real à segurança digital.
+			\item A adoção de criptografia pós-quântica é essencial para garantir a proteção de dados no futuro.
+			\item Este trabalho contribuirá para a compreensão e adoção de CPQ, oferecendo soluções práticas e seguras.
+		\end{itemize}
+	\end{frame}
+	
+\end{document}
