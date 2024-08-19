@@ -28,14 +28,26 @@
         android:inputType="numberDecimal"
         android:id="@+id/txt_preco_produto"/>
 
-    <Spinner
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Setor do produto"
-        android:id="@+id/spinner_setor_produto"/>
+        android:orientation="horizontal"
+        android:padding="8dp">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="5dp"
+            android:text="Departamento:"/>
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner_setor_produto"/>
+    </LinearLayout>
     <Button
-        android:layout_marginTop="20sp"
+        android:layout_margin="20sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
