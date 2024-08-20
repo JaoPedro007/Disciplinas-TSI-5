@@ -11,13 +11,13 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Descrição do setor"
+        android:hint="@string/descricao_setor"
         android:id="@+id/txt_descr_setor"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Margem de lucro do setor"
+        android:hint="@string/margem_lucro"
         android:inputType="numberDecimal"
         android:id="@+id/txt_margem_setor"/>
 
@@ -26,7 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Confirmar"
+        android:text="@string/confirmar"
         android:onClick="confirmar"/>
 
     <ListView

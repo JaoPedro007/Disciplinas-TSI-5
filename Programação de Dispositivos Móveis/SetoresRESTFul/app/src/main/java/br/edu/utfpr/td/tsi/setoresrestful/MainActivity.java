@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 
@@ -63,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
             edMargem.setText(String.valueOf(setorSelecionado.getMargem()));
             editando=true;
         });
+
         buscarSetores();
     }
 

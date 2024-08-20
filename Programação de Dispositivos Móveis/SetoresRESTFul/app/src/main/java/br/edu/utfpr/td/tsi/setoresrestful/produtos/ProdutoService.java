@@ -21,6 +21,7 @@ public class ProdutoService extends IntentService {
     public static final String ACTION_LISTAR    = "br.edu.utfpr.td.tsi.setoresrestful.produtos.action.LISTAR";
     public static final String ACTION_CADASTRAR = "br.edu.utfpr.td.tsi.setoresrestful.produtos.action.CADASTRAR";
     public static final String ACTION_EDITAR = "br.edu.utfpr.td.tsi.setoresrestful.produtos.action.EDITAR";
+    public static final String ACTION_DELETAR = "br.edu.utfpr.td.tsi.setoresrestful.produtos.action.DELETAR";
     public static final String RESULTADO_LISTA_PRODUTOS = "br.edu.utfpr.td.tsi.setoresrestful.produtos.RESULTADO_LISTA_SETORES";
     static final String URL_WS = "http://argo.td.utfpr.edu.br/clients/ws/produto";
     Gson gson;
@@ -43,6 +44,8 @@ public class ProdutoService extends IntentService {
                 break;
             case ACTION_EDITAR:
                 editar(intent);
+                break;
+            case ACTION_DELETAR: deletar(intent);
                 break;
         }
     }
@@ -124,5 +127,23 @@ public class ProdutoService extends IntentService {
         }
     }
 
+    private void deletar(Intent intent) {
+        try {
+            Produto produto = (Produto) intent.getSerializableExtra("produto");
+
+            URL url = new URL(URL_WS + "/" + produto.getId());
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("DELETE");
+            con.connect();
+
+            if (con.getResponseCode() == 200) {
+                Log.d("DELETE", "Produto deletado com sucesso.");
+            } else {
+                Log.d("DELETE", "Falha ao deletar o produto. Código: " + con.getResponseCode());
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
 
 }

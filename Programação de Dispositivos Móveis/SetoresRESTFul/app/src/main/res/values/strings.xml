@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">Factory App</string>
+    <string name="descricao_setor">Descrição do setor</string>
+    <string name="margem_lucro">Margem de lucro do setor</string>
+    <string name="confirmar">Confirmar</string>
+    <string name="descricao_produto">Descrição do produto</string>
+    <string name="estoque_produto">Estoque do produto</string>
+    <string name="preco_produto">Preço do produto</string>
+    <string name="setor">Setor:</string>
+    <string name="setores">Setores</string>
+    <string name="produtos">Produtos</string>
+
+
+
+
 </resources>

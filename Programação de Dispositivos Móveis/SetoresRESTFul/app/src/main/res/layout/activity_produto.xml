@@ -11,20 +11,21 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Descrição do produto"
+        android:hint="@string/descricao_produto"
         android:id="@+id/txt_descr_produto"/>
+
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Estoque do produto"
+        android:hint="@string/estoque_produto"
         android:inputType="numberDecimal"
         android:id="@+id/txt_estoque_produto"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Preço do produto"
+        android:hint="@string/preco_produto"
         android:inputType="numberDecimal"
         android:id="@+id/txt_preco_produto"/>
 
@@ -39,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginEnd="5dp"
-            android:text="Departamento:"/>
+            android:text="Setor:"/>
 
         <Spinner
             android:layout_width="match_parent"
@@ -51,7 +52,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Confirmar"
+        android:text="@string/confirmar"
         android:onClick="confirmar"/>
 
     <ListView

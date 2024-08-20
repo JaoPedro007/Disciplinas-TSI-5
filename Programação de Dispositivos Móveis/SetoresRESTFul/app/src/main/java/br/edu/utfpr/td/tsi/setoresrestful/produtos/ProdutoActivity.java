@@ -15,6 +15,7 @@ import android.widget.Spinner;
 import android.widget.Switch;
 
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
@@ -90,6 +91,25 @@ public class ProdutoActivity extends AppCompatActivity {
             setorSelecionado = produtoSelecionado.getSetor();
             spinnerSetor.setSelection(((ArrayAdapter<Setor>) spinnerSetor.getAdapter()).getPosition(setorSelecionado));
             editando=true;
+        });
+
+        lista.setOnItemLongClickListener((parent, view, position, id) -> {
+            produtoSelecionado = produtos.get(position);
+            new AlertDialog.Builder(ProdutoActivity.this)
+                    .setTitle("Deletar Produto")
+                    .setMessage("Tem certeza que deseja deletar o produto " + produtoSelecionado.getDescricao() + "?")
+                    .setPositiveButton(android.R.string.yes, (dialog, which) -> {
+                        produtos.remove(position);
+                        adapter.notifyDataSetChanged();
+
+                        Intent it = new Intent(ProdutoActivity.this, ProdutoService.class);
+                        it.setAction(ProdutoService.ACTION_DELETAR);
+                        it.putExtra("produto", produtoSelecionado);
+                        startService(it);
+                    })
+                    .setNegativeButton(android.R.string.no, null)
+                    .show();
+            return true;
         });
 
         buscarProdutos();

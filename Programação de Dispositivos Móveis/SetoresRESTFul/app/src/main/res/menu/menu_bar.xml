@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/menu_setores"
-        android:title="Setores"
+        android:title="@string/setores"
         app:showAsAction="always"/>
     <item
         android:id="@+id/menu_produtos"
-        android:title="Produtos"
+        android:title="@string/produtos"
         app:showAsAction="always" />
 </menu>
