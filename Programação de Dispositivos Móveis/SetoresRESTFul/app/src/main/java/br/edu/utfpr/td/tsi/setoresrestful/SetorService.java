@@ -15,9 +15,12 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.Comparator;
 
+import br.edu.utfpr.td.tsi.setoresrestful.produtos.Produto;
+
 public class SetorService extends IntentService {
 
     public static final String ACTION_LISTAR    = "br.edu.utfpr.td.tsi.setoresrestful.action.LISTAR";
+    public static final String ACTION_EDITAR   = "br.edu.utfpr.td.tsi.setoresrestful.action.EDITAR";
     public static final String ACTION_CADASTRAR = "br.edu.utfpr.td.tsi.setoresrestful.action.CADASTRAR";
     public static final String RESULTADO_LISTA_SETORES = "br.edu.utfpr.td.tsi.setoresrestful.RESULTADO_LISTA_SETORES";
     static final String URL_WS = "http://argo.td.utfpr.edu.br/clients/ws/setor";
@@ -36,6 +39,9 @@ public class SetorService extends IntentService {
             case ACTION_CADASTRAR: cadastrar(intent);
             break;
             case ACTION_LISTAR: listar(intent);
+            break;
+            case ACTION_EDITAR: editar(intent);
+            break;
         }
     }
 
@@ -88,6 +94,28 @@ public class SetorService extends IntentService {
                 Intent it = new Intent(RESULTADO_LISTA_SETORES);
                 it.putExtra("setores", setores);
                 sendBroadcast(it);
+            }
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+
+    private void editar(Intent intent) {
+        try {
+            Setor setor = (Setor) intent.getSerializableExtra("setor");
+            String strSetor = gson.toJson(setor);
+
+            URL url = new URL(URL_WS + "/" + setor.getId());
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("PUT");
+            con.setRequestProperty("content-type","application/json");
+            con.connect();
+            PrintWriter writer = new PrintWriter(con.getOutputStream());
+            writer.println(strSetor);
+            writer.flush();
+            if (con.getResponseCode() == 200) {
+                Log.d("PUT","Setor atualizado com sucesso.");
             }
         } catch(Exception ex) {
             ex.printStackTrace();

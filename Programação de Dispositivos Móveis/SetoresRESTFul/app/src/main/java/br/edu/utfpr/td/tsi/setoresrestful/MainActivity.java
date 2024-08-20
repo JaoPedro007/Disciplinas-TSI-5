@@ -18,7 +18,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.Arrays;
 import java.util.LinkedList;
 
+import br.edu.utfpr.td.tsi.setoresrestful.produtos.Produto;
 import br.edu.utfpr.td.tsi.setoresrestful.produtos.ProdutoActivity;
+import br.edu.utfpr.td.tsi.setoresrestful.produtos.ProdutoService;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,6 +42,9 @@ public class MainActivity extends AppCompatActivity {
     EditText edDescricao, edMargem;
     ListView lista;
     ArrayAdapter<Setor> adapter;
+    Setor setorSelecionado;
+    Boolean editando = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +56,13 @@ public class MainActivity extends AppCompatActivity {
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, setores);
         lista.setAdapter( adapter );
         registerReceiver(new SetorServiceObserver(), new IntentFilter(SetorService.RESULTADO_LISTA_SETORES));
+
+        lista.setOnItemClickListener((parent, view, position, id) -> {
+            setorSelecionado = setores.get(position);
+            edDescricao.setText(setorSelecionado.getDescricao());
+            edMargem.setText(String.valueOf(setorSelecionado.getMargem()));
+            editando=true;
+        });
         buscarSetores();
     }
 
@@ -83,16 +95,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void confirmar(View view){
-        Setor setor = new Setor();
+        Setor setor;
+        Intent it = new Intent(this, SetorService.class);
+
+        if(setorSelecionado != null && editando == true){
+            setor = setorSelecionado;
+            it.setAction(SetorService.ACTION_EDITAR);
+        }else {
+            setor = new Setor();
+            it.setAction(SetorService.ACTION_CADASTRAR);
+        }
         setor.setDescricao(edDescricao.getText().toString());
         setor.setMargem(Double.parseDouble(edMargem.getText().toString()));
-        Intent it = new Intent(this, SetorService.class);
-        it.setAction(SetorService.ACTION_CADASTRAR);
+
         it.putExtra("setor", setor);
         startService(it);
-        it = new Intent(this, SetorService.class);
-        it.setAction(SetorService.ACTION_LISTAR);
-        startService(it);
+        buscarSetores();
 
     }
 }
