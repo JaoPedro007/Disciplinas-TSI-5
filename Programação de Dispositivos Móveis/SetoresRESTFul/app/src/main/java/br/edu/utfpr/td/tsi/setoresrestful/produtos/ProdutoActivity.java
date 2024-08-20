@@ -61,7 +61,8 @@ public class ProdutoActivity extends AppCompatActivity {
     Setor setorSelecionado;
     ListView lista;
     ArrayAdapter<Produto> adapter;
-
+    Boolean editando = false;
+    Produto produtoSelecionado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +81,16 @@ public class ProdutoActivity extends AppCompatActivity {
         ProdutoServiceObserver observer = new ProdutoServiceObserver();
         registerReceiver(observer, new IntentFilter(ProdutoService.RESULTADO_LISTA_PRODUTOS));
         registerReceiver(observer, new IntentFilter(SetorService.RESULTADO_LISTA_SETORES));
+
+        lista.setOnItemClickListener((parent, view, position, id) -> {
+            produtoSelecionado = produtos.get(position);
+            edDescricao.setText(produtoSelecionado.getDescricao());
+            estoque.setText(String.valueOf(produtoSelecionado.getEstoque()));
+            preco.setText(String.valueOf(produtoSelecionado.getPreco()));
+            setorSelecionado = produtoSelecionado.getSetor();
+            spinnerSetor.setSelection(((ArrayAdapter<Setor>) spinnerSetor.getAdapter()).getPosition(setorSelecionado));
+            editando=true;
+        });
 
         buscarProdutos();
         carregarSetores();
@@ -115,7 +126,16 @@ public class ProdutoActivity extends AppCompatActivity {
     }
 
     public void confirmar(View view) {
-        Produto produto = new Produto();
+        Produto produto;
+        Intent it = new Intent(this, ProdutoService.class);
+
+        if(produtoSelecionado != null && editando == true){
+            produto = produtoSelecionado;
+            it.setAction(ProdutoService.ACTION_EDITAR);
+        }else {
+            produto = new Produto();
+            it.setAction(ProdutoService.ACTION_CADASTRAR);
+        }
         produto.setDescricao(edDescricao.getText().toString());
         produto.setEstoque(Float.parseFloat(estoque.getText().toString()));
         produto.setPreco(Double.parseDouble(preco.getText().toString()));
@@ -124,18 +144,22 @@ public class ProdutoActivity extends AppCompatActivity {
         setorSelecionado = (Setor) spinnerSetor.getSelectedItem();
         produto.setSetor(setorSelecionado);
 
-        Intent it = new Intent(this, ProdutoService.class);
-        it.setAction(ProdutoService.ACTION_CADASTRAR);
         it.putExtra("produto", produto);
         startService(it);
 
-        it = new Intent(this, ProdutoService.class);
-        it.setAction(ProdutoService.ACTION_LISTAR);
-        startService(it);
+        limparCampos();
+        buscarProdutos();
     }
 
 
-    public void carregarSetores() {
+    private void limparCampos(){
+            edDescricao.setText("");
+            estoque.setText("");
+            preco.setText("");
+            spinnerSetor.setSelection(0);
+    }
+
+    private void carregarSetores() {
         Intent it = new Intent(this, SetorService.class);
         it.setAction(SetorService.ACTION_LISTAR);
         startService(it);

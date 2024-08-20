@@ -12,6 +12,8 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.Comparator;
 
 public class SetorService extends IntentService {
 
@@ -75,6 +77,14 @@ public class SetorService extends IntentService {
                     }
                 } while (linha != null);
                 Setor[] setores = gson.fromJson(bld.toString(), Setor[].class);
+
+                Arrays.sort(setores, new Comparator<Setor>() {
+                    @Override
+                    public int compare(Setor s1, Setor s2) {
+                        return Long.compare(s1.getId(), s2.getId());
+                    }
+                });
+
                 Intent it = new Intent(RESULTADO_LISTA_SETORES);
                 it.putExtra("setores", setores);
                 sendBroadcast(it);
