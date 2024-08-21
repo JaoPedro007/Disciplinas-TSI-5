@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <item
-        android:id="@+id/menu_setores"
-        android:title="@string/setores"
-        app:showAsAction="always"/>
-    <item
-        android:id="@+id/menu_produtos"
-        android:title="@string/produtos"
-        app:showAsAction="always" />
+        android:id="@+id/menu_hamburger"
+        android:title="Menu"
+        android:icon="@drawable/ic_hamburger"
+        app:showAsAction="always">
+
+    <menu>
+        <item
+            android:id="@+id/menu_setores"
+            android:title="@string/setores"
+            android:icon="@drawable/ic_setor" />
+        <item
+            android:id="@+id/menu_produtos"
+            android:title="@string/produtos"
+            android:icon="@drawable/ic_produto" />
+    </menu>
+</item>
 </menu>

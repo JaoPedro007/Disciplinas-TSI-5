@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -44,18 +45,27 @@ public class ProdutoActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
             }
             else if (intent.getAction().equals(SetorService.RESULTADO_LISTA_SETORES)) {
-                Setor[] setores = (Setor[]) intent.getSerializableExtra("setores");
+                setores = (Setor[]) intent.getSerializableExtra("setores");
                 if (setores != null) {
-                    ArrayAdapter<Setor> setorAdapter = new ArrayAdapter<>(ProdutoActivity.this,
-                            android.R.layout.simple_spinner_item, setores);
+                    List<String> setorList = new ArrayList<>();
+                    setorList.add("");
+
+                    for (Setor setor : setores) {
+                        setorList.add(setor.getDescricao());
+                    }
+                    ArrayAdapter<String> setorAdapter = new ArrayAdapter<>(ProdutoActivity.this,
+                            android.R.layout.simple_spinner_item, setorList);
                     setorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
                     Spinner spinnerSetor = findViewById(R.id.spinner_setor_produto);
                     spinnerSetor.setAdapter(setorAdapter);
+
+                    spinnerSetor.setSelection(0);
                 }
             }
         }
     }
-
+    Setor[] setores;
     LinkedList<Produto> produtos;
     EditText edDescricao, estoque, preco;
     Spinner spinnerSetor;
@@ -160,9 +170,18 @@ public class ProdutoActivity extends AppCompatActivity {
         produto.setEstoque(Float.parseFloat(estoque.getText().toString()));
         produto.setPreco(Double.parseDouble(preco.getText().toString()));
 
-        spinnerSetor = findViewById(R.id.spinner_setor_produto);
-        setorSelecionado = (Setor) spinnerSetor.getSelectedItem();
+        String setorDescricao = (String) spinnerSetor.getSelectedItem();
+
+        Setor setorSelecionado = null;
+        for (Setor setor : setores) {
+            if (setor.getDescricao().equals(setorDescricao)) {
+                setorSelecionado = setor;
+                break;
+            }
+        }
+
         produto.setSetor(setorSelecionado);
+
 
         it.putExtra("produto", produto);
         startService(it);
