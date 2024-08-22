@@ -20,6 +20,7 @@ import br.edu.utfpr.td.tsi.setoresrestful.Setor;
 
 public class ProdutoService extends IntentService {
     public static final String ACTION_LISTAR    = "br.edu.utfpr.td.tsi.setoresrestful.produtos.action.LISTAR";
+    public static final String ACTION_LISTAR_PRODUTO    = "br.edu.utfpr.td.tsi.setoresrestful.produtos.action.LISTAR_PRODUTO";
     public static final String ACTION_CADASTRAR = "br.edu.utfpr.td.tsi.setoresrestful.produtos.action.CADASTRAR";
     public static final String ACTION_EDITAR = "br.edu.utfpr.td.tsi.setoresrestful.produtos.action.EDITAR";
     public static final String ACTION_DELETAR = "br.edu.utfpr.td.tsi.setoresrestful.produtos.action.DELETAR";
@@ -42,6 +43,9 @@ public class ProdutoService extends IntentService {
                 break;
             case ACTION_LISTAR:
                 listar(intent);
+                break;
+            case ACTION_LISTAR_PRODUTO:
+                listarProdutoPorId(intent);
                 break;
             case ACTION_EDITAR:
                 editar(intent);
@@ -118,6 +122,44 @@ public class ProdutoService extends IntentService {
             ex.printStackTrace();
         }
     }
+
+    private void listarProdutoPorId(Intent intent) {
+        int idProduto = intent.getIntExtra("produto_id", -1);
+
+        if (idProduto == -1) {
+            Log.e("ProdutoService", "ID do produto inválido");
+            return;
+        }
+
+        try {
+            URL url = new URL(URL_WS + "/" + idProduto);
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("GET");
+            con.connect();
+
+            if (con.getResponseCode() == 200) {
+                BufferedReader ent = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                StringBuilder bld = new StringBuilder(1000);
+                String linha;
+                while ((linha = ent.readLine()) != null) {
+                    bld.append(linha);
+                }
+                ent.close();
+
+                Produto produto = gson.fromJson(bld.toString(), Produto.class);
+
+                Intent it = new Intent(RESULTADO_LISTA_PRODUTOS);
+                it.putExtra("produto", produto);
+                sendBroadcast(it);
+            } else {
+                Log.e("ProdutoService", "Erro ao buscar produto: " + con.getResponseCode());
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+
 
     private void editar(Intent intent) {
         try {

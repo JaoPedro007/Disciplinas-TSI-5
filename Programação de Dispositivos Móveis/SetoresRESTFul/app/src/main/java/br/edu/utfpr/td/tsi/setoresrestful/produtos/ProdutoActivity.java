@@ -36,15 +36,22 @@ public class ProdutoActivity extends AppCompatActivity {
     class ProdutoServiceObserver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(intent.getAction().equals(ProdutoService.RESULTADO_LISTA_PRODUTOS)){
+            String action = intent.getAction();
+
+            if (ProdutoService.RESULTADO_LISTA_PRODUTOS.equals(action)) {
                 Produto[] prods = (Produto[]) intent.getSerializableExtra("produtos");
+                Produto produto = (Produto) intent.getSerializableExtra("produto");
+
                 produtos.clear();
-                if(prods != null && prods.length > 0){
+                if (prods != null && prods.length > 0) {
                     produtos.addAll(Arrays.asList(prods));
+                }
+                else if (produto != null) {
+                    produtos.add(produto);
                 }
                 adapter.notifyDataSetChanged();
             }
-            else if (intent.getAction().equals(SetorService.RESULTADO_LISTA_SETORES)) {
+            else if (SetorService.RESULTADO_LISTA_SETORES.equals(action)) {
                 setores = (Setor[]) intent.getSerializableExtra("setores");
                 if (setores != null) {
                     Setor setorDefault = new Setor("");
@@ -69,6 +76,8 @@ public class ProdutoActivity extends AppCompatActivity {
             }
         }
     }
+
+
     Setor[] setores;
     LinkedList<Produto> produtos;
     EditText edDescricao, estoque, preco;
@@ -129,7 +138,6 @@ public class ProdutoActivity extends AppCompatActivity {
         carregarSetores();
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_bar, menu);
@@ -157,6 +165,27 @@ public class ProdutoActivity extends AppCompatActivity {
         it.setAction(ProdutoService.ACTION_LISTAR);
         startService(it);
     }
+
+    public void listarProdutoPorId(View v) {
+        EditText editTextId = findViewById(R.id.txt_id_produto);
+        String idText = editTextId.getText().toString();
+        if (!idText.isEmpty()) {
+            try {
+                int produtoId = Integer.parseInt(idText);
+
+                Intent it = new Intent(this, ProdutoService.class);
+                it.setAction(ProdutoService.ACTION_LISTAR_PRODUTO);
+                it.putExtra("produto_id", produtoId);
+                startService(it);
+            } catch (NumberFormatException e) {
+                alerta("Erro", "ID do produto inválido");
+            }
+        } else {
+            buscarProdutos();
+        }
+    }
+
+
 
     public void confirmar(View view) {
         Produto produto;
@@ -196,7 +225,6 @@ public class ProdutoActivity extends AppCompatActivity {
         limparCampos();
         buscarProdutos();
     }
-
 
     private void alerta(String title, String message){
         new AlertDialog.Builder(ProdutoActivity.this)
