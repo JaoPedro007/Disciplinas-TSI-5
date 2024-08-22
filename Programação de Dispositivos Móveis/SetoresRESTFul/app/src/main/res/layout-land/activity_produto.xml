@@ -51,12 +51,34 @@
                 android:id="@+id/spinner_setor_produto"/>
         </LinearLayout>
         <Button
-            android:layout_margin="20sp"
+            android:layout_margin="10sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/confirmar"
             android:onClick="confirmar"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="ID do produto"
+                android:id="@+id/txt_id_produto"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Buscar"
+                android:layout_marginStart="8dp"
+                android:onClick="listarProdutoPorId"/>
+        </LinearLayout>
+
 
     </LinearLayout>
 

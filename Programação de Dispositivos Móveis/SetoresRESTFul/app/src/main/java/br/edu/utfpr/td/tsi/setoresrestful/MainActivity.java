@@ -30,9 +30,14 @@ public class MainActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             if(intent.getAction().equals(SetorService.RESULTADO_LISTA_SETORES)){
                 Setor[] sets = (Setor[]) intent.getSerializableExtra("setores");
+                Setor setor = (Setor) intent.getSerializableExtra("setor");
+
                 setores.clear();
                 if(sets != null && sets.length > 0){
                     setores.addAll(Arrays.asList(sets));
+                }
+                else if (setor != null) {
+                    setores.add(setor);
                 }
                 adapter.notifyDataSetChanged();
             }
@@ -65,6 +70,24 @@ public class MainActivity extends AppCompatActivity {
             editando=true;
         });
 
+        lista.setOnItemLongClickListener((parent, view, position, id) -> {
+            setorSelecionado = setores.get(position);
+            new AlertDialog.Builder(MainActivity.this)
+                    .setTitle("Deletar Setor")
+                    .setMessage("Tem certeza que deseja deletar o setor " + setorSelecionado.getDescricao() + "?")
+                    .setPositiveButton(android.R.string.yes, (dialog, which) -> {
+                        setores.remove(position);
+                        adapter.notifyDataSetChanged();
+
+                        Intent it = new Intent(MainActivity.this, SetorService.class);
+                        it.setAction(SetorService.ACTION_DELETAR);
+                        it.putExtra("setor", setorSelecionado);
+                        startService(it);
+                    })
+                    .setNegativeButton(android.R.string.no, null)
+                    .show();
+            return true;
+        });
         buscarSetores();
     }
 
@@ -96,6 +119,25 @@ public class MainActivity extends AppCompatActivity {
         startService(it);
     }
 
+    public void listarSetorPorId(View v) {
+        EditText editTextId = findViewById(R.id.txt_id_setor);
+        String idText = editTextId.getText().toString();
+        if (!idText.isEmpty()) {
+            try {
+                int setorId = Integer.parseInt(idText);
+
+                Intent it = new Intent(this, SetorService.class);
+                it.setAction(SetorService.ACTION_LISTAR_SETOR);
+                it.putExtra("setor_id", setorId);
+                startService(it);
+            } catch (NumberFormatException e) {
+                alerta("Erro", "ID do produto inválido");
+            }
+        } else {
+            buscarSetores();
+        }
+    }
+
     public void confirmar(View view){
         Setor setor;
         Intent it = new Intent(this, SetorService.class);
@@ -112,7 +154,23 @@ public class MainActivity extends AppCompatActivity {
 
         it.putExtra("setor", setor);
         startService(it);
+        limparCampos();
         buscarSetores();
 
+    }
+
+    private void alerta(String title, String message){
+        new AlertDialog.Builder(MainActivity.this)
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton(android.R.string.ok, (dialog, which) -> {
+                    dialog.dismiss();
+                })
+                .show();
+    }
+
+    private void limparCampos(){
+        edDescricao.setText("");
+        edMargem.setText("");
     }
 }

@@ -126,11 +126,6 @@ public class ProdutoService extends IntentService {
     private void listarProdutoPorId(Intent intent) {
         int idProduto = intent.getIntExtra("produto_id", -1);
 
-        if (idProduto == -1) {
-            Log.e("ProdutoService", "ID do produto inválido");
-            return;
-        }
-
         try {
             URL url = new URL(URL_WS + "/" + idProduto);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -147,12 +142,9 @@ public class ProdutoService extends IntentService {
                 ent.close();
 
                 Produto produto = gson.fromJson(bld.toString(), Produto.class);
-
                 Intent it = new Intent(RESULTADO_LISTA_PRODUTOS);
                 it.putExtra("produto", produto);
                 sendBroadcast(it);
-            } else {
-                Log.e("ProdutoService", "Erro ao buscar produto: " + con.getResponseCode());
             }
         } catch (Exception ex) {
             ex.printStackTrace();
