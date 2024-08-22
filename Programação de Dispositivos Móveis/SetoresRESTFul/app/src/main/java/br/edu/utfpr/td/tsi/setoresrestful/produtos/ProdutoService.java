@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -22,7 +23,7 @@ public class ProdutoService extends IntentService {
     public static final String ACTION_CADASTRAR = "br.edu.utfpr.td.tsi.setoresrestful.produtos.action.CADASTRAR";
     public static final String ACTION_EDITAR = "br.edu.utfpr.td.tsi.setoresrestful.produtos.action.EDITAR";
     public static final String ACTION_DELETAR = "br.edu.utfpr.td.tsi.setoresrestful.produtos.action.DELETAR";
-    public static final String RESULTADO_LISTA_PRODUTOS = "br.edu.utfpr.td.tsi.setoresrestful.produtos.RESULTADO_LISTA_SETORES";
+    public static final String RESULTADO_LISTA_PRODUTOS = "br.edu.utfpr.td.tsi.setoresrestful.produtos.RESULTADO_LISTA_PRODUTOS";
     static final String URL_WS = "http://argo.td.utfpr.edu.br/clients/ws/produto";
     Gson gson;
     public ProdutoService() {
@@ -54,7 +55,19 @@ public class ProdutoService extends IntentService {
     private void cadastrar(Intent intent) {
         try {
             Produto prod = (Produto) intent.getSerializableExtra("produto");
-            String strProduto = gson.toJson(prod);
+
+            JsonObject jsonProduto = gson.toJsonTree(prod).getAsJsonObject();
+
+            //Aqui eu modifico a estrutura do Json para enviar apenas o ID do setor
+            if (prod.getSetor() != null){
+                JsonObject setorJson = new JsonObject();
+                setorJson.addProperty("id", prod.getSetorId());
+                jsonProduto.add("setor", setorJson);
+            }
+
+
+            String strProduto = jsonProduto.toString();
+            Log.d("JSON_PRODUTO", "JSON_ENVIADO: " + strProduto);
 
             URL url = new URL(URL_WS);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -138,8 +151,6 @@ public class ProdutoService extends IntentService {
 
             if (con.getResponseCode() == 200) {
                 Log.d("DELETE", "Produto deletado com sucesso.");
-            } else {
-                Log.d("DELETE", "Falha ao deletar o produto. Código: " + con.getResponseCode());
             }
         } catch (Exception ex) {
             ex.printStackTrace();

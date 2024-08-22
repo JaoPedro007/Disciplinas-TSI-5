@@ -4,10 +4,16 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class Setor implements Serializable {
+
     private int id;
     private String descricao;
     private double margem;
 
+    public Setor(){
+    }
+    public Setor(String descricao){
+        this.descricao = descricao;
+    }
     public int getId() {
         return id;
     }
@@ -47,6 +53,8 @@ public class Setor implements Serializable {
 
     @Override
     public String toString() {
-        return String.valueOf(id)+" - "+descricao+"\nMargem de lucro: " +margem;
+        return String.valueOf(id != 0 ? id : "")
+                + (!descricao.trim().isEmpty() ? " - "+descricao : "")
+                + (margem != 0 ? "\nMargem de lucro: " +margem+"%" : "");
     }
 }

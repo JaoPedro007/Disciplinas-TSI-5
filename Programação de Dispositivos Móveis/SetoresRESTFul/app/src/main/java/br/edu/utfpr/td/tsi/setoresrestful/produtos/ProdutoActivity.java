@@ -47,20 +47,24 @@ public class ProdutoActivity extends AppCompatActivity {
             else if (intent.getAction().equals(SetorService.RESULTADO_LISTA_SETORES)) {
                 setores = (Setor[]) intent.getSerializableExtra("setores");
                 if (setores != null) {
-                    List<String> setorList = new ArrayList<>();
-                    setorList.add("");
+                    Setor setorDefault = new Setor("");
 
-                    for (Setor setor : setores) {
-                        setorList.add(setor.getDescricao());
-                    }
-                    ArrayAdapter<String> setorAdapter = new ArrayAdapter<>(ProdutoActivity.this,
-                            android.R.layout.simple_spinner_item, setorList);
+                    List<Setor> listaSetores = new ArrayList<>(Arrays.asList(setores));
+                    listaSetores.add(0, setorDefault);
+
+                    ArrayAdapter<Setor> setorAdapter = new ArrayAdapter<>(ProdutoActivity.this,
+                            android.R.layout.simple_spinner_item, listaSetores);
                     setorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
                     Spinner spinnerSetor = findViewById(R.id.spinner_setor_produto);
                     spinnerSetor.setAdapter(setorAdapter);
 
-                    spinnerSetor.setSelection(0);
+                    if (produtoSelecionado != null && produtoSelecionado.getSetor() != null) {
+                        setorSelecionado = produtoSelecionado.getSetor();
+                        spinnerSetor.setSelection(setorAdapter.getPosition(setorSelecionado));
+                    } else {
+                        spinnerSetor.setSelection(setorAdapter.getPosition(setorDefault));
+                    }
                 }
             }
         }
@@ -69,11 +73,11 @@ public class ProdutoActivity extends AppCompatActivity {
     LinkedList<Produto> produtos;
     EditText edDescricao, estoque, preco;
     Spinner spinnerSetor;
-    Setor setorSelecionado;
     ListView lista;
     ArrayAdapter<Produto> adapter;
     Boolean editando = false;
     Produto produtoSelecionado;
+    Setor setorSelecionado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,8 +102,7 @@ public class ProdutoActivity extends AppCompatActivity {
             edDescricao.setText(produtoSelecionado.getDescricao());
             estoque.setText(String.valueOf(produtoSelecionado.getEstoque()));
             preco.setText(String.valueOf(produtoSelecionado.getPreco()));
-            setorSelecionado = produtoSelecionado.getSetor();
-            spinnerSetor.setSelection(((ArrayAdapter<Setor>) spinnerSetor.getAdapter()).getPosition(setorSelecionado));
+            spinnerSetor.setSelection(((ArrayAdapter<Setor>) spinnerSetor.getAdapter()).getPosition(produtoSelecionado.getSetor()));
             editando=true;
         });
 
@@ -159,43 +162,63 @@ public class ProdutoActivity extends AppCompatActivity {
         Produto produto;
         Intent it = new Intent(this, ProdutoService.class);
 
-        if(produtoSelecionado != null && editando == true){
+        if (!camposValidos()) {
+            alerta("Erro", "Preencha todos os campos");
+            return;
+        }
+
+        if (produtoSelecionado != null && editando) {
             produto = produtoSelecionado;
             it.setAction(ProdutoService.ACTION_EDITAR);
-        }else {
+        } else {
             produto = new Produto();
             it.setAction(ProdutoService.ACTION_CADASTRAR);
         }
+
         produto.setDescricao(edDescricao.getText().toString());
         produto.setEstoque(Float.parseFloat(estoque.getText().toString()));
         produto.setPreco(Double.parseDouble(preco.getText().toString()));
 
-        String setorDescricao = (String) spinnerSetor.getSelectedItem();
+        Setor setor = (Setor) spinnerSetor.getSelectedItem();
 
-        Setor setorSelecionado = null;
-        for (Setor setor : setores) {
-            if (setor.getDescricao().equals(setorDescricao)) {
-                setorSelecionado = setor;
-                break;
-            }
+        if (!setor.toString().trim().isEmpty()) {
+            produto.setSetor(setor);
         }
-
-        produto.setSetor(setorSelecionado);
-
 
         it.putExtra("produto", produto);
         startService(it);
+
+        if(editando)
+            alerta("Edição", "O produto " + produto.getDescricao() + " foi editado com sucesso");
+        else
+            alerta("Cadastro", "O produto " + produto.getDescricao() + " foi cadastrado com sucesso");
 
         limparCampos();
         buscarProdutos();
     }
 
 
+    private void alerta(String title, String message){
+        new AlertDialog.Builder(ProdutoActivity.this)
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton(android.R.string.ok, (dialog, which) -> {
+                    dialog.dismiss();
+                })
+                .show();
+    }
+
     private void limparCampos(){
             edDescricao.setText("");
             estoque.setText("");
             preco.setText("");
             spinnerSetor.setSelection(0);
+    }
+
+    private boolean camposValidos(){
+        return !(edDescricao.getText().toString().trim().isEmpty()
+                && estoque.getText().toString().trim().isEmpty()
+                && preco.getText().toString().trim().isEmpty());
     }
 
     private void carregarSetores() {

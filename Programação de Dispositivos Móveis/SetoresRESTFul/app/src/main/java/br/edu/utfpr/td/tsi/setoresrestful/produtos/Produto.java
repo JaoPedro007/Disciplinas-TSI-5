@@ -52,12 +52,20 @@ public class Produto implements Serializable {
         this.setor = setor;
     }
 
+    public int getSetorId() {
+        return setor != null ? setor.getId() : 0;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Produto produto = (Produto) o;
-        return id == produto.id && Float.compare(estoque, produto.estoque) == 0 && Double.compare(preco, produto.preco) == 0 && Objects.equals(descricao, produto.descricao) && Objects.equals(setor, produto.setor);
+        return id == produto.id &&
+                Float.compare(produto.estoque, estoque) == 0 &&
+                Double.compare(produto.preco, preco) == 0 &&
+                Objects.equals(descricao, produto.descricao) &&
+                Objects.equals(setor, produto.setor);
     }
 
     @Override
@@ -67,11 +75,11 @@ public class Produto implements Serializable {
 
     @Override
     public String toString() {
-        return String.valueOf(id)+" - "
-                +descricao +
-                "\nEstoque: " +estoque+
-                " - Valor: " +preco+
-                "\nSetor: " + (setor !=null ? setor.getDescricao() : "Sem setor");
-
+        return String.valueOf(id) + " - "
+                + descricao +
+                "\nEstoque: " + estoque +
+                " - R$ " + preco +
+                "\nSetor: " + (setor != null ? setor.getDescricao() : "Sem setor");
     }
+
 }
