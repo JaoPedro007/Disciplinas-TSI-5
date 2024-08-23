@@ -16,8 +16,6 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.Comparator;
 
-import br.edu.utfpr.td.tsi.setoresrestful.Setor;
-
 public class ProdutoService extends IntentService {
     public static final String ACTION_LISTAR    = "br.edu.utfpr.td.tsi.setoresrestful.produtos.action.LISTAR";
     public static final String ACTION_LISTAR_PRODUTO    = "br.edu.utfpr.td.tsi.setoresrestful.produtos.action.LISTAR_PRODUTO";
@@ -26,12 +24,13 @@ public class ProdutoService extends IntentService {
     public static final String ACTION_DELETAR = "br.edu.utfpr.td.tsi.setoresrestful.produtos.action.DELETAR";
     public static final String RESULTADO_LISTA_PRODUTOS = "br.edu.utfpr.td.tsi.setoresrestful.produtos.RESULTADO_LISTA_PRODUTOS";
     static final String URL_WS = "http://argo.td.utfpr.edu.br/clients/ws/produto";
+
     Gson gson;
+
     public ProdutoService() {
         super("ProdutoService");
         gson = new GsonBuilder().create();
     }
-
 
     @Override
     protected void onHandleIntent(Intent intent) {
@@ -69,7 +68,6 @@ public class ProdutoService extends IntentService {
                 jsonProduto.add("setor", setorJson);
             }
 
-
             String strProduto = jsonProduto.toString();
             Log.d("JSON_PRODUTO", "JSON_ENVIADO: " + strProduto);
 
@@ -82,7 +80,7 @@ public class ProdutoService extends IntentService {
             writer.println(strProduto);
             writer.flush();
             if (con.getResponseCode() == 200) {
-                Log.d("POST","Produto cadastrado com sucesso.");
+                Log.d("POST","OK");
             }
         } catch(Exception ex) {
             ex.printStackTrace();
@@ -167,7 +165,7 @@ public class ProdutoService extends IntentService {
             writer.println(strProduto);
             writer.flush();
             if (con.getResponseCode() == 200) {
-                Log.d("PUT","Produto atualizado com sucesso.");
+                Log.d("PUT","OK");
             }
         } catch(Exception ex) {
             ex.printStackTrace();
@@ -184,7 +182,7 @@ public class ProdutoService extends IntentService {
             con.connect();
 
             if (con.getResponseCode() == 200) {
-                Log.d("DELETE", "Produto deletado com sucesso.");
+                Log.d("DELETE", "OK");
             }
         } catch (Exception ex) {
             ex.printStackTrace();

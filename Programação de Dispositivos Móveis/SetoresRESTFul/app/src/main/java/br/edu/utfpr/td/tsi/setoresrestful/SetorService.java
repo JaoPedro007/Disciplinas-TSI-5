@@ -15,8 +15,6 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.Comparator;
 
-import br.edu.utfpr.td.tsi.setoresrestful.produtos.Produto;
-
 public class SetorService extends IntentService {
 
     public static final String ACTION_LISTAR    = "br.edu.utfpr.td.tsi.setoresrestful.action.LISTAR";
@@ -25,7 +23,6 @@ public class SetorService extends IntentService {
     public static final String ACTION_CADASTRAR = "br.edu.utfpr.td.tsi.setoresrestful.action.CADASTRAR";
     public static final String ACTION_DELETAR   = "br.edu.utfpr.td.tsi.setoresrestful.action.DELETAR";
     public static final String RESULTADO_LISTA_SETORES = "br.edu.utfpr.td.tsi.setoresrestful.RESULTADO_LISTA_SETORES";
-    public static final String RESULTADO_DELETAR_SETOR = "br.edu.utfpr.td.tsi.setoresrestful.RESULTADO_DELETAR_SETOR";
     static final String URL_WS = "http://argo.td.utfpr.edu.br/clients/ws/setor";
     Gson gson;
 
@@ -150,7 +147,7 @@ public class SetorService extends IntentService {
             writer.println(strSetor);
             writer.flush();
             if (con.getResponseCode() == 200) {
-                Log.d("PUT","Setor atualizado com sucesso.");
+                Log.d("PUT","OK");
             }
         } catch(Exception ex) {
             ex.printStackTrace();
@@ -158,9 +155,6 @@ public class SetorService extends IntentService {
     }
 
     private void deletar(Intent intent) {
-        boolean sucesso = false;
-        int position = intent.getIntExtra("position", -1);
-
         try {
             Setor setor = (Setor) intent.getSerializableExtra("setor");
 
@@ -170,21 +164,12 @@ public class SetorService extends IntentService {
             con.connect();
 
             if (con.getResponseCode() == 200) {
-                Log.d("DELETE", "Setor deletado com sucesso.");
-                sucesso = true;
+                Log.d("DELETE", "OK");
             }
 
         } catch (Exception ex) {
             ex.printStackTrace();
-        } finally {
-            Intent it = new Intent(SetorService.RESULTADO_DELETAR_SETOR);
-            it.putExtra("sucesso", sucesso);
-            it.putExtra("position", position);
-            sendBroadcast(it);
         }
     }
-
-
-
 
 }

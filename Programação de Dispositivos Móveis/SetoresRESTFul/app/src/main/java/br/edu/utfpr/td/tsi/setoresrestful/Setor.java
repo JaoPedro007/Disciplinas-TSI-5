@@ -55,6 +55,6 @@ public class Setor implements Serializable {
     public String toString() {
         return String.valueOf(id != 0 ? id : "")
                 + (!descricao.trim().isEmpty() ? " - "+descricao : "")
-                + (margem != 0 ? "\nMargem de lucro: " +margem+"%" : "");
+                + (margem != 0 ? "\n Margem de lucro: " +margem+"%" : "");
     }
 }

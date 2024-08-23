@@ -19,9 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.Arrays;
 import java.util.LinkedList;
 
-import br.edu.utfpr.td.tsi.setoresrestful.produtos.Produto;
 import br.edu.utfpr.td.tsi.setoresrestful.produtos.ProdutoActivity;
-import br.edu.utfpr.td.tsi.setoresrestful.produtos.ProdutoService;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -73,8 +71,8 @@ public class MainActivity extends AppCompatActivity {
         lista.setOnItemLongClickListener((parent, view, position, id) -> {
             setorSelecionado = setores.get(position);
             new AlertDialog.Builder(MainActivity.this)
-                    .setTitle("Deletar Setor")
-                    .setMessage("Tem certeza que deseja deletar o setor " + setorSelecionado.getDescricao() + "?")
+                    .setTitle(R.string.deletar)
+                    .setMessage(getString(R.string.certeza_deletar_setor) + "\n" + setorSelecionado.getDescricao() + "?")
                     .setPositiveButton(android.R.string.yes, (dialog, which) -> {
                         setores.remove(position);
                         adapter.notifyDataSetChanged();
@@ -131,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
                 it.putExtra("setor_id", setorId);
                 startService(it);
             } catch (NumberFormatException e) {
-                alerta("Erro", "ID do produto inválido");
+                alerta(getString(R.string.erro), getString(R.string.id_produto_invalido));
             }
         } else {
             buscarSetores();
@@ -142,7 +140,11 @@ public class MainActivity extends AppCompatActivity {
         Setor setor;
         Intent it = new Intent(this, SetorService.class);
 
-        if(setorSelecionado != null && editando == true){
+        if(!camposValidos()){
+            alerta(getString(R.string.erro), getString(R.string.preencha_todos_campos));
+            return;
+        }
+        if(setorSelecionado != null && editando){
             setor = setorSelecionado;
             it.setAction(SetorService.ACTION_EDITAR);
         }else {
@@ -154,6 +156,13 @@ public class MainActivity extends AppCompatActivity {
 
         it.putExtra("setor", setor);
         startService(it);
+        if(editando) {
+            alerta(getString(R.string.edicao), getString(R.string.o_setor) + ": " + setor.getDescricao() + " " + getString(R.string.editado_sucesso));
+            editando=false;
+        }
+        else
+            alerta(getString(R.string.cadastro), getString(R.string.o_setor) + ": " + setor.getDescricao() + " " + getString(R.string.cadastrado_sucesso));
+
         limparCampos();
         buscarSetores();
 
@@ -172,5 +181,10 @@ public class MainActivity extends AppCompatActivity {
     private void limparCampos(){
         edDescricao.setText("");
         edMargem.setText("");
+    }
+
+    private boolean camposValidos(){
+        return !(edDescricao.getText().toString().trim().isEmpty()
+                || edMargem.getText().toString().trim().isEmpty());
     }
 }

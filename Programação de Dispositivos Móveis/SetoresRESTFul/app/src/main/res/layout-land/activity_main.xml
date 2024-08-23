@@ -40,20 +40,18 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="ID do setor"
+                android:hint="@string/id_do_setor"
                 android:id="@+id/txt_id_setor"/>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Buscar"
+                android:text="@string/buscar"
                 android:layout_marginStart="8dp"
                 android:onClick="listarSetorPorId"/>
         </LinearLayout>
 
     </LinearLayout>
-
-
 
         <ListView
             android:layout_width="0sp"

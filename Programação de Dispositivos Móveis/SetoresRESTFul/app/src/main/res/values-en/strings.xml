@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Factory App</string>
+    <string name="descricao_setor">Sector Description</string>
+    <string name="margem_lucro">Sector Profit Margin</string>
+    <string name="confirmar">Confirm</string>
+    <string name="descricao_produto">Product Description</string>
+    <string name="estoque_produto">Product Stock</string>
+    <string name="estoque">Stock: </string>
+    <string name="preco_produto">Product Price</string>
+    <string name="setor">Sector: </string>
+    <string name="setores">Sectors</string>
+    <string name="produtos">Products</string>
+    <string name="id_do_setor">Sector ID</string>
+    <string name="buscar">Search</string>
+    <string name="selecione_um_setor">Select a Sector</string>
+    <string name="id_do_produto">Product ID</string>
+    <string name="deletar">Delete</string>
+    <string name="certeza_deletar_setor">Are you sure you want to delete the sector:</string>
+    <string name="certeza_deletar_produto">Are you sure you want to delete the product:</string>
+    <string name="id_produto_invalido">Invalid Product ID</string>
+    <string name="erro">Error</string>
+    <string name="edicao">Edit</string>
+    <string name="cadastro">Registration</string>
+    <string name="margem_luco">Profit Margin: </string>
+    <string name="sem_setor">No Sector</string>
+    <string name="preencha_todos_campos">Fill in all the fields</string>
+    <string name="o_produto">The product</string>
+    <string name="o_setor">The sector</string>
+    <string name="cadastrado_sucesso"> was successfully registered</string>
+    <string name="editado_sucesso"> was successfully edited</string>
+
+</resources>

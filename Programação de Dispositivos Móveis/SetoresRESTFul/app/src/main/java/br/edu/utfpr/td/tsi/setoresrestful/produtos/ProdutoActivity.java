@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,7 +12,6 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.Switch;
 
 
 import androidx.appcompat.app.AlertDialog;
@@ -118,8 +116,8 @@ public class ProdutoActivity extends AppCompatActivity {
         lista.setOnItemLongClickListener((parent, view, position, id) -> {
             produtoSelecionado = produtos.get(position);
             new AlertDialog.Builder(ProdutoActivity.this)
-                    .setTitle("Deletar Produto")
-                    .setMessage("Tem certeza que deseja deletar o produto " + produtoSelecionado.getDescricao() + "?")
+                    .setTitle(R.string.deletar)
+                    .setMessage(getString(R.string.certeza_deletar_produto) + produtoSelecionado.getDescricao() + "?")
                     .setPositiveButton(android.R.string.yes, (dialog, which) -> {
                         produtos.remove(position);
                         adapter.notifyDataSetChanged();
@@ -178,21 +176,19 @@ public class ProdutoActivity extends AppCompatActivity {
                 it.putExtra("produto_id", produtoId);
                 startService(it);
             } catch (NumberFormatException e) {
-                alerta("Erro", "ID do produto inválido");
+                alerta(getString(R.string.erro), getString(R.string.id_produto_invalido));
             }
         } else {
             buscarProdutos();
         }
     }
 
-
-
     public void confirmar(View view) {
         Produto produto;
         Intent it = new Intent(this, ProdutoService.class);
 
         if (!camposValidos()) {
-            alerta("Erro", "Preencha todos os campos");
+            alerta(getString(R.string.erro), getString(R.string.preencha_todos_campos));
             return;
         }
 
@@ -217,10 +213,12 @@ public class ProdutoActivity extends AppCompatActivity {
         it.putExtra("produto", produto);
         startService(it);
 
-        if(editando)
-            alerta("Edição", "O produto " + produto.getDescricao() + " foi editado com sucesso");
+        if(editando) {
+            alerta(getString(R.string.edicao), getString(R.string.o_produto) + ": " + produto.getDescricao() + " " + getString(R.string.editado_sucesso));
+            editando=false;
+        }
         else
-            alerta("Cadastro", "O produto " + produto.getDescricao() + " foi cadastrado com sucesso");
+            alerta(getString(R.string.cadastro), getString(R.string.o_produto) + ": " + produto.getDescricao() + " " + getString(R.string.cadastrado_sucesso));
 
         limparCampos();
         buscarProdutos();
@@ -245,8 +243,8 @@ public class ProdutoActivity extends AppCompatActivity {
 
     private boolean camposValidos(){
         return !(edDescricao.getText().toString().trim().isEmpty()
-                && estoque.getText().toString().trim().isEmpty()
-                && preco.getText().toString().trim().isEmpty());
+                || estoque.getText().toString().trim().isEmpty()
+                || preco.getText().toString().trim().isEmpty());
     }
 
     private void carregarSetores() {

@@ -1,16 +1,31 @@
 <resources>
-    <string name="app_name">Factory App</string>
+    <string name="app_name">Fábrica App</string>
     <string name="descricao_setor">Descrição do setor</string>
     <string name="margem_lucro">Margem de lucro do setor</string>
     <string name="confirmar">Confirmar</string>
     <string name="descricao_produto">Descrição do produto</string>
     <string name="estoque_produto">Estoque do produto</string>
+    <string name="estoque">Estoque: </string>
     <string name="preco_produto">Preço do produto</string>
-    <string name="setor">Setor:</string>
+    <string name="setor">Setor: </string>
     <string name="setores">Setores</string>
     <string name="produtos">Produtos</string>
-
-
-
-
+    <string name="id_do_setor">ID do setor</string>
+    <string name="buscar">Buscar</string>
+    <string name="selecione_um_setor">Selecione um setor</string>
+    <string name="id_do_produto">ID do produto</string>
+    <string name="deletar">Deletar</string>
+    <string name="certeza_deletar_setor">Tem certeza que deseja deletar o setor:</string>
+    <string name="certeza_deletar_produto">Tem certeza que deseja deletar o produto:</string>
+    <string name="id_produto_invalido">ID do produto inválido</string>
+    <string name="erro">Erro</string>
+    <string name="edicao">Edição</string>
+    <string name="cadastro">Cadastro</string>
+    <string name="margem_luco">Margem de lucro: </string>
+    <string name="sem_setor">Sem setor</string>
+    <string name="preencha_todos_campos">Preencha todos os campos</string>
+    <string name="o_produto">O produto</string>
+    <string name="o_setor">O setor</string>
+    <string name="cadastrado_sucesso"> foi cadastrado com sucesso</string>
+    <string name="editado_sucesso"> foi editado com sucesso</string>
 </resources>

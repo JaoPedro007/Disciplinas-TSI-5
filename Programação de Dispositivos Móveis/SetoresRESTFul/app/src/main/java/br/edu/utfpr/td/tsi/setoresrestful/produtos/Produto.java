@@ -77,9 +77,9 @@ public class Produto implements Serializable {
     public String toString() {
         return String.valueOf(id) + " - "
                 + descricao +
-                "\nEstoque: " + estoque +
+                "\n Estoque: "+  + estoque +
                 " - R$ " + preco +
-                "\nSetor: " + (setor != null ? setor.getDescricao() : "Sem setor");
+                "\n Setor: " + (setor != null ? setor.getDescricao() : "Sem setor");
     }
 
 }
