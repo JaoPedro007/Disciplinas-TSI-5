@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import br.edu.utfpr.td.tsi.delegacia.modelo.BoletimFurtoVeiculo;
 
 @Component
-public class BoletimImpl implements IBoletim{
+public class BoletimRepository implements IBoletimRepository{
 	
 	List<BoletimFurtoVeiculo> bd = new ArrayList<BoletimFurtoVeiculo>();
 
@@ -19,9 +19,8 @@ public class BoletimImpl implements IBoletim{
 
 	@Override
 	public List<BoletimFurtoVeiculo> listarTodos() {
-		BoletimFurtoVeiculo b = new BoletimFurtoVeiculo("ID:1", 1);
-		bd.add(b);
 		return bd;
+		
 	}
 
 	@Override

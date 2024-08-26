@@ -4,7 +4,7 @@ import java.util.List;
 
 import br.edu.utfpr.td.tsi.delegacia.modelo.BoletimFurtoVeiculo;
 
-public interface IBoletim {
+public interface IBoletimRepository {
 	
 	void registrar(BoletimFurtoVeiculo b);
 	List<BoletimFurtoVeiculo> listarTodos();

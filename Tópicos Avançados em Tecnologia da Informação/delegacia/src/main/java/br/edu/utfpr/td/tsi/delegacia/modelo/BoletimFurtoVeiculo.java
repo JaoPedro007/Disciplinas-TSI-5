@@ -1,9 +1,11 @@
 package br.edu.utfpr.td.tsi.delegacia.modelo;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 public class BoletimFurtoVeiculo {
 
+	
 	private String identificador;
 	private LocalDate dataOcorrencia;
 	private int periodoOcorrencia;
@@ -11,17 +13,14 @@ public class BoletimFurtoVeiculo {
 	private Endereco localOcorrencia;
 	private Veiculo veiculoFurtado;
 	
-	
-	public BoletimFurtoVeiculo(String identificador, int periodoOcorrencia) {
-		this.identificador = identificador;
-		this.periodoOcorrencia = periodoOcorrencia;
+	public BoletimFurtoVeiculo() {
+		this.identificador = UUID.randomUUID().toString();
 	}
 	
 
-	public BoletimFurtoVeiculo(String identificador, LocalDate dataOcorrencia, int periodoOcorrencia, Parte partes,
+	public BoletimFurtoVeiculo(LocalDate dataOcorrencia, int periodoOcorrencia, Parte partes,
 			Endereco localOcorrencia, Veiculo veiculoFurtado) {
 		super();
-		this.identificador = identificador;
 		this.dataOcorrencia = dataOcorrencia;
 		this.periodoOcorrencia = periodoOcorrencia;
 		this.partes = partes;

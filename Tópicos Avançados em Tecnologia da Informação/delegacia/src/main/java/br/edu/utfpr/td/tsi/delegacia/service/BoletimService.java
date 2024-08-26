@@ -1,22 +1,36 @@
 package br.edu.utfpr.td.tsi.delegacia.service;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import br.edu.utfpr.td.tsi.delegacia.modelo.BoletimFurtoVeiculo;
-import br.edu.utfpr.td.tsi.delegacia.persistencia.IBoletim;
+import br.edu.utfpr.td.tsi.delegacia.persistencia.IBoletimRepository;
 
 @Component
-public class BoletimService implements IBoletimService{
-	
+public class BoletimService implements IBoletimService {
+
+	private static final Logger logger = Logger.getLogger(BoletimService.class.getName());
+
 	@Autowired
-	IBoletim boletim;
+	IBoletimRepository boletim;
 
 	@Override
 	public void registrar(BoletimFurtoVeiculo b) {
-		boletim.registrar(b);
+		if (!boletimValido(b)) {
+			throw new IllegalArgumentException("Boletim inválido: Campos obrigatórios estão ausentes.");
+
+		}
+		try {
+			boletim.registrar(b);
+		} catch (Exception e) {
+			logger.log(Level.SEVERE, "Ocorreu um erro ao registrar o boletim: ", e);
+			throw e;
+		}
+
 	}
 
 	@Override
@@ -39,7 +53,12 @@ public class BoletimService implements IBoletimService{
 	@Override
 	public void excluir(BoletimFurtoVeiculo b) {
 		// TODO Auto-generated method stub
-		
+
+	}
+
+	private boolean boletimValido(BoletimFurtoVeiculo b) {
+		return b != null && b.getDataOcorrencia() != null && b.getLocalOcorrencia() != null && b.getPartes() != null
+				&& b.getVeiculoFurtado() != null && b.getPeriodoOcorrencia() != -1;
 	}
 
 }
