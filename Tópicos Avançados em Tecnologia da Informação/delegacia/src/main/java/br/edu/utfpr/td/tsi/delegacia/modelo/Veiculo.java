@@ -7,9 +7,8 @@ public class Veiculo {
 	private LocalDate anoFabricacao;
 	private String cor;
 	private String marca;
-	private String tipoVeiculo;
+	private String modelo;
 	private Emplacamento emplacamento;
-	
 	
 	public LocalDate getAnoFabricacao() {
 		return anoFabricacao;
@@ -17,6 +16,11 @@ public class Veiculo {
 	public void setAnoFabricacao(LocalDate anoFabricacao) {
 		this.anoFabricacao = anoFabricacao;
 	}
+	
+	public int getAnoFabricacaoAno() {
+		return anoFabricacao != null ? anoFabricacao.getYear() : 0;
+	}
+
 	public String getCor() {
 		return cor;
 	}
@@ -29,17 +33,18 @@ public class Veiculo {
 	public void setMarca(String marca) {
 		this.marca = marca;
 	}
-	public String getTipoVeiculo() {
-		return tipoVeiculo;
-	}
-	public void setTipoVeiculo(String tipoVeiculo) {
-		this.tipoVeiculo = tipoVeiculo;
-	}
+
 	public Emplacamento getEmplacamento() {
 		return emplacamento;
 	}
 	public void setEmplacamento(Emplacamento emplacamento) {
 		this.emplacamento = emplacamento;
+	}
+	public String getModelo() {
+		return modelo;
+	}
+	public void setModelo(String modelo) {
+		this.modelo = modelo;
 	}
 	
 	
