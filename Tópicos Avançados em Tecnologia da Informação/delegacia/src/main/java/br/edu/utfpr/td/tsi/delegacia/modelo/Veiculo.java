@@ -1,26 +1,21 @@
 package br.edu.utfpr.td.tsi.delegacia.modelo;
 
-import java.time.LocalDate;
 
 public class Veiculo {
 	
-	private LocalDate anoFabricacao;
+	private String anoFabricacao;
 	private String cor;
 	private String marca;
 	private String modelo;
 	private Emplacamento emplacamento;
 	
-	public LocalDate getAnoFabricacao() {
+	public String getAnoFabricacao() {
 		return anoFabricacao;
 	}
-	public void setAnoFabricacao(LocalDate anoFabricacao) {
+	public void setAnoFabricacao(String anoFabricacao) {
 		this.anoFabricacao = anoFabricacao;
 	}
 	
-	public int getAnoFabricacaoAno() {
-		return anoFabricacao != null ? anoFabricacao.getYear() : 0;
-	}
-
 	public String getCor() {
 		return cor;
 	}

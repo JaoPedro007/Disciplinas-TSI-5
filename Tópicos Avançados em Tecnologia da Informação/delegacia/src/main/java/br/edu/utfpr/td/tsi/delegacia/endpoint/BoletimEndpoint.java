@@ -31,7 +31,7 @@ public class BoletimEndpoint {
 	public Response postBoletim(BoletimFurtoVeiculo b) {
 		try {
 			boletimService.registrar(b);
-			return Response.status(Response.Status.CREATED).entity("Boletim registrado com sucesso").build();
+			return Response.status(Response.Status.CREATED).entity(b.getIdentificador()).build();
 
 		} catch (IllegalArgumentException iae) {
 			return Response.status(Response.Status.BAD_REQUEST).entity("Falha na validação: " + iae.getMessage())

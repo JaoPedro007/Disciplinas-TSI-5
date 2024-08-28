@@ -1,5 +1,6 @@
 package br.edu.utfpr.td.tsi.delegacia.service;
 
+
 import java.util.List;
 
 import br.edu.utfpr.td.tsi.delegacia.modelo.BoletimFurtoVeiculo;

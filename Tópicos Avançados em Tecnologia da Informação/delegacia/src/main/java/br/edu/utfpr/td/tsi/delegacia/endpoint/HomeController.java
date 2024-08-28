@@ -11,13 +11,13 @@ public class HomeController {
 		return "index";
 	}
 	
-    @GetMapping("/cadastroBo")
-    public String cadastroBo() {
-        return "cadastroBo";
+    @GetMapping("/cadastroBoletim")
+    public String cadastroBoletim() {
+        return "cadastroBoletim";
     }
 
-    @GetMapping("/listaBos")
-    public String listaBos() {
-        return "listaBos";
+    @GetMapping("/listaBoletim")
+    public String listaBoletim() {
+        return "listaBoletim";
     }
 }

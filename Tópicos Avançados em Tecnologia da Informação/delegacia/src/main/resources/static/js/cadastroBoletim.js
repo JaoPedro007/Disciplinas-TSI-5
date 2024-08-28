@@ -20,12 +20,12 @@ var cadastrar = function(url) {
 		marca: $("#marca").val(),	
 		tipoVeiculo: $("#tipo").val()	
 	},
-	partes: [{
+	partes: {
 		nome: $("#nome").val(),
 		email: $("#email").val(),
 		telefone: $("#telefone").val(),
 		tipoEnvolvimento: "Vítima"			
-	}]		
+	}		
   };
   
   $.ajax({
@@ -34,22 +34,49 @@ var cadastrar = function(url) {
     async: true,
     contentType: 'application/json',
     data: JSON.stringify(bo),
-    success: function(boCadastrado) {
+    success: function(identificador) {
       $("#resultado").empty();
-      $("#resultado").html("Boletim cadastrado com sucesso! <br> Identificador: " + boCadastrado.identificador);
-
+      $("#resultado").html("Boletim cadastrado com sucesso!").css({
+		"color": "green",
+		"font-weight": "bold"
+	  });
+	  $("#identificador").html("Identificador: " + identificador);
+	  limparCampos();
     },
     error: function(xhr, status, error) {
+	  $("#identificador").val('');
       $("#resultado").empty();
-      $("#resultado").append("Erro ao cadastrar: " + xhr.responseText)
+      $("#resultado").append("Erro ao cadastrar: " + xhr.responseText).css({
+		"color": "red",
+		"font-weight": "bold"
+	  })
     }
   });
 };
 
+	function limparCampos() {
+	  $("#data").val('');
+	  $("#periodo").val('');
+	  $("#logradouro").val('');
+	  $("#numero").val('');
+	  $("#bairro").val('');
+	  $("#cidade").val('');
+	  $("#estado").val('');
+	  $("#placa").val('');
+	  $("#cidadePlaca").val('');
+	  $("#estadoPlaca").val('');
+	  $("#ano").val('');
+	  $("#cor").val('');
+	  $("#marca").val('');
+	  $("#tipo").val('');
+	  $("#nome").val('');
+	  $("#email").val('');
+	  $("#telefone").val('');	  
+	}
 
 
 $(document).ready(function() {
   $("#botaoCadastrar").click(function() {
-    cadastrar("http://localhost:8080/delegacia/bo-furto-veiculo");
+    cadastrar("http://localhost:8080/delegacia/boletim");
   }); 
 });
