@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import br.edu.utfpr.td.tsi.delegacia.modelo.BoletimFurtoVeiculo;
+import br.edu.utfpr.td.tsi.delegacia.modelo.Veiculo;
 import br.edu.utfpr.td.tsi.delegacia.persistencia.IBoletimRepository;
 
 @Component
@@ -16,7 +17,7 @@ public class BoletimService implements IBoletimService {
 	private static final Logger logger = Logger.getLogger(BoletimService.class.getName());
 
 	@Autowired
-	IBoletimRepository boletim;
+	IBoletimRepository boletimRepository;
 
 	@Override
 	public void registrar(BoletimFurtoVeiculo b) {
@@ -24,8 +25,9 @@ public class BoletimService implements IBoletimService {
 			throw new IllegalArgumentException("Boletim inválido: Campos obrigatórios estão ausentes.");
 
 		}
+		
 		try {
-			boletim.registrar(b);
+			boletimRepository.registrar(b);
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "Ocorreu um erro ao registrar o boletim: ", e);
 			throw e;
@@ -35,30 +37,38 @@ public class BoletimService implements IBoletimService {
 
 	@Override
 	public List<BoletimFurtoVeiculo> listarTodos() {
-		return boletim.listarTodos();
+		return boletimRepository.listarTodos();
 	}
 
 	@Override
-	public BoletimFurtoVeiculo listar() {
-		// TODO Auto-generated method stub
-		return null;
+	public BoletimFurtoVeiculo listar(String id) {
+		return boletimRepository.listar(id);
 	}
 
 	@Override
 	public BoletimFurtoVeiculo editar(BoletimFurtoVeiculo b) {
-		// TODO Auto-generated method stub
-		return null;
+		return boletimRepository.editar(b);
+
 	}
 
 	@Override
-	public void excluir(BoletimFurtoVeiculo b) {
-		// TODO Auto-generated method stub
-
+	public boolean excluir(String id) {
+		return boletimRepository.excluir(id);
 	}
 
 	private boolean boletimValido(BoletimFurtoVeiculo b) {
 		return b != null && b.getDataOcorrencia() != null && b.getLocalOcorrencia() != null && b.getPartes() != null
-				&& b.getVeiculoFurtado() != null && b.getPeriodoOcorrencia() != -1;
+				&& b.getVeiculoFurtado() != null && b.getPeriodoOcorrencia() !=null;
 	}
+
+	@Override
+	public List<BoletimFurtoVeiculo> listarComFiltros(String identificador, String cidade, String periodo) {
+		return boletimRepository.listarComFiltros(identificador, cidade, periodo);
+	}
+	
+    @Override
+    public List<Veiculo> listarVeiculosComFiltros(String placa, String cor, String tipo) {
+        return boletimRepository.listarVeiculosComFiltros(placa, cor, tipo);
+    }
 
 }

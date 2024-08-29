@@ -8,7 +8,7 @@ public class BoletimFurtoVeiculo {
 	
 	private String identificador;
 	private LocalDate dataOcorrencia;
-	private int periodoOcorrencia;
+	private String periodoOcorrencia;
 	private Parte partes;
 	private Endereco localOcorrencia;
 	private Veiculo veiculoFurtado;
@@ -18,7 +18,7 @@ public class BoletimFurtoVeiculo {
 	}
 	
 
-	public BoletimFurtoVeiculo(LocalDate dataOcorrencia, int periodoOcorrencia, Parte partes,
+	public BoletimFurtoVeiculo(LocalDate dataOcorrencia, String periodoOcorrencia, Parte partes,
 			Endereco localOcorrencia, Veiculo veiculoFurtado) {
 		super();
 		this.dataOcorrencia = dataOcorrencia;
@@ -44,11 +44,11 @@ public class BoletimFurtoVeiculo {
 		this.dataOcorrencia = dataOcorrencia;
 	}
 
-	public int getPeriodoOcorrencia() {
+	public String getPeriodoOcorrencia() {
 		return periodoOcorrencia;
 	}
 
-	public void setPeriodoOcorrencia(int periodoOcorrencia) {
+	public void setPeriodoOcorrencia(String periodoOcorrencia) {
 		this.periodoOcorrencia = periodoOcorrencia;
 	}
 

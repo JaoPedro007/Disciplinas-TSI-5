@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class HomeController {
 	
-	@GetMapping("/")
+	@GetMapping("/delegacia")
 	public String index() {
 		return "index";
 	}
@@ -19,5 +19,18 @@ public class HomeController {
     @GetMapping("/listaBoletim")
     public String listaBoletim() {
         return "listaBoletim";
+    }
+    
+    @GetMapping("/editarBoletim")
+    public String editarBoletim() {
+        return "editarBoletim";
+    }
+    
+    
+    //Veiculos
+    
+    @GetMapping("/listaVeiculo")
+    public String listaVeiculo() {
+        return "listaVeiculo";
     }
 }

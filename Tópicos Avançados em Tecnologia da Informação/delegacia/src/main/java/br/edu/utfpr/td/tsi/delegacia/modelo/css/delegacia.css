@@ -10,7 +10,6 @@ body, html {
 
 #topo{
    font-size: 1.15em; 
-   width: 25cm;	
    max-width: 50cm;	
    padding-bottom:10px;
    background-color: white;  
@@ -131,4 +130,23 @@ li{
    text-align: right;
    color: #E6E6E6;
    font-size: 2.0em;
-}​
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table, th, td {
+    border: 1px solid black; 
+}
+
+th, td {
+    padding: 8px;  
+    text-align: left; 
+}
+
+th {
+    background-color: #f5ffff;
+}
+​

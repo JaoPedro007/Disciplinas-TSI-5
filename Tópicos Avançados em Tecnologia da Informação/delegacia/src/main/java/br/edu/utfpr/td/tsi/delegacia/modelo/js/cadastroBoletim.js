@@ -15,10 +15,12 @@ var cadastrar = function(url) {
 			cidade: $("#cidadePlaca").val(),
 			estado: $("#estadoPlaca").val()				
 		},
-		anoFabricacao: $("#ano").val(),	
+		anoFabricacao: $("#anoFabricacao").val(),	
 		cor: $("#cor").val(),	
 		marca: $("#marca").val(),	
-		tipoVeiculo: $("#tipo").val()	
+		modelo: $("#modelo").val(),
+		tipo: $("#tipo").val()	
+	
 	},
 	partes: {
 		nome: $("#nome").val(),
@@ -65,9 +67,10 @@ var cadastrar = function(url) {
 	  $("#placa").val('');
 	  $("#cidadePlaca").val('');
 	  $("#estadoPlaca").val('');
-	  $("#ano").val('');
+	  $("#anoFabricacao").val('');
 	  $("#cor").val('');
 	  $("#marca").val('');
+	  $("#modelo").val('');
 	  $("#tipo").val('');
 	  $("#nome").val('');
 	  $("#email").val('');
@@ -77,6 +80,6 @@ var cadastrar = function(url) {
 
 $(document).ready(function() {
   $("#botaoCadastrar").click(function() {
-    cadastrar("http://localhost:8080/delegacia/boletim");
+    cadastrar("http://localhost:8080/delegacia/api/boletim");
   }); 
 });

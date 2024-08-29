@@ -6,7 +6,7 @@
 <link rel="stylesheet" type="text/css"
 	href="/delegacia/css/delegacia.css" />
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-<script src="/delegacia/js/listaBoletim.js"></script>
+<script src="/delegacia/js/listaVeiculo.js"></script>
 </head>
 <body>
 	<div id='topo'
@@ -23,22 +23,24 @@
 		<img height='5' src='/delegacia/img/utfLinha.jpg' width='100%'>
 	</center>
 
-	<h1>Lista de Boletins de Ocorrência - Furto de veículo</h1>
+	<h1>Lista de veículos furtados</h1>
 
 	<div id="filtros">
-	    <label for="filtroIdentificador">Identificador:</label>
-	    <input type="text" id="filtroIdentificador" placeholder="Identificador do BO" />
+	    <label for="filtroPlaca">Placa:</label>
+	    <input type="text" id="filtroPlaca" placeholder="Placa do veículo" />
 	
-	    <label for="filtroCidade">Cidade:</label>
-	    <input type="text" id="filtroCidade" placeholder="Nome da cidade" />
+	    <label for="filtroCor">Cor</label>
+	    <input type="text" id="filtroCor" placeholder="Cor do veículo" />
 	
-	    <label for="filtroPeriodo">Período:</label>
-	    <select id="filtroPeriodo">
+	    <label for="filtroTipo">Tipo:</label>
+	    <select id="filtroTipo">
 	        <option value="">Todos</option>
-	        <option value="Manhã">Manhã</option>
-	        <option value="Tarde">Tarde</option>
-	        <option value="Noite">Noite</option>
-	        <option value="Madrugada">Madrugada</option>
+	        <option value="Carro">Carro</option>
+	        <option value="Motocicleta">Motocicleta</option>
+	        <option value="Caminhão">Caminhão</option>
+	        <option value="Caminhão">Carreta</option>	        
+	        <option value="Van">Van</option>
+	        <option value="Van">Outros</option>
 	    </select>
 	
 	    <button id="botaoFiltrar">Filtrar</button>
@@ -50,31 +52,7 @@
 		rules="groups" frame="hsides" width="100%">
 		<thead>
 			<tr>
-				<th colspan="3">Dados da gerais</th>
-				<th colspan="3">Dados da vítima</th>
-				<th colspan="5">Local da ocorrência</th>
-				<th colspan="8">Dados do veículo</th>
-			</tr>
-			<tr>
-				<!-- Dados gerais -->
-				<th>Identificador</th>
-				<th>Data ocorrência</th>
-				<th>Período ocorrência</th>
-
-				<!-- Dados da vítima -->
-				<th>Nome</th>
-				<th>Telefone</th>
-				<th>Email</th>
-
-				<!-- Local da ocorrência -->
-				<th>Logradouro</th>
-				<th>Número</th>
-				<th>Bairro</th>
-				<th>Cidade</th>
-				<th>Estado</th>
-
-				<!-- Dados do veículo -->
-				<th>Ano fabr.</th>
+				<th>Ano fabricação</th>
 				<th>Cor</th>
 				<th>Marca</th>
 				<th>Modelo</th>
@@ -82,7 +60,6 @@
 				<th>Placa</th>
 				<th>Cidade</th>
 				<th>Estado</th>
-				<th>Ações</th>
 			</tr>
 		</thead>
 		<tbody id="tabelaBosBody">
