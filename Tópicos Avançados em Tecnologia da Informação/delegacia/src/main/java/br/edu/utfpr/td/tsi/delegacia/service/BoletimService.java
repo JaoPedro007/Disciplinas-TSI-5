@@ -1,11 +1,16 @@
 package br.edu.utfpr.td.tsi.delegacia.service;
 
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvException;
 
 import br.edu.utfpr.td.tsi.delegacia.modelo.BoletimFurtoVeiculo;
 import br.edu.utfpr.td.tsi.delegacia.modelo.Veiculo;
@@ -69,6 +74,23 @@ public class BoletimService implements IBoletimService {
     @Override
     public List<Veiculo> listarVeiculosComFiltros(String placa, String cor, String tipo) {
         return boletimRepository.listarVeiculosComFiltros(placa, cor, tipo);
+    }
+    
+    @Override
+    public void carregarBoletinsDeCSV(String caminhoArquivoCSV) throws IOException {
+        try (CSVReader reader = new CSVReader(new FileReader(caminhoArquivoCSV))) {
+            List<String[]> linhas = reader.readAll();
+
+            for (String[] linha : linhas) {
+                BoletimFurtoVeiculo boletim = new BoletimFurtoVeiculo();
+                
+                boletim.setIdentificador(linha[0]);
+
+                boletimRepository.registrar(boletim);
+            }
+        } catch (CsvException e) {
+            e.printStackTrace();
+        }
     }
 
 }

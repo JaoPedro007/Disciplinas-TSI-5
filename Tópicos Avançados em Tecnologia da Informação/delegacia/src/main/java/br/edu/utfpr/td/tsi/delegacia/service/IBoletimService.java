@@ -1,6 +1,7 @@
 package br.edu.utfpr.td.tsi.delegacia.service;
 
 
+import java.io.IOException;
 import java.util.List;
 
 import br.edu.utfpr.td.tsi.delegacia.modelo.BoletimFurtoVeiculo;
@@ -15,6 +16,6 @@ public interface IBoletimService {
 	boolean excluir(String id);
     List<BoletimFurtoVeiculo> listarComFiltros(String identificador, String cidade, String periodo);
     List<Veiculo> listarVeiculosComFiltros(String placa, String cor, String tipo);
-
+    void carregarBoletinsDeCSV(String caminhoArquivoCSV) throws IOException;
 
 }
