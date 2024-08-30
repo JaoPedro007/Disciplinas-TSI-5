@@ -2,132 +2,78 @@ package br.edu.utfpr.td.tsi.delegacia.persistencia;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import br.edu.utfpr.td.tsi.delegacia.modelo.BoletimFurtoVeiculo;
-import br.edu.utfpr.td.tsi.delegacia.modelo.Veiculo;
+import jakarta.annotation.PostConstruct;
 
-@Component
-public class BoletimRepository implements IBoletimRepository{
-	
-	List<BoletimFurtoVeiculo> bd = new ArrayList<BoletimFurtoVeiculo>();
+@Repository
+public class BoletimRepository implements IBoletimRepository {
 
-	@Override
-	public void registrar(BoletimFurtoVeiculo b) {
-			bd.add(b);
-	}
+    @Autowired
+    private LeitorArquivo leitorArquivo;
 
-	@Override
-	public List<BoletimFurtoVeiculo> listarTodos() {
-		return bd;
-		
-	}
+    private List<BoletimFurtoVeiculo> boletins = new ArrayList<>();
 
-	@Override
-	public BoletimFurtoVeiculo listar(String id) {
-		for (BoletimFurtoVeiculo boletimFurtoVeiculo : bd) {
-			if(boletimFurtoVeiculo.getIdentificador().equals(id)) {
-				return boletimFurtoVeiculo;
-			}
-		}
-		return null;
-	}
+    @PostConstruct
+    public void init() {
+        boletins = new ArrayList<>(this.leitorArquivo.getBoletins());
+    }
 
-	@Override
-	public BoletimFurtoVeiculo editar(BoletimFurtoVeiculo b) {
-	    for (int i = 0; i < bd.size(); i++) {
-	        BoletimFurtoVeiculo boletimFurtoVeiculo = bd.get(i);
-	        if (boletimFurtoVeiculo.getIdentificador().equals(b.getIdentificador())) {
-	            bd.set(i, b);
-	            return b;
-	        }
-	    }
-	    return null;
-	}
+    @Override
+    public void registrar(BoletimFurtoVeiculo b) {
+        if (b != null) {
+            boletins.add(b);
+        }
+    }
 
-	@Override
-	public boolean excluir(String id) {
-		for (BoletimFurtoVeiculo boletimFurtoVeiculo : bd) {
-			if(boletimFurtoVeiculo.getIdentificador().equals(id)){
-				bd.remove(boletimFurtoVeiculo);
-				return true;
-			}
-		}
-		
-		return false;
-		
-	}
+    @Override
+    public List<BoletimFurtoVeiculo> listarTodos() {
+        return new ArrayList<>(boletins);
+    }
 
-	@Override
-	public List<BoletimFurtoVeiculo> listarComFiltros(String identificador, String cidade, String periodo) {
-	    List<BoletimFurtoVeiculo> resultados = new ArrayList<>();
+    @Override
+    public BoletimFurtoVeiculo listar(String id) {
+        return boletins.stream()
+                       .filter(b -> b.getIdentificador().equals(id))
+                       .findFirst()
+                       .orElse(null);
+    }
 
-	    for (BoletimFurtoVeiculo boletim : bd) {
-	        boolean match = true;
+    @Override
+    public BoletimFurtoVeiculo editar(BoletimFurtoVeiculo b) {
+        for (int i = 0; i < boletins.size(); i++) {
+            if (boletins.get(i).getIdentificador().equals(b.getIdentificador())) {
+                boletins.set(i, b);
+                return b;
+            }
+        }
+        return null;
+    }
 
-	        if (identificador != null && !identificador.isEmpty()) {
-	            if (!boletim.getIdentificador().equals(identificador)) {
-	                match = false;
-	            }
-	        }
+    @Override
+    public boolean excluir(String id) {
+        return boletins.removeIf(b -> b.getIdentificador().equals(id));
+    }
 
-	        if (cidade != null && !cidade.isEmpty()) {
-	            if (!boletim.getLocalOcorrencia().getCidade().equalsIgnoreCase(cidade)) {
-	                match = false;
-	            }
-	        }
+    @Override
+    public List<BoletimFurtoVeiculo> listarComFiltros(String identificador, String cidade, String periodo, int pageNumber, int pageSize) {
+        List<BoletimFurtoVeiculo> resultados = boletins.stream()
+            .filter(b -> (identificador == null || identificador.isEmpty() || b.getIdentificador().equals(identificador)))
+            .filter(b -> (cidade == null || cidade.isEmpty() || b.getLocalOcorrencia().getCidade().equalsIgnoreCase(cidade)))
+            .filter(b -> (periodo == null || periodo.isEmpty() || b.getPeriodoOcorrencia().equalsIgnoreCase(periodo)))
+            .collect(Collectors.toList());
 
-	        if (periodo != null && !periodo.isEmpty()) {
-	            if (!boletim.getPeriodoOcorrencia().equalsIgnoreCase(periodo)) {
-	                match = false;
-	            }
-	        }
+        int start = pageNumber * pageSize;
+        int end = Math.min(start + pageSize, resultados.size());
 
-	        if (match) {
-	            resultados.add(boletim);
-	        }
-	    }
+        if (start >= resultados.size()) {
+            return new ArrayList<>();
+        }
 
-	    return resultados;
-	}
-	
-	
-	@Override
-	public List<Veiculo> listarVeiculosComFiltros(String placa, String cor, String tipo) {
-	    List<Veiculo> resultados = new ArrayList<>();
-
-	    for (BoletimFurtoVeiculo boletim : bd) {
-	        Veiculo veiculo = boletim.getVeiculoFurtado();
-
-	        if (veiculo != null) {
-	            boolean match = true;
-
-	            if (placa != null && !placa.isEmpty()) {
-	                if (!veiculo.getEmplacamento().getPlaca().equalsIgnoreCase(placa)) {
-	                    match = false;
-	                }
-	            }
-
-	            if (cor != null && !cor.isEmpty()) {
-	                if (!veiculo.getCor().equalsIgnoreCase(cor)) {
-	                    match = false;
-	                }
-	            }
-
-	            if (tipo != null && !tipo.isEmpty()) {
-	                if (!veiculo.getTipo().equalsIgnoreCase(tipo)) {
-	                    match = false;
-	                }
-	            }
-
-	            if (match) {
-	                resultados.add(veiculo);
-	            }
-	        }
-	    }
-
-	    return resultados;
-	}
-
+        return resultados.subList(start, end);
+    }
 }

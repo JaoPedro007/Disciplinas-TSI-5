@@ -8,6 +8,16 @@ public class Endereco {
 	private String cidade;
 	private String estado;
 	
+
+	public Endereco(String logradouro, String numero, String bairro, String cidade, String estado) {
+		super();
+		this.logradouro = logradouro;
+		this.numero = numero;
+		this.bairro = bairro;
+		this.cidade = cidade;
+		this.estado = estado;
+	}
+	
 	public String getLogradouro() {
 		return logradouro;
 	}

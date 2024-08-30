@@ -18,7 +18,6 @@ var cadastrar = function(url) {
 		anoFabricacao: $("#anoFabricacao").val(),	
 		cor: $("#cor").val(),	
 		marca: $("#marca").val(),	
-		modelo: $("#modelo").val(),
 		tipo: $("#tipo").val()	
 	
 	},
@@ -70,7 +69,6 @@ var cadastrar = function(url) {
 	  $("#anoFabricacao").val('');
 	  $("#cor").val('');
 	  $("#marca").val('');
-	  $("#modelo").val('');
 	  $("#tipo").val('');
 	  $("#nome").val('');
 	  $("#email").val('');

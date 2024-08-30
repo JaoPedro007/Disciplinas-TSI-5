@@ -42,8 +42,8 @@
     <h1>Edição de Boletim de Ocorrência - Furto de veículo</h1>
     <div id="dadosContato">
         <h3>Dados da ocorrência</h3>
-        <input id="identificador" type="hidden">
-        <label>Data:</label><input id="data" type="text"><br> 
+		<label>Identificador:</label><input id="identificador" type="text" readonly><br>
+        <label>Data:</label><input id="data" type="date"><br> 
         <label>Período:</label>			
         	<select id="periodo">
 			    <option value="Manhã">Manhã</option>
@@ -58,20 +58,21 @@
         <label>Estado:</label><input id="estado" type="text"><br> <br>
         
         <h3>Dados do veículo</h3>
-        <label>Placa:</label><input id="placa" type="text"><br> 
+      ABC1234  <label>Placa:</label><input id="placa" type="text"><br> 
         <label>Estado:</label><input id="estadoPlaca" type="text"><br> 
         <label>Cidade:</label><input id="cidadePlaca" type="text"><br> 
         <label>Cor:</label><input id="cor" type="text"><br> 
         <label>Marca:</label><input id="marca" type="text"><br> 
-        <label>Modelo:</label><input id="modelo" type="text"><br> 
         <label>Tipo:</label>
         	<select id="tipo">
-		        <option value="Carro">Carro</option>
-		        <option value="Motocicleta">Motocicleta</option>
-		        <option value="Caminhão">Caminhão</option>
-		        <option value="Caminhão">Carreta</option>	        
-		        <option value="Van">Van</option>
-		        <option value="Van">Outros</option>
+		        <option value="Automovel">Automovel</option>
+		        <option value="Motociclo">Motociclo</option>
+		        <option value="Caminhonete">Caminhonete</option>
+		        <option value="Caminhão">Caminhão</option>	        
+		        <option value="Reboque">Reboque</option>
+		        <option value="Mononeta">Mononeta</option>
+		        <option value="Camioneta">Camioneta</option>
+		        <option value="Utilitário">Utilitário</option>
 	    	</select><br>
         
         <label>Ano:</label><input id="anoFabricacao" type="text"><br> <br>
@@ -81,7 +82,7 @@
         <label>Email:</label><input id="email" type="text"><br> 
         <label>Telefone:</label><input id="telefone" type="text"><br> <br>
         <center>
-            <button id="botaoCancelar" onclick="location.href = '/delegacia';">Voltar</button>
+            <button onclick="location.href = '/delegacia/listaBoletim';">Voltar</button>
             <button id="botaoSalvar">Salvar</button>
         </center>
         <br>

@@ -35,12 +35,14 @@
 	    <label for="filtroTipo">Tipo:</label>
 	    <select id="filtroTipo">
 	        <option value="">Todos</option>
-	        <option value="Carro">Carro</option>
-	        <option value="Motocicleta">Motocicleta</option>
-	        <option value="Caminhão">Caminhão</option>
-	        <option value="Caminhão">Carreta</option>	        
-	        <option value="Van">Van</option>
-	        <option value="Van">Outros</option>
+	        <option value="Automovel">Automovel</option>
+	        <option value="Motociclo">Motociclo</option>
+	        <option value="Caminhonete">Caminhonete</option>
+	        <option value="Caminhão">Caminhão</option>	        
+	        <option value="Reboque">Reboque</option>
+	        <option value="Mononeta">Mononeta</option>
+	        <option value="Camioneta">Camioneta</option>
+	        <option value="Utilitário">Utilitário</option>
 	    </select>
 	
 	    <button id="botaoFiltrar">Filtrar</button>
@@ -55,7 +57,6 @@
 				<th>Ano fabricação</th>
 				<th>Cor</th>
 				<th>Marca</th>
-				<th>Modelo</th>
 				<th>Tipo</th>
 				<th>Placa</th>
 				<th>Cidade</th>
@@ -67,5 +68,15 @@
 	</table>
 	</div>
 	<span id="loading">Carregando dados...</span>
+	
+	<div>
+	    <button id="botaoPaginaAnterior">Página Anterior</button>
+	    <span id="paginaAtual">Página 1</span>
+	    <button id="botaoProximaPagina">Próxima Página</button>
+	</div>
+	
+	<div>
+    	<button onclick="location.href = '/delegacia';">Voltar</button>
+	</div>
 </body>
 </html>

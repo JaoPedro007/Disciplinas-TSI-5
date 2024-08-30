@@ -5,7 +5,14 @@ public class Emplacamento {
 	private String placa;
 	private String estado;
 	private String cidade;
+		
 	
+	public Emplacamento(String placa, String estado, String cidade) {
+		super();
+		this.placa = placa;
+		this.estado = estado;
+		this.cidade = cidade;
+	}
 	
 	public String getPlaca() {
 		return placa;

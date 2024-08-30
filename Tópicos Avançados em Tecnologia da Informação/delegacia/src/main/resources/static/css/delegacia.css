@@ -10,7 +10,6 @@ body, html {
 
 #topo{
    font-size: 1.15em; 
-   max-width: 50cm;	
    padding-bottom:10px;
    background-color: white;  
 }​
@@ -52,8 +51,8 @@ a {
 
 a:hover {
 	text-decoration: none;
-	//background-color: #000000;
-	// color: #FFFFFF;
+	background-color: #000000;
+	color: #FFFFFF;
 }
 
 /** HEADER */
@@ -78,9 +77,6 @@ a:hover {
 }
 
 
-
-
-/** FOOTER */
 
 #footer {
 	clear: both;
@@ -149,4 +145,7 @@ th, td {
 th {
     background-color: #f5ffff;
 }
-​
+#filtroIdentificador{
+	width: 50em;
+}
+​{}

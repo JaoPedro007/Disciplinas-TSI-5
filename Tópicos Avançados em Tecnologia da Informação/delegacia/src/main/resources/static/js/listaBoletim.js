@@ -1,4 +1,24 @@
-var listarProcessos = function(filtros = {}) {
+var currentPage = 0;
+var pageSize = 10;
+
+function limparTabela() {
+    $("#tabelaBos tbody").empty();
+}
+
+function atualizarPaginaAtual() {
+    $("#paginaAtual").text("Página " + (currentPage + 1));
+}
+
+function aplicarFiltros() {
+    var filtros = {
+        identificador: $("#filtroIdentificador").val(),
+        cidade: $("#filtroCidade").val(),
+        periodo: $("#filtroPeriodo").val()
+    };
+    listarProcessos(filtros, currentPage, pageSize);
+}
+
+var listarProcessos = function(filtros = {}, page = 0, size = 10) {
     var url = "/delegacia/api/boletim";
     var queryParams = [];
 
@@ -11,6 +31,9 @@ var listarProcessos = function(filtros = {}) {
     if (filtros.periodo) {
         queryParams.push("periodo=" + encodeURIComponent(filtros.periodo));
     }
+
+    queryParams.push("page=" + page);
+    queryParams.push("size=" + size);
 
     if (queryParams.length > 0) {
         url += "?" + queryParams.join("&");
@@ -25,14 +48,18 @@ var listarProcessos = function(filtros = {}) {
             $("#loading").hide();
             limparTabela();
             $.each(boletins, function(index, bo) {
+                var partesNome = bo.partes ? bo.partes.nome : '';
+                var partesTelefone = bo.partes ? bo.partes.telefone : '';
+                var partesEmail = bo.partes ? bo.partes.email : '';
+
                 var novaLinha =
                     '<tr>' +
                         '<td style="text-align: center">' + bo.identificador + '</td>' +
                         '<td style="text-align: center">' + bo.dataOcorrencia + '</td>' +
                         '<td style="text-align: center">' + bo.periodoOcorrencia + '</td>' +
-                        '<td style="text-align: center">' + bo.partes.nome + '</td>' +
-                        '<td style="text-align: center">' + bo.partes.telefone + '</td>' +
-                        '<td style="text-align: center">' + bo.partes.email + '</td>' +       
+                        '<td style="text-align: center">' + partesNome + '</td>' +
+                        '<td style="text-align: center">' + partesTelefone + '</td>' +
+                        '<td style="text-align: center">' + partesEmail + '</td>' +
                         '<td style="text-align: center">' + bo.localOcorrencia.logradouro + '</td>' +
                         '<td style="text-align: center">' + bo.localOcorrencia.numero + '</td>' +
                         '<td style="text-align: center">' + bo.localOcorrencia.bairro + '</td>' +
@@ -41,8 +68,7 @@ var listarProcessos = function(filtros = {}) {
                         '<td style="text-align: center">' + bo.veiculoFurtado.anoFabricacao + '</td>' +
                         '<td style="text-align: center">' + bo.veiculoFurtado.cor + '</td>' +
                         '<td style="text-align: center">' + bo.veiculoFurtado.marca + '</td>' +
-                        '<td style="text-align: center">' + bo.veiculoFurtado.modelo + '</td>' +
-						'<td style="text-align: center">' + bo.veiculoFurtado.tipo + '</td>' +
+                        '<td style="text-align: center">' + bo.veiculoFurtado.tipo + '</td>' +
                         '<td style="text-align: center">' + bo.veiculoFurtado.emplacamento.placa + '</td>' +
                         '<td style="text-align: center">' + bo.veiculoFurtado.emplacamento.cidade + '</td>' +
                         '<td style="text-align: center">' + bo.veiculoFurtado.emplacamento.estado + '</td>' +
@@ -53,12 +79,14 @@ var listarProcessos = function(filtros = {}) {
                     '</tr>';
                 $("#tabelaBos tbody").append(novaLinha);
             });
-            
+
+            atualizarPaginaAtual();
+
             $(".remover-btn").on("click", function() {
                 var id = $(this).data("id");
                 removerBoletim(id);
             });
-            
+
             $(".editar-btn").on("click", function() {
                 var id = $(this).data("id");
                 editarBoletim(id);
@@ -70,22 +98,8 @@ var listarProcessos = function(filtros = {}) {
     });
 };
 
-var aplicarFiltros = function() {
-    var identificadorFiltro = $("#filtroIdentificador").val().trim();
-    var cidadeFiltro = $("#filtroCidade").val().trim();
-    var periodoFiltro = $("#filtroPeriodo").val().trim();
-
-    var filtros = {
-        identificador: identificadorFiltro,
-        cidade: cidadeFiltro,
-        periodo: periodoFiltro
-    };
-
-    listarProcessos(filtros);
-};
-
 function editarBoletim(id) {
-    window.location.href = '/delegacia/editarBoletim?id=' + id;
+    window.location.href = '/delegacia/editarBoletim?identificador=' + id;
 }
 
 function removerBoletim(id) {
@@ -104,14 +118,11 @@ function removerBoletim(id) {
     }
 }
 
-var limparTabela = function() {
-    $("#tabelaBos tbody").empty();
-};
-
 $(document).ready(function() {
-    listarProcessos();    
-    
+    listarProcessos({}, currentPage, pageSize);
+
     $("#botaoFiltrar").on("click", function() {
+        currentPage = 0;
         aplicarFiltros();
     });
 
@@ -119,6 +130,26 @@ $(document).ready(function() {
         $("#filtroIdentificador").val('');
         $("#filtroCidade").val('');
         $("#filtroPeriodo").val('');
-        listarProcessos();
+        listarProcessos({}, currentPage, pageSize);
+    });
+
+    $("#botaoProximaPagina").on("click", function() {
+        currentPage++;
+        listarProcessos({
+            identificador: $("#filtroIdentificador").val(),
+            cidade: $("#filtroCidade").val(),
+            periodo: $("#filtroPeriodo").val()
+        }, currentPage, pageSize);
+    });
+
+    $("#botaoPaginaAnterior").on("click", function() {
+        if (currentPage > 0) {
+            currentPage--;
+            listarProcessos({
+                identificador: $("#filtroIdentificador").val(),
+                cidade: $("#filtroCidade").val(),
+                periodo: $("#filtroPeriodo").val()
+            }, currentPage, pageSize);
+        }
     });
 });

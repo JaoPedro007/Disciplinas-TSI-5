@@ -6,7 +6,6 @@ public class Veiculo {
 	private String anoFabricacao;
 	private String cor;
 	private String marca;
-	private String modelo;
 	private String tipo;
 	private Emplacamento emplacamento;
 	
@@ -35,12 +34,6 @@ public class Veiculo {
 	}
 	public void setEmplacamento(Emplacamento emplacamento) {
 		this.emplacamento = emplacamento;
-	}
-	public String getModelo() {
-		return modelo;
-	}
-	public void setModelo(String modelo) {
-		this.modelo = modelo;
 	}
 	public String getTipo() {
 		return tipo;

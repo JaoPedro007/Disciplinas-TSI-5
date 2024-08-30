@@ -1,32 +1,35 @@
 $(document).ready(function() {
     const urlParams = new URLSearchParams(window.location.search);
-    const id = urlParams.get('id');
+    const id = urlParams.get('identificador');
 
     if (id) {
         $.ajax({
-            url: '/delegacia/api/boletim?id=' + encodeURIComponent(id),
+            url: '/delegacia/api/boletim?identificador=' + encodeURIComponent(id),
             type: 'GET',
-            success: function(boletim) {
-                $('#identificador').val(boletim.identificador);
-                $('#data').val(boletim.dataOcorrencia);
-                $('#periodo').val(boletim.periodoOcorrencia);
-                $('#logradouro').val(boletim.localOcorrencia.logradouro);
-                $('#numero').val(boletim.localOcorrencia.numero);
-                $('#bairro').val(boletim.localOcorrencia.bairro);
-                $('#cidade').val(boletim.localOcorrencia.cidade);
-                $('#estado').val(boletim.localOcorrencia.estado);
-                $('#placa').val(boletim.veiculoFurtado.emplacamento.placa);
-                $('#estadoPlaca').val(boletim.veiculoFurtado.emplacamento.estado);
-                $('#cidadePlaca').val(boletim.veiculoFurtado.emplacamento.cidade);
-                $('#cor').val(boletim.veiculoFurtado.cor);
-                $('#marca').val(boletim.veiculoFurtado.marca);
-                $('#modelo').val(boletim.veiculoFurtado.modelo);
-				$('#tipo').val(boletim.veiculoFurtado.tipo);
-                $('#anoFabricacao').val(boletim.veiculoFurtado.anoFabricacao);
-                $('#nome').val(boletim.partes.nome);
-                $('#email').val(boletim.partes.email);
-                $('#telefone').val(boletim.partes.telefone);
-            },
+			success: function(data) {
+				const boletim  = data[0];
+			    $('#identificador').val(boletim.identificador || '');
+			    $('#data').val(boletim.dataOcorrencia || '');
+			    $('#periodo').val(boletim.periodoOcorrencia || '');
+
+			    $('#logradouro').val(boletim.localOcorrencia ? boletim.localOcorrencia.logradouro : '');
+			    $('#numero').val(boletim.localOcorrencia ? boletim.localOcorrencia.numero : '');
+			    $('#bairro').val(boletim.localOcorrencia ? boletim.localOcorrencia.bairro : '');
+			    $('#cidade').val(boletim.localOcorrencia ? boletim.localOcorrencia.cidade : '');
+			    $('#estado').val(boletim.localOcorrencia ? boletim.localOcorrencia.estado : '');
+
+			    $('#placa').val(boletim.veiculoFurtado ? boletim.veiculoFurtado.emplacamento.placa : '');
+			    $('#estadoPlaca').val(boletim.veiculoFurtado ? boletim.veiculoFurtado.emplacamento.estado : '');
+			    $('#cidadePlaca').val(boletim.veiculoFurtado ? boletim.veiculoFurtado.emplacamento.cidade : '');
+			    $('#cor').val(boletim.veiculoFurtado ? boletim.veiculoFurtado.cor : '');
+			    $('#marca').val(boletim.veiculoFurtado ? boletim.veiculoFurtado.marca : '');
+			    $('#tipo').val(boletim.veiculoFurtado ? boletim.veiculoFurtado.tipo : '');
+			    $('#anoFabricacao').val(boletim.veiculoFurtado ? boletim.veiculoFurtado.anoFabricacao : '');
+
+			    $('#nome').val(boletim.partes ? boletim.partes.nome : '');
+			    $('#email').val(boletim.partes ? boletim.partes.email : '');
+			    $('#telefone').val(boletim.partes ? boletim.partes.telefone : '');
+			},
             error: function(err) {
                 console.log("Erro ao carregar o boletim:", err);
                 alert('Erro ao carregar os dados do boletim.');
@@ -54,7 +57,6 @@ $(document).ready(function() {
                 },
                 cor: $('#cor').val(),
                 marca: $('#marca').val(),
-                modelo: $('#modelo').val(),
 				tipo: $('#tipo').val(),
                 anoFabricacao: $('#anoFabricacao').val()
             },
