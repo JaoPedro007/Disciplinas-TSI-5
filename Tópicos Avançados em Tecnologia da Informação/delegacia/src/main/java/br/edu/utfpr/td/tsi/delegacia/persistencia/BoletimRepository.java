@@ -25,10 +25,13 @@ public class BoletimRepository implements IBoletimRepository {
 
     @Override
     public void registrar(BoletimFurtoVeiculo b) {
-        if (b != null) {
-            boletins.add(b);
+        if (b != null && boletins.stream().noneMatch(boletim -> boletim.getIdentificador().equals(b.getIdentificador()))) {
+            boletins.add(0, b);
+        } else {
+            throw new IllegalArgumentException("Boletim com identificador duplicado.");
         }
     }
+
 
     @Override
     public List<BoletimFurtoVeiculo> listarTodos() {
@@ -51,20 +54,36 @@ public class BoletimRepository implements IBoletimRepository {
                 return b;
             }
         }
-        return null;
+        throw new IllegalArgumentException("Boletim com o identificador especificado não encontrado.");
     }
+
 
     @Override
     public boolean excluir(String id) {
-        return boletins.removeIf(b -> b.getIdentificador().equals(id));
+        if (id == null || id.isEmpty()) {
+            throw new IllegalArgumentException("ID do boletim não localizado para exclusão.");
+        }
+        
+        boolean removed = boletins.removeIf(b -> b.getIdentificador().equals(id));
+        
+        if (!removed) {
+            throw new IllegalArgumentException("Boletim com o ID fornecido não encontrado.");
+        }
+        
+        return removed;
     }
+
+
 
     @Override
     public List<BoletimFurtoVeiculo> listarComFiltros(String identificador, String cidade, String periodo, int pageNumber, int pageSize) {
+        
+        String periodoNormalizado = normalizarPeriodo(periodo);
+        
         List<BoletimFurtoVeiculo> resultados = boletins.stream()
             .filter(b -> (identificador == null || identificador.isEmpty() || b.getIdentificador().equals(identificador)))
             .filter(b -> (cidade == null || cidade.isEmpty() || b.getLocalOcorrencia().getCidade().equalsIgnoreCase(cidade)))
-            .filter(b -> (periodo == null || periodo.isEmpty() || b.getPeriodoOcorrencia().equalsIgnoreCase(periodo)))
+            .filter(b -> (periodoNormalizado == null || periodoNormalizado.isEmpty() || b.getPeriodoOcorrencia().toLowerCase().contains(periodoNormalizado.toLowerCase())))
             .collect(Collectors.toList());
 
         int start = pageNumber * pageSize;
@@ -76,4 +95,26 @@ public class BoletimRepository implements IBoletimRepository {
 
         return resultados.subList(start, end);
     }
+
+    
+    private String normalizarPeriodo(String periodo) {
+        if (periodo == null) {
+            return null;
+        }
+
+        String periodoLower = periodo.trim().toLowerCase();
+        
+        if (periodoLower.contains("manhã") || periodoLower.contains("manha")) {
+            return "Manhã";
+        } else if (periodoLower.contains("tarde")) {
+            return "Tarde";
+        } else if (periodoLower.contains("madrugada") || periodoLower.contains("madruga")) {
+            return "Madrugada";
+        }else if (periodoLower.contains("noite") || periodoLower.contains("noite")) {
+	        return "Noite";
+	    }
+        
+        return null;
+    }
+
 }

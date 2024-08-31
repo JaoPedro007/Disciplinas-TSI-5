@@ -48,9 +48,9 @@ var listarProcessos = function(filtros = {}, page = 0, size = 10) {
             $("#loading").hide();
             limparTabela();
             $.each(boletins, function(index, bo) {
-                var partesNome = bo.partes ? bo.partes.nome : '';
-                var partesTelefone = bo.partes ? bo.partes.telefone : '';
-                var partesEmail = bo.partes ? bo.partes.email : '';
+                var partesNome = bo.partes ? '**********' : 'Não identificado';
+                var partesTelefone = bo.partes ? '**********' : 'Não identificado';
+                var partesEmail = bo.partes ? '**********' : 'Não identificado';
 
                 var novaLinha =
                     '<tr>' +
@@ -73,8 +73,8 @@ var listarProcessos = function(filtros = {}, page = 0, size = 10) {
                         '<td style="text-align: center">' + bo.veiculoFurtado.emplacamento.cidade + '</td>' +
                         '<td style="text-align: center">' + bo.veiculoFurtado.emplacamento.estado + '</td>' +
                         '<td style="text-align: center">' +
-                            '<button class="remover-btn" data-id="' + bo.identificador + '">Remover</button>' +
                             '<button class="editar-btn" data-id="' + bo.identificador + '">Editar</button>' +
+                            '<button class="remover-btn" data-id="' + bo.identificador + '">Remover</button>' +
                         '</td>' +
                     '</tr>';
                 $("#tabelaBos tbody").append(novaLinha);

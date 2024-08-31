@@ -14,6 +14,7 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.Status;
 
 @Component
 @Path("veiculo")
@@ -32,8 +33,9 @@ public class VeiculoEndpoint {
         try {
             List<Veiculo> veiculos = veiculoService.listarVeiculosComFiltros(placaFiltro, corFiltro, tipoFiltro, page, size);
             return Response.ok(veiculos).build();
+            
         } catch (Exception e) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+            return Response.status(Status.INTERNAL_SERVER_ERROR)
                     .entity("Erro ao buscar boletins: " + e.getMessage()).build();
         }
     }

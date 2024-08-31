@@ -36,17 +36,18 @@ public class VeiculoRepository implements IVeiculoRepository {
     @Override
     public void registrarFurto(Veiculo veiculo) {
         if (veiculo != null) {
-            listaVeiculos.add(veiculo);
-            System.out.println("Veículo adicionado: " + veiculo);
+            listaVeiculos.add(0, veiculo);
         }
     }
 
     @Override
     public List<Veiculo> listarVeiculosComFiltros(String placa, String cor, String tipo, int page, int size) {
+        String tipoNormalizado = normalizarTipo(tipo);
+
         List<Veiculo> resultados = listaVeiculos.stream()
             .filter(v -> (placa == null || placa.isEmpty() || v.getEmplacamento().getPlaca().equals(placa)))
             .filter(v -> (cor == null || cor.isEmpty() || v.getCor().equalsIgnoreCase(cor)))
-            .filter(v -> (tipo == null || tipo.isEmpty() || v.getTipo().equalsIgnoreCase(tipo)))
+            .filter(v -> (tipoNormalizado == null || tipoNormalizado.isEmpty() || v.getTipo().equalsIgnoreCase(tipoNormalizado)))
             .collect(Collectors.toList());
 
         int start = page * size;
@@ -58,4 +59,33 @@ public class VeiculoRepository implements IVeiculoRepository {
 
         return resultados.subList(start, end);
     }
+
+    private String normalizarTipo(String tipo) {
+        if (tipo == null) {
+            return null;
+        }
+
+        String tipoLower = tipo.trim().toLowerCase();
+        
+        if (tipoLower.contains("automovel")) {
+            return "Automovel";
+        } else if (tipoLower.contains("motociclo")) {
+            return "Motociclo";
+        } else if (tipoLower.contains("caminhonete")) {
+            return "Caminhonete";
+        } else if (tipoLower.contains("caminhão")) {
+            return "Caminhão";
+        } else if (tipoLower.contains("reboque")) {
+            return "Reboque";
+        } else if (tipoLower.contains("mononeta")) {
+            return "Mononeta";
+        } else if (tipoLower.contains("camioneta")) {
+            return "Camioneta";
+        } else if (tipoLower.contains("utilitário")) {
+            return "Utilitário";
+        }
+        
+        return null;
+    }
+
 }

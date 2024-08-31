@@ -72,14 +72,20 @@ $(document).ready(function() {
             type: 'PUT',
             contentType: 'application/json',
             data: JSON.stringify(boletim),
-            success: function(result) {
-                alert(result);
-                location.href = '/delegacia/listaBoletim';
-            },
-            error: function(err) {
-                console.log("Erro ao atualizar o boletim:", err);
-                alert('Erro ao atualizar o boletim.');
-            }
+			success: function() {
+			  $("#resultado").empty();
+			  $("#resultado").html("Boletim cadastrado com sucesso!").css({
+				"color": "green",
+				"font-weight": "bold"
+			  });
+			},
+			error: function(xhr, status, error) {
+			  $("#resultado").empty();
+			  $("#resultado").append("Erro ao cadastrar: " + xhr.responseText).css({
+				"color": "red",
+				"font-weight": "bold"
+			  })
+			}
         });
     });
 });

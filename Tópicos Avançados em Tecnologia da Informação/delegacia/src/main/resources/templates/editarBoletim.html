@@ -1,94 +1,126 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Delegacia Eletrônica - Edição de Boletim</title>
-    <meta charset="UTF-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" type="text/css" href="/delegacia/css/delegacia.css" />
-    <link rel="icon" type="image/x-icon" href="/delegacia/img/favicon.png">
-    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-    <script src="/delegacia/js/editarBoletim.js"></script>
-    <style>
-        label {
-            float: left;
-            width: 215px;
-            clear: both;
-            margin: 2px;
-            text-align: right;
-        }
+<title>Delegacia Eletrônica - Edição de Boletim</title>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="icon" type="image/x-icon" href="/delegacia/img/favicon.png">
+<link rel="stylesheet" type="text/css"
+	href="/delegacia/css/editarBoletim.css" />
+<link rel="stylesheet" type="text/css"
+	href="/delegacia/css/delegacia.css" />
 
-        input, select {
-            width: 325px;
-            clear: both;
-            margin: 2px;
-        }
-    </style>
+
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="/delegacia/js/editarBoletim.js"></script>
 </head>
 <body>
 
-    <div id='topo'
-        style='display: flex; align-items: center; justify-content: center;'>
-        <img src='/delegacia/img/police.png' width='110px' style='float: left' />
-        <div style='text-align: center; padding: 5px 80px;'>
-            <span class='header'>Delegacia Eletrônica</span><br> <span
-                class='header'><b>Boletim de Ocorrência </b></span><br> <span
-                class='header'>Controle de Furto de Veículos</span><br>
-        </div>
-        <img src='/delegacia/img/police2.png' width='160px' />
-    </div>
-    <center>
-        <img height='5' src='/delegacia/img/utfLinha.jpg' width='100%'>
-    </center>
+	<div id='topo'>
+		<img src='/delegacia/img/police.png' />
+		<div class='header'>
+			Delegacia Eletrônica<br> <b>Boletim de Ocorrência</b><br>
+			Controle de Furto de Veículos
+		</div>
+		<img src='/delegacia/img/furto.png' />
+	</div>
 
-    <h1>Edição de Boletim de Ocorrência - Furto de veículo</h1>
-    <div id="dadosContato">
-        <h3>Dados da ocorrência</h3>
-		<label>Identificador:</label><input id="identificador" type="text" readonly><br>
-        <label>Data:</label><input id="data" type="date"><br> 
-        <label>Período:</label>			
-        	<select id="periodo">
-			    <option value="Manhã">Manhã</option>
-			    <option value="Tarde">Tarde</option>
-			    <option value="Noite">Noite</option>
-			    <option value="Madrugada">Madrugada</option>
-			</select><br>
-        <label>Logradouro:</label><input id="logradouro" type="text"><br> 
-        <label>Número:</label><input id="numero" type="text"><br> 
-        <label>Bairro:</label><input id="bairro" type="text"><br> 
-        <label>Cidade:</label><input id="cidade" type="text"><br> 
-        <label>Estado:</label><input id="estado" type="text"><br> <br>
-        
-        <h3>Dados do veículo</h3>
-      ABC1234  <label>Placa:</label><input id="placa" type="text"><br> 
-        <label>Estado:</label><input id="estadoPlaca" type="text"><br> 
-        <label>Cidade:</label><input id="cidadePlaca" type="text"><br> 
-        <label>Cor:</label><input id="cor" type="text"><br> 
-        <label>Marca:</label><input id="marca" type="text"><br> 
-        <label>Tipo:</label>
-        	<select id="tipo">
-		        <option value="Automovel">Automovel</option>
-		        <option value="Motociclo">Motociclo</option>
-		        <option value="Caminhonete">Caminhonete</option>
-		        <option value="Caminhão">Caminhão</option>	        
-		        <option value="Reboque">Reboque</option>
-		        <option value="Mononeta">Mononeta</option>
-		        <option value="Camioneta">Camioneta</option>
-		        <option value="Utilitário">Utilitário</option>
-	    	</select><br>
-        
-        <label>Ano:</label><input id="anoFabricacao" type="text"><br> <br>
-        
-        <h3>Dados da vítima</h3>
-        <label>Nome:</label><input id="nome" type="text"><br> 
-        <label>Email:</label><input id="email" type="text"><br> 
-        <label>Telefone:</label><input id="telefone" type="text"><br> <br>
-        <center>
-            <button onclick="location.href = '/delegacia/listaBoletim';">Voltar</button>
-            <button id="botaoSalvar">Salvar</button>
-        </center>
-        <br>
-        <br>
-        <div id="resultado"></div>
-    </div>
+
+	<center>
+		<img height='5' src='/delegacia/img/utfLinha.jpg' width='100%'>
+	</center>
+
+	<div class="container">
+		<h1>Edição de Boletim de Ocorrência - Furto de Veículo</h1>
+
+		<div id="dadosContato">
+			<h3>Dados da Ocorrência</h3>
+			<div class="field-container">
+				<label for="identificador">Identificador:</label> <input
+					id="identificador" type="text" readonly>
+			</div>
+			<div class="field-container">
+				<label for="data">Data:</label> <input id="data" type="date">
+			</div>
+			<div class="field-container">
+				<label for="periodo">Período:</label> <select id="periodo">
+					<option value="Manhã">Manhã</option>
+					<option value="Tarde">Tarde</option>
+					<option value="Noite">Noite</option>
+					<option value="Madrugada">Madrugada</option>
+				</select>
+			</div>
+			<div class="field-container">
+				<label for="logradouro">Logradouro:</label> <input id="logradouro"
+					type="text">
+			</div>
+			<div class="field-container">
+				<label for="numero">Número:</label> <input id="numero" type="text">
+			</div>
+			<div class="field-container">
+				<label for="bairro">Bairro:</label> <input id="bairro" type="text">
+			</div>
+			<div class="field-container">
+				<label for="cidade">Cidade:</label> <input id="cidade" type="text">
+			</div>
+			<div class="field-container">
+				<label for="estado">Estado:</label> <input id="estado" type="text">
+			</div>
+
+			<h3>Dados do Veículo</h3>
+			<div class="field-container">
+				<label for="placa">Placa:</label> <input id="placa" type="text">
+			</div>
+			<div class="field-container">
+				<label for="estadoPlaca">Estado:</label> <input id="estadoPlaca"
+					type="text">
+			</div>
+			<div class="field-container">
+				<label for="cidadePlaca">Cidade:</label> <input id="cidadePlaca"
+					type="text">
+			</div>
+			<div class="field-container">
+				<label for="cor">Cor:</label> <input id="cor" type="text">
+			</div>
+			<div class="field-container">
+				<label for="marca">Marca:</label> <input id="marca" type="text">
+			</div>
+			<div class="field-container">
+				<label for="tipo">Tipo:</label> <select id="tipo">
+					<option value="Automovel">Automóvel</option>
+					<option value="Motociclo">Motociclo</option>
+					<option value="Caminhonete">Caminhonete</option>
+					<option value="Caminhão">Caminhão</option>
+					<option value="Reboque">Reboque</option>
+					<option value="Mononeta">Mononeta</option>
+					<option value="Camioneta">Camioneta</option>
+					<option value="Utilitário">Utilitário</option>
+				</select>
+			</div>
+			<div class="field-container">
+				<label for="anoFabricacao">Ano:</label> <input id="anoFabricacao"
+					type="text">
+			</div>
+
+			<h3>Dados da Vítima</h3>
+			<div class="field-container">
+				<label for="nome">Nome:</label> <input id="nome" type="text">
+			</div>
+			<div class="field-container">
+				<label for="email">Email:</label> <input id="email" type="text">
+			</div>
+			<div class="field-container">
+				<label for="telefone">Telefone:</label> <input id="telefone"
+					type="text">
+			</div>
+
+			<div class="center">
+				<button onclick="location.href = '/delegacia/listaBoletim';">Voltar</button>
+				<button id="botaoSalvar">Salvar</button>
+			</div>
+
+			<div id="resultado"></div>
+		</div>
+	</div>
 </body>
 </html>

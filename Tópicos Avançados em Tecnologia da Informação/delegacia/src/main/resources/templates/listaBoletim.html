@@ -1,105 +1,114 @@
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="pt_BR" xml:lang="pt_BR">
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Delegacia Eletrônica</title>
-<link rel="stylesheet" type="text/css" href="/delegacia/css/delegacia.css" />
 <link rel="icon" type="image/x-icon" href="/delegacia/img/favicon.png">
+<link rel="stylesheet" type="text/css"
+	href="/delegacia/css/listaBoletim.css" />
+<link rel="stylesheet" type="text/css"
+	href="/delegacia/css/delegacia.css" />
+
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script src="/delegacia/js/listaBoletim.js"></script>
 </head>
 <body>
-	<div id='topo'
-		style='display: flex; align-items: center; justify-content: center;'>
-		<img src='/delegacia/img/police.png' width='110px' style='float: left' />
-		<div style='text-align: center; padding: 5px 80px;'>
-			<span class='header'>Delegacia Eletrônica</span><br> <span
-				class='header'><b>Boletim de Ocorrência </b></span><br> <span
-				class='header'>Controle de Furto de Veículos</span><br>
+	<div id='topo'>
+		<img src='/delegacia/img/police.png' />
+		<div class='header'>
+			Delegacia Eletrônica<br> <b>Boletim de Ocorrência</b><br>
+			Controle de Furto de Veículos
 		</div>
-		<img src='/delegacia/img/police2.png' width='160px' />
+		<img src='/delegacia/img/furto.png' />
 	</div>
+
 	<center>
 		<img height='5' src='/delegacia/img/utfLinha.jpg' width='100%'>
 	</center>
 
-	<h1>Lista de Boletins de Ocorrência - Furto de veículo</h1>
+	<div id="filtros" class="filtros-container">
+		<h1>Lista de Boletins de Ocorrência - Furto de veículo</h1>
 
-	<div id="filtros">
-	    <label for="filtroIdentificador">Identificador:</label>
-	    <input type="text" id="filtroIdentificador" placeholder="Identificador do BO" />
-	
-	    <label for="filtroCidade">Cidade:</label>
-	    <input type="text" id="filtroCidade" placeholder="Nome da cidade" />
-	
-	    <label for="filtroPeriodo">Período:</label>
-	    <select id="filtroPeriodo">
-	        <option value="">Todos</option>
-	        <option value="Manhã">Manhã</option>
-	        <option value="Tarde">Tarde</option>
-	        <option value="Noite">Noite</option>
-	        <option value="Madrugada">Madrugada</option>
-	    </select>
-	
-	    <button id="botaoFiltrar">Filtrar</button>
-	    <button id="botaoLimpar">Limpar Filtros</button>
+		<div class="field-container">
+			<label for="filtroIdentificador">Identificador:</label> <input
+				type="text" id="filtroIdentificador"
+				placeholder="Identificador do BO" />
+		</div>
+		<div class="field-container">
+			<label for="filtroCidade">Cidade:</label> <input type="text"
+				id="filtroCidade" placeholder="Nome da cidade" />
+		</div>
+		<div class="field-container">
+			<label for="filtroPeriodo">Período:</label> <select
+				id="filtroPeriodo">
+				<option value="">Todos</option>
+				<option value="Manhã">Manhã</option>
+				<option value="Tarde">Tarde</option>
+				<option value="Noite">Noite</option>
+				<option value="Madrugada">Madrugada</option>
+			</select>
+		</div>
+
+		<div class="center">
+			<button id="botaoFiltrar">Filtrar</button>
+			<button id="botaoLimpar">Limpar Filtros</button>
+		</div>
 	</div>
 
+	<div class="tabela-container">
+		<table id="tabelaBos">
+			<thead>
+				<tr>
+					<th colspan="3">Dados Gerais</th>
+					<th colspan="3">Dados da Vítima</th>
+					<th colspan="5">Local da Ocorrência</th>
+					<th colspan="7">Dados do Veículo</th>
+				</tr>
+				<tr>
+					<!-- Dados Gerais -->
+					<th>Identificador</th>
+					<th>Data Ocorrência</th>
+					<th>Período Ocorrência</th>
 
-	<table id="tabelaBos" border="2" cellspacing="0" cellpadding="6"
-		rules="groups" frame="hsides" width="100%">
-		<thead>
-			<tr>
-				<th colspan="3">Dados da gerais</th>
-				<th colspan="3">Dados da vítima</th>
-				<th colspan="5">Local da ocorrência</th>
-				<th colspan="7">Dados do veículo</th>
-			</tr>
-			<tr>
-				<!-- Dados gerais -->
-				<th>Identificador</th>
-				<th>Data ocorrência</th>
-				<th>Período ocorrência</th>
+					<!-- Dados da Vítima -->
+					<th>Nome</th>
+					<th>Telefone</th>
+					<th>Email</th>
 
-				<!-- Dados da vítima -->
-				<th>Nome</th>
-				<th>Telefone</th>
-				<th>Email</th>
+					<!-- Local da Ocorrência -->
+					<th>Logradouro</th>
+					<th>Número</th>
+					<th>Bairro</th>
+					<th>Cidade</th>
+					<th>Estado</th>
 
-				<!-- Local da ocorrência -->
-				<th>Logradouro</th>
-				<th>Número</th>
-				<th>Bairro</th>
-				<th>Cidade</th>
-				<th>Estado</th>
-
-				<!-- Dados do veículo -->
-				<th>Ano fabr.</th>
-				<th>Cor</th>
-				<th>Marca</th>
-				<th>Tipo</th>
-				<th>Placa</th>
-				<th>Cidade</th>
-				<th>Estado</th>
-				<th>Ações</th>
-			</tr>
-		</thead>
-		<tbody id="tabelaBosBody">
-		</tbody>
-	</table>
+					<!-- Dados do Veículo -->
+					<th>Ano Fabr.</th>
+					<th>Cor</th>
+					<th>Marca</th>
+					<th>Tipo</th>
+					<th>Placa</th>
+					<th>Cidade</th>
+					<th>Estado</th>
+					<th>Ações</th>
+				</tr>
+			</thead>
+			<tbody id="tabelaBosBody">
+			</tbody>
+		</table>
 	</div>
+
 	<span id="loading">Carregando dados...</span>
-	
-	<div>
-	    <button id="botaoPaginaAnterior">Página Anterior</button>
-	    <span id="paginaAtual">Página 1</span>
-	    <button id="botaoProximaPagina">Próxima Página</button>
-	</div>
-	
-	<div>
-    	<button onclick="location.href = '/delegacia';">Voltar</button>
+
+	<div class="center">
+		<button id="botaoPaginaAnterior">Página Anterior</button>
+		<span id="paginaAtual">Página 1</span>
+		<button id="botaoProximaPagina">Próxima Página</button>
 	</div>
 
-	
+	<div class="center">
+		<button onclick="location.href = '/delegacia';">Voltar</button>
+	</div>
 </body>
 </html>

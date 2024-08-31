@@ -4,53 +4,38 @@
 <title>Delegacia Eletrônica</title>
 <meta charset="UTF-8">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="stylesheet" type="text/css" href="/delegacia/css/delegacia.css" />
+<link rel="stylesheet" type="text/css" href="/delegacia/css/index.css" />
+<link rel="stylesheet" type="text/css"
+	href="/delegacia/css/delegacia.css" />
+
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <link rel="icon" type="image/x-icon" href="/delegacia/img/favicon.png">
 
-<style>
-.flexboxOnParentDiv {
-	display: inline-block;
-	align-items: center;
-	justify-content: center;
-}
-</style>
 
 </head>
 <body>
 
-	<div id='topo'
-		style='display: flex; align-items: center; justify-content: center;'>
-		<img src='/delegacia/img/police.png' width='110px' style='float: left' />
-		<div style='text-align: center; padding: 5px 80px 5px 80px;'>
-			<span class='header'>Delegacia Eletrônica</span><br> <span
-				class='header'><b>Boletim de Ocorrência </b></span><br> <span
-				class='header'>Controle de Furto de Veículos</span><br>
+	<div id='topo'>
+		<img src='/delegacia/img/police.png' />
+		<div class='header'>
+			Delegacia Eletrônica<br> <b>Boletim de Ocorrência</b><br>
+			Controle de Furto de Veículos
 		</div>
-		<img src='/delegacia/img/police2.png' width='160px' />
-	</div>
-	<center>
-		<img height='5' src='/delegacia/img/utfLinha.jpg' width='100%'>
-	</center>
-
-	<h1>Sistema de Gestão de Boletins de Ocorrência</h1>
-	
-	<div class="flexboxOnParentDiv">
-		<a href="/delegacia/cadastroBoletim">
-			<span style="font-size: 28px; padding-bottom: 40px;">Cadastrar Boletim de Ocorrência</span>
-		</a>
-	</div>
-	
-	<div>
-		<a href="/delegacia/listaBoletim">
-			<span style="font-size: 28px; padding-bottom: 40px;">Lista de Boletins de ocorrência</span>
-		</a>
+		<img src='/delegacia/img/furto.png' />
 	</div>
 
-	<div>
-		<a href="/delegacia/listaVeiculo">
-			<span style="font-size: 28px; padding-bottom: 40px;">Lista de Veículos Furtados</span>
-		</a>
+	<div class="container">
+		<h1>Sistema de Gestão de Boletins de Ocorrência</h1>
+
+		<div class="center">
+			<a href="/delegacia/cadastroBoletim">
+				<button>Cadastrar Boletim de Ocorrência</button>
+			</a> <a href="/delegacia/listaBoletim">
+				<button>Lista de Boletins de Ocorrência</button>
+			</a> <a href="/delegacia/listaVeiculo">
+				<button>Lista de Veículos Furtados</button>
+			</a>
+		</div>
 	</div>
 
 </body>
