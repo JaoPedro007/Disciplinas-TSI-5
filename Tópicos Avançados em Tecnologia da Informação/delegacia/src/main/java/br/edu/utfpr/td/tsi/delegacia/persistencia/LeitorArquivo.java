@@ -14,6 +14,8 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.csv.QuoteMode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import br.edu.utfpr.td.tsi.delegacia.modelo.BoletimFurtoVeiculo;
@@ -23,6 +25,9 @@ import br.edu.utfpr.td.tsi.delegacia.modelo.Veiculo;
 
 @Component
 public class LeitorArquivo {
+	
+    private static final Logger logger = LoggerFactory.getLogger(LeitorArquivo.class);
+
 
     private List<BoletimFurtoVeiculo> boletins = new ArrayList<>();
 
@@ -54,8 +59,9 @@ public class LeitorArquivo {
 				    }
 				}
 			}
+            logger.info("Arquivo foi carregado com sucesso. Possui {} registros", boletins.size());
         } catch (IOException e) {
-            System.out.println("Erro ao abrir arquivo CSV");
+            logger.error("Erro ao abrir arquivo CSV");
         }
 
         return boletins;
