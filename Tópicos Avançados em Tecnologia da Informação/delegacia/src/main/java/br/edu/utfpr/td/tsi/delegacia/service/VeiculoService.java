@@ -89,4 +89,9 @@ public class VeiculoService implements IVeiculoService {
 
 		return true;
 	}
+
+	@Override
+	public void excluir(Veiculo v) {
+		veiculoRepository.excluir(v);
+	}
 }

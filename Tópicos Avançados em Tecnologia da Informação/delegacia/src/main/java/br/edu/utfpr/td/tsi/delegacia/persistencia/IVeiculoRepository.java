@@ -9,4 +9,5 @@ public interface IVeiculoRepository {
 	   List<Veiculo> listarTodos();
 	   List<Veiculo> listarVeiculosComFiltros(String placa, String cor, String tipo, int page, int size);
 	   void registrarFurto(Veiculo veiculo);
+	   void excluir(Veiculo v);
 }

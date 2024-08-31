@@ -88,4 +88,14 @@ public class VeiculoRepository implements IVeiculoRepository {
         return null;
     }
 
+	@Override
+	public void excluir(Veiculo v) {
+        if (v == null) {
+            throw new IllegalArgumentException("Veiculo não localizado para exclusão.");
+        }
+        
+        listaVeiculos.remove(v);
+        
+	}
+
 }

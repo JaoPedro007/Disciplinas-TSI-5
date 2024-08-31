@@ -75,6 +75,10 @@ public class BoletimService implements IBoletimService {
 
 	@Override
 	public boolean excluir(String id) {
+		BoletimFurtoVeiculo b = boletimRepository.listar(id);
+		if(b != null) {
+			veiculoService.excluir(b.getVeiculoFurtado());			
+		}
 		return boletimRepository.excluir(id);
 	}
 	
