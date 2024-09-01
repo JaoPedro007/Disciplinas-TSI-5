@@ -15,7 +15,7 @@ import java.util.List;
 public interface AgendamentoDAO {
 
     @Insert
-    public void inserir(Agendamento ag);
+    public long inserir(Agendamento ag);
 
     @Update
     public void alterar(Agendamento ag);

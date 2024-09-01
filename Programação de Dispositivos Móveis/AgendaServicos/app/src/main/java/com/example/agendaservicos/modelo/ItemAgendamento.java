@@ -3,6 +3,7 @@ package com.example.agendaservicos.modelo;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
@@ -30,6 +31,17 @@ public class ItemAgendamento implements Serializable {
 
     @ColumnInfo(name = "valor_item")
     private double valorItem;
+
+    @Ignore
+    private Servico servico;
+
+    public Servico getServico() {
+        return servico;
+    }
+
+    public void setServico(Servico servico) {
+        this.servico = servico;
+    }
 
     public long getId() {
         return id;
@@ -83,4 +95,12 @@ public class ItemAgendamento implements Serializable {
     public int hashCode() {
         return Objects.hash(id);
     }
+
+    @Override
+    public String toString() {
+            return  servico.getDescricao() + "\n" +
+                    servico.getUnidadeMedida() + " - R$ " +
+                    String.format("%.2f", valorItem * quantidade);
+    }
+
 }

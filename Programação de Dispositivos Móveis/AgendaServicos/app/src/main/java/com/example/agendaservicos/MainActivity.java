@@ -1,6 +1,8 @@
 package com.example.agendaservicos;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.room.Room;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,12 +12,51 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.example.agendaservicos.banco.Banco;
+import com.example.agendaservicos.dao.AgendamentoDAO;
+import com.example.agendaservicos.modelo.Agendamento;
+import com.example.agendaservicos.modelo.Servico;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
+
+
+    Agendamento agendamento;
+    ArrayAdapter<Agendamento> adapter;
+    ArrayList<Agendamento> agendamentos;
+
+    Banco bd;
+    AgendamentoDAO dao;
+
+    ListView lista;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        lista = (ListView) findViewById(R.id.lista_servicos);
+
+        agendamentos = new ArrayList<>();
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,
+                agendamentos);
+        lista.setAdapter( adapter );
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        bd = Room.databaseBuilder(getApplicationContext(), Banco.class, "banco_agendamento").build();
+        dao = bd.getAgendamentoDAO();
+
+        dao.listar().observe(this, new ObservadorAgendamento());
+    }
+
+    public void onStop() {
+        bd.close();
+        super.onStop();
     }
 
     @Override
@@ -36,5 +77,15 @@ public class MainActivity extends AppCompatActivity {
     public void agendamentos(View v) {
         Intent it = new Intent(this, TelaAgendamento.class);
         startActivity(it);
+    }
+
+
+    class ObservadorAgendamento implements Observer<List<Agendamento>> {
+        @Override
+        public void onChanged(List<Agendamento> agendamentos) {
+            MainActivity.this.agendamentos.clear();
+            MainActivity.this.agendamentos.addAll( agendamentos );
+            adapter.notifyDataSetChanged();
+        }
     }
 }

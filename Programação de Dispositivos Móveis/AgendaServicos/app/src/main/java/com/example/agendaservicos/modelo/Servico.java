@@ -63,8 +63,8 @@ public class Servico implements Serializable {
     @Override
     public String toString() {
         return  descricao + " - "
-                + unidadeMedida + " - R$"
-                + valor;
+                + unidadeMedida + " - R$ "
+                + String.format("%.2f", valor);
     }
 
     @Override
