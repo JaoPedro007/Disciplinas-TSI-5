@@ -9,21 +9,22 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.agendaservicos.banco.Banco;
 import com.example.agendaservicos.dao.AgendamentoDAO;
 import com.example.agendaservicos.modelo.Agendamento;
 import com.example.agendaservicos.modelo.Servico;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-
-    Agendamento agendamento;
     ArrayAdapter<Agendamento> adapter;
     ArrayList<Agendamento> agendamentos;
 
@@ -38,6 +39,20 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         lista = (ListView) findViewById(R.id.lista_servicos);
+
+        lista.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Agendamento agendamento = (Agendamento) parent.getItemAtPosition(position);
+
+                Intent intent = new Intent(MainActivity.this, TelaAgendamento.class);
+                intent.putExtra("agendamento", agendamento);
+
+                startActivity(intent);
+
+                return true;
+            }
+        });
 
         agendamentos = new ArrayList<>();
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,

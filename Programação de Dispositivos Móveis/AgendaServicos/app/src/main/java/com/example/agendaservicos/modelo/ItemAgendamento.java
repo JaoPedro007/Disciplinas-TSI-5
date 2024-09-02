@@ -100,7 +100,7 @@ public class ItemAgendamento implements Serializable {
     public String toString() {
             return  servico.getDescricao() + "\n" +
                     servico.getUnidadeMedida() + " - R$ " +
-                    String.format("%.2f", valorItem * quantidade);
+                    String.format("%.2f", valorItem);
     }
 
 }

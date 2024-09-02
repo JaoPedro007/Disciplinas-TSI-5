@@ -9,6 +9,7 @@ import androidx.room.Update;
 
 import com.example.agendaservicos.modelo.ItemAgendamento;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Dao
@@ -25,4 +26,7 @@ public interface ItemAgendamentoDAO {
 
     @Query("select * from itemagendamento")
     public LiveData<List<ItemAgendamento>> listar();
+
+    @Query("SELECT * FROM itemagendamento WHERE id_agendamento = :id")
+    LiveData<List<ItemAgendamento>> listarPorAgendamento(long id);
 }

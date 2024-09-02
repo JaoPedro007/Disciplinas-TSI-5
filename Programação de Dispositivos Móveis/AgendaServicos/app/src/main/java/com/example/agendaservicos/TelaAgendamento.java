@@ -5,10 +5,13 @@ import androidx.lifecycle.Observer;
 import androidx.room.Room;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -18,6 +21,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.example.agendaservicos.banco.Banco;
 import com.example.agendaservicos.dao.AgendamentoDAO;
@@ -33,11 +37,13 @@ import java.util.Date;
 import java.util.List;
 
 public class TelaAgendamento extends AppCompatActivity {
-    public static SimpleDateFormat dtFormater = new SimpleDateFormat("dd/MM/yyyy");
-    public static SimpleDateFormat fmtDiaMes = new SimpleDateFormat("dd/MM");
+    public static SimpleDateFormat dtFormater = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+    Agendamento agendamento;
 
     ArrayAdapter<ItemAgendamento> adapter;
     ArrayList<ItemAgendamento> itemAgendamentos;
+    boolean editando = false;
 
     Banco bd;
     AgendamentoDAO dao;
@@ -66,10 +72,13 @@ public class TelaAgendamento extends AppCompatActivity {
         txtValor = (TextView) findViewById(R.id.txt_valor);
         opcoes_servico = (Spinner) findViewById(R.id.opcoes_servico);
 
+        Intent intent = getIntent();
+        agendamento = (Agendamento) intent.getSerializableExtra("agendamento");
+
         itemAgendamentos = new ArrayList<>();
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_single_choice,
                 itemAgendamentos);
-        lista.setAdapter( adapter );
+        lista.setAdapter(adapter);
 
         edQuantidade.addTextChangedListener(new TextWatcher() {
             @Override
@@ -96,41 +105,67 @@ public class TelaAgendamento extends AppCompatActivity {
                     txtValor.setText(String.valueOf(servicoSelecionado.getValor()));
                 }
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
 
-     }
+    }
 
-     @Override
-    public void onStart(){
+    @Override
+    public void onStart() {
         super.onStart();
         bd = Room.databaseBuilder(getApplicationContext(), Banco.class, "banco_agendamento").build();
-         dao = bd.getAgendamentoDAO();
-         servicoDao = bd.getServicoDAO();
-         itemDao = bd.getItemAgendamentoDAO();
-         carregarServicos();
+        dao = bd.getAgendamentoDAO();
+        servicoDao = bd.getServicoDAO();
+        itemDao = bd.getItemAgendamentoDAO();
+        carregarServicos();
 
-     }
+        if (agendamento != null) {
+            editando=true;
+            edCliente.setText(agendamento.getNomeCliente());
+            edEndereco.setText(agendamento.getEndereco());
+            txtDataHora.setText(dtFormater.format(agendamento.getDataHora()));
+            carregarItensAgendamento(agendamento.getId());
+        }
 
-     public void onStop(){
+    }
+
+    public void onStop() {
         bd.close();
         super.onStop();
-     }
+    }
 
     public void lerData(View view) {
-        DatePickerDialog dlg = new DatePickerDialog(this);
-        dlg.setOnDateSetListener(new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this);
+        datePickerDialog.setOnDateSetListener(new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int ano, int mes, int dia) {
-                dataAgendamento = new Date(ano-1900, mes, dia);
-                txtDataHora.setText(dtFormater.format(dataAgendamento));
+                dataAgendamento = new Date(ano - 1900, mes, dia);
+
+                showTimePickerDialog();
             }
         });
-        dlg.show();
+        datePickerDialog.show();
     }
+
+    private void showTimePickerDialog() {
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int hora, int minuto) {
+                if (dataAgendamento != null) {
+                    dataAgendamento.setHours(hora);
+                    dataAgendamento.setMinutes(minuto);
+                    dataAgendamento.setSeconds(0);
+                    txtDataHora.setText(dtFormater.format(dataAgendamento));
+                }
+            }
+        }, 0, 0, true);
+        timePickerDialog.show();
+    }
+
 
     public void adicionar(View v) {
         if (servicoSelecionado != null && !edQuantidade.getText().toString().isEmpty()) {
@@ -156,13 +191,13 @@ public class TelaAgendamento extends AppCompatActivity {
         if (dataAgendamento == null) {
             return;
         }
-
+        
         double valorTotal = 0;
         for (ItemAgendamento item : itemAgendamentos) {
             valorTotal += item.getValorItem();
         }
 
-        Agendamento ag = new Agendamento();
+        Agendamento ag = editando ? agendamento : new Agendamento();
         ag.setNomeCliente(edCliente.getText().toString());
         ag.setEndereco(edEndereco.getText().toString());
         ag.setDataHora(dataAgendamento);
@@ -171,13 +206,26 @@ public class TelaAgendamento extends AppCompatActivity {
         new Thread() {
             public void run() {
                 Looper.prepare();
-                long idAgendamento = dao.inserir(ag);
 
-                for (ItemAgendamento itemAgendamento : itemAgendamentos) {
-                    itemAgendamento.setId_agendamento(idAgendamento);
-                    itemDao.inserir(itemAgendamento);
+                if (editando) {
+                    dao.alterar(ag);
+
+                    for (ItemAgendamento itemAgendamento : itemAgendamentos) {
+                        if (itemAgendamento.getId() != 0) {
+                            itemDao.alterar(itemAgendamento);
+                        } else {
+                            itemAgendamento.setId_agendamento(ag.getId());
+                            itemDao.inserir(itemAgendamento);
+                        }
+                    }
+                } else {
+                    long agendamentoId = dao.inserir(ag);
+
+                    for (ItemAgendamento itemAgendamento : itemAgendamentos) {
+                        itemAgendamento.setId_agendamento(agendamentoId);
+                        itemDao.inserir(itemAgendamento);
+                    }
                 }
-
                 Looper.loop();
             }
         }.start();
@@ -214,7 +262,7 @@ public class TelaAgendamento extends AppCompatActivity {
         });
     }
 
-    private void atualizarValorTotal(){
+    private void atualizarValorTotal() {
         if (servicoSelecionado != null) {
             String quantidadeStr = edQuantidade.getText().toString();
             if (!quantidadeStr.isEmpty()) {
@@ -232,18 +280,33 @@ public class TelaAgendamento extends AppCompatActivity {
         }
     }
 
+    private void carregarItensAgendamento(long id) {
+        itemDao.listarPorAgendamento(id).observe(this, new Observer<List<ItemAgendamento>>() {
+            @Override
+            public void onChanged(List<ItemAgendamento> itens) {
+                itemAgendamentos.clear();
 
+                new Thread() {
+                    public void run() {
+                        Looper.prepare();
 
+                        for (ItemAgendamento item : itens) {
+                            long idServico = item.getId_servico();
+                            Servico servico = servicoDao.listarPorId(idServico);
+                            item.setServico(servico);
+                            itemAgendamentos.add(item);
+                        }
+                        Looper.loop();
+                    }
+                }.start();
 
-    class ObservadorItemAgendamento implements Observer<List<ItemAgendamento>> {
-        @Override
-        public void onChanged(List<ItemAgendamento> itemAgendamentos) {
-            TelaAgendamento.this.itemAgendamentos.clear();
-            TelaAgendamento.this.itemAgendamentos.addAll( itemAgendamentos );
-            adapter.notifyDataSetChanged();
-        }
+                adapter.notifyDataSetChanged();
+            }
+        });
     }
-    private void limparCampos(){
+
+
+    private void limparCampos() {
         edCliente.setText("");
         edEndereco.setText("");
         edQuantidade.setText("");
