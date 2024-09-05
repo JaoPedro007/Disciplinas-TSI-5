@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.agendaservicos.banco.Banco;
+import com.example.agendaservicos.banco.DatabaseClient;
 import com.example.agendaservicos.dao.AgendamentoDAO;
 import com.example.agendaservicos.modelo.Agendamento;
 import com.example.agendaservicos.modelo.Servico;
@@ -63,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onStart(){
         super.onStart();
-        bd = Room.databaseBuilder(getApplicationContext(), Banco.class, "banco_agendamento").build();
+        bd = DatabaseClient.getInstance(this).getDatabase();
         dao = bd.getAgendamentoDAO();
 
         dao.listar().observe(this, new ObservadorAgendamento());

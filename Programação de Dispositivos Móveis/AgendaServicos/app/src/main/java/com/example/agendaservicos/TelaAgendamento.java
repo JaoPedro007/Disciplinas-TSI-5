@@ -33,6 +33,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.agendaservicos.banco.Banco;
+import com.example.agendaservicos.banco.DatabaseClient;
 import com.example.agendaservicos.dao.AgendamentoDAO;
 import com.example.agendaservicos.dao.ItemAgendamentoDAO;
 import com.example.agendaservicos.dao.ServicoDAO;
@@ -128,12 +129,22 @@ public class TelaAgendamento extends AppCompatActivity {
             }
         });
 
+        lista.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                ItemAgendamento itemSelecionado = itemAgendamentos.get(position);
+                mostrarDialogoRemover(itemSelecionado);
+                return true;
+            }
+        });
+
+
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        bd = Room.databaseBuilder(getApplicationContext(), Banco.class, "banco_agendamento").build();
+        bd = DatabaseClient.getInstance(this).getDatabase();
         dao = bd.getAgendamentoDAO();
         servicoDao = bd.getServicoDAO();
         itemDao = bd.getItemAgendamentoDAO();
@@ -353,7 +364,7 @@ public class TelaAgendamento extends AppCompatActivity {
         double valorCalculado = calcularValorTotal();
 
         txtValorTotal = (TextView) dialogView.findViewById(R.id.txt_valor_total);
-        txtValorTotal.setText("Valor total: " + String.format("%.2f", valorCalculado));
+        txtValorTotal.setText("Valor restante: " + String.format("%.2f", valorCalculado));
 
         EditText txtValorRecebido = (EditText) dialogView.findViewById(R.id.valor_recebido);
 
@@ -389,6 +400,18 @@ public class TelaAgendamento extends AppCompatActivity {
 
         try {
             double valorRecebido = Double.parseDouble(valor);
+            double valorTotal = calcularValorTotal();
+
+            if (valorTotal <= 0) {
+                Toast.makeText(this, "O valor total dos serviços deve ser maior que zero", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (valorRecebido > valorTotal) {
+                Toast.makeText(this, "O valor recebido não pode ser maior do que o valor total dos serviços", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             double valorAtual = agendamento.getRecebido();
 
             agendamento.setRecebido(valorAtual + valorRecebido);
@@ -401,7 +424,6 @@ public class TelaAgendamento extends AppCompatActivity {
             Toast.makeText(this, "O valor recebido é inválido", Toast.LENGTH_SHORT).show();
         }
     }
-
 
     private double calcularValorTotal() {
         double valorTotal = 0;
@@ -426,8 +448,44 @@ public class TelaAgendamento extends AppCompatActivity {
             executorService.shutdown();
         }
 
-        return (valorRecebido - valorTotal);
+        return (valorTotal - valorRecebido) ; // Retorne o valor total sem subtrair o valor recebido
     }
+
+    private void mostrarDialogoRemover(final ItemAgendamento item) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Remover serviço");
+        builder.setMessage("Tem certeza que deseja remover este serviço?");
+
+        builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                removerItem(item);
+            }
+        });
+
+
+        builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void removerItem(ItemAgendamento item) {
+        itemAgendamentos.remove(item);
+        adapter.notifyDataSetChanged();
+
+        new Thread() {
+            public void run() {
+                itemDao.remover(item);
+            }
+        }.start();
+    }
+
 
     private void limparCampos() {
         edCliente.setText("");
