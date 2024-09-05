@@ -79,10 +79,35 @@
         android:layout_height="0sp"
         android:layout_weight="2"
         android:id="@+id/lista_servico"/>
-    <Button
-        android:layout_width="wrap_content"
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Confirmar"
-        android:layout_gravity="right"
-        android:onClick="confirmar"/>
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <Button
+            android:id="@+id/btn_cancelar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Cancelar"
+            android:onClick="cancelar"
+            android:maxWidth="150dp"
+            android:minWidth="100dp"
+            android:visibility="gone"
+            android:layout_marginEnd="8dp"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Confirmar"
+            android:onClick="confirmar"
+            android:maxWidth="150dp"
+            android:minWidth="100dp"
+            android:layout_marginStart="8dp"/>
+
+    </LinearLayout>
+
 </LinearLayout>

@@ -8,6 +8,7 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.example.agendaservicos.modelo.Agendamento;
+import com.example.agendaservicos.modelo.ItemAgendamento;
 
 import java.util.List;
 
@@ -25,6 +26,11 @@ public interface AgendamentoDAO {
 
     @Query("select * from agendamento")
     public LiveData<List<Agendamento>> listar();
+
+    @Query("SELECT recebido FROM agendamento WHERE id = :id")
+    public Double buscarPorValorRecebido(long id);
+
+
 
 
 }

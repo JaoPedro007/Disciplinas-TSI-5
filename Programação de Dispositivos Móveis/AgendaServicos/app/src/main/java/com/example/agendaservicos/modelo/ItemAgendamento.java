@@ -9,7 +9,6 @@ import androidx.room.PrimaryKey;
 import java.io.Serializable;
 import java.util.Objects;
 
-
 @Entity(foreignKeys = {
         @ForeignKey(entity = Agendamento.class,
                 parentColumns = "id",
@@ -21,17 +20,13 @@ import java.util.Objects;
                 onDelete = ForeignKey.CASCADE)
 })
 public class ItemAgendamento implements Serializable {
-
     @PrimaryKey(autoGenerate = true)
     private long id;
-
     private long id_agendamento;
     private long id_servico;
     private double quantidade;
-
     @ColumnInfo(name = "valor_item")
     private double valorItem;
-
     @Ignore
     private Servico servico;
 
@@ -98,9 +93,9 @@ public class ItemAgendamento implements Serializable {
 
     @Override
     public String toString() {
-            return  servico.getDescricao() + "\n" +
-                    servico.getUnidadeMedida() + " - R$ " +
-                    String.format("%.2f", valorItem);
+        return servico.getDescricao() + "\n" +
+                servico.getUnidadeMedida() + " - R$ " +
+                String.format("%.2f", valorItem);
     }
 
 }
