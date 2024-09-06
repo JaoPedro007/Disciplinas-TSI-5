@@ -1,0 +1,44 @@
+\begin{thebibliography}{1}
+
+\bibitem{argetsinger2024promise}
+Cameron~R Argetsinger.
+\newblock The promise and peril of quantum computing and its implications for
+  cyber insurance.
+\newblock {\em Journal of Emerging Issues in Litigation/Winter}, 4(1):65--73,
+  2024.
+
+\bibitem{Callan2024}
+Tim Callan.
+\newblock Quantum computing trends 2024.
+\newblock
+  \url{https://www.siliconrepublic.com/machines/quantum-computing-trends-2024-sectigo-tim-callan},
+  2024.
+\newblock Acessado em 05/08/2024.
+
+\bibitem{grover1996fast}
+Lov~K Grover.
+\newblock A fast quantum mechanical algorithm for database search.
+\newblock In {\em Proceedings of the twenty-eighth annual ACM symposium on
+  Theory of computing}, pages 212--219, 1996.
+
+\bibitem{mitra2017quantum}
+Saptarshi Mitra, Bappaditya Jana, Supratim Bhattacharya, Prashnatita Pal, and
+  Jayanta Poray.
+\newblock Quantum cryptography: Overview, security issues and future
+  challenges.
+\newblock In {\em 2017 4th International Conference on Opto-Electronics and
+  Applied Optics (Optronix)}, pages 1--7. IEEE, 2017.
+
+\bibitem{nandhini2022extensive}
+S~Nandhini, Harpreet Singh, and UN~Akash.
+\newblock An extensive review on quantum computers.
+\newblock {\em Advances in Engineering Software}, 174, 2022.
+
+\bibitem{shor1994algorithms}
+Peter~W Shor.
+\newblock Algorithms for quantum computation: discrete logarithms and
+  factoring.
+\newblock In {\em Proceedings 35th annual symposium on foundations of computer
+  science}, pages 124--134. Ieee, 1994.
+
+\end{thebibliography}
