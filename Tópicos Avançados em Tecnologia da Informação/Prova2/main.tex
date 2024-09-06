@@ -1,0 +1,181 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[portuguese]{babel}
+
+
+\begin{document}
+	
+	\begin{titlepage}
+		\centering
+		\vspace*{2cm}
+		
+		\Huge
+		\textbf{Avaliação 2}
+		
+		\vspace{1.5cm}
+		
+		\LARGE
+		João Pedro Rodrigues Leite
+		RA: A2487055
+		
+		\vspace{0.5cm}
+		\LARGE
+		Data: \today
+		
+		\vspace{1.5cm}
+		
+		\textbf{Universidade Tecnológica Federal do Paraná}
+		
+		\vfill
+		
+		\Large
+		Curso: Sistemas para Internet
+		
+		\vspace{0.5cm}
+		\Large
+		Professor: Ivan Luiz Salvadori
+		
+		\vspace{0.5cm}
+		\Large
+		Tópicos Avançados em Tecnologia da Informação
+	\end{titlepage}
+		
+	\noindent\large{1. Explique as diferenças entre comunicação síncrona e assíncrona em serviços web, destacando os principais cenários de uso para cada abordagem. Descreva como cada tipo de comunicação afeta o desempenho, a escalabilidade e a experiência do usuário em sistemas distribuídos. Em seguida, forneça exemplos de tecnologias e padrões utilizados para implementar ambos os tipos de comunicação em aplicações web modernas.}
+
+	\subsection*{Diferença entre Comunicação Síncrona e Assíncrona}
+	
+	Basicamente na comunicação \textbf{síncrona}, o cliente faz uma requisição e precisa aguardar a resposta antes de continuar a execução, já na \textbf{assíncrona}, o cliente envia a requisição e continua suas operações normalmente sem aguardar a resposta imediata.
+	
+	\subsection*{Cenários de Uso}
+	A comunicação síncrona é usada quando a resposta imediata é essencial para o programa, geralmente em sistemas de pagamento ou operações CRUD por exemplo. Já a comunicação assíncrona é ideal para cenários onde o processamento pode demorar, e o cliente não precisa de uma resposta imediata, como envio de e-mails.
+	
+	\subsection*{Impacto no Desempenho e Escalabilidade}
+	A comunicação síncrona pode se tornar um gargalo, em alguns casos não é recomendada, pois bloqueia o cliente até a resposta, afetando o desempenho em sistemas. Em contrapartida, a comunicação assíncrona melhora a escalabilidade, pois libera o cliente para continuar outras tarefas sem que ele precise aguardar uma resposta, mas pode impactar a experiência do usuário se não houver feedback imediato.
+	
+	\subsection*{Tecnologias}
+	Para comunicação síncrona, são comuns HTTP/HTTPS e RPC. Para assíncrona, pode-se utilizar Message Queues como o Apache Kafka, ActiveMQ e RabbitMQ
+	
+	\vspace{1cm}
+	
+	%---------------------------------------------------------------------------------------%
+	
+	\noindent\large{2. Descreva, com suas palavras, a arquitetura de microserviços, destacando 
+		suas principais características e benefícios em comparação com a arquitetura 
+		monolítica. Em seguida, discuta como a comunicação síncrona e assíncrona é 
+		utilizada entre microserviços, explicando as vantagens e desvantagens de cada
+		abordagem. Por fim, exemplifique cenários em que uma comunicação assíncrona seria mais adequada que uma comunicação síncrona dentro de uma aplicação baseada em microserviços}
+	
+	
+	
+	\subsection*{Arquitetura de Microserviços}
+	
+	A arquitetura de microserviços é uma abordagem para desenvolver sistemas como um conjunto de pequenos serviços independentes. Cada serviço é responsável por uma função específica e pode ser desenvolvido, atualizado e escalado separadamente. A ideia é que a alteração em um microserviço não impacte em outro micro serviço, se isso ocorrer, os microserviços não foram bem construidos. Já na arquitetura monolítica tudo está em uma única fonte de código. As vantagens dessa arquitetura estão listadas abaixo:
+	
+	\begin{itemize}
+		\item \textbf{Modularidade}: Cada microserviço faz uma coisa, mas faz bem feita, sempre buscando a perfeição. O que facilita a manutenção e a evolução.
+		\item \textbf{Independência}: Mudanças em um serviço não devem afetar diretamente os outros, isso permite melhores atualizações.
+		\item \textbf{Tecnologia Diversificada}: Você pode usar diferentes tecnologias para diferentes serviços, o que ajuda a escolher a melhor ferramenta para cada tarefa. Dependendo da função que o microserviço deve executar algumas tecnologias(Linguagem de programação, Banco de dados, etc) serão mais adequadas.
+		\item \textbf{Resiliência}: Se um serviço falhar, o resto do sistema continua funcionando.
+		\item \textbf{Escalabilidade}: É possível escalar apenas os serviços que precisam de mais recursos.
+		\item \textbf{Facilidade de Substituição}: Microserviços pequenos são mais fáceis de substituir ou atualizar sem grandes impactos no sistema.
+	\end{itemize}
+	
+	\subsection*{Comunicação entre Microserviços}
+	
+	Microserviços se comunicam de duas formas principais: síncrona e assíncrona.
+	
+	\subsection*{Comunicação Síncrona}
+	
+	Na comunicação síncrona, um serviço faz uma solicitação e espera pela resposta antes de continuar o processo. É como uma conversa onde você espera a resposta antes de prosseguir.
+	
+	\textbf{Vantagens}:
+	\begin{itemize}
+		\item \textbf{Simples de Implementar}: A comunicação é direta e fácil de entender.
+		\item \textbf{Resposta Imediata}: Ideal para situações que exigem uma resposta rápida.
+	\end{itemize}
+	
+	\textbf{Desvantagens}:
+	\begin{itemize}
+		\item \textbf{Dependência}: Se o serviço chamado estiver lento ou fora do ar, isso pode impactar o desempenho.
+		\item \textbf{Latência}: Pode gerar atrasos se os serviços estiverem distantes, sobrecarregados ou mal construidos.
+	\end{itemize}
+	
+	\subsection*{Comunicação Assíncrona}
+	
+	Na comunicação assíncrona, os serviços trocam mensagens sem esperar pela resposta imediata. É como enviar um e-mail e continuar o trabalho enquanto aguarda uma resposta.
+	
+	\textbf{Vantagens}:
+	\begin{itemize}
+		\item \textbf{Desacoplamento}: Menos dependência direta entre serviços, o que melhora a flexibilidade.
+		\item \textbf{Escalabilidade}: Melhora a performance em sistemas com alto volume de dados.
+	\end{itemize}
+	
+	\textbf{Desvantagens}:
+	\begin{itemize}
+		\item \textbf{Complexidade}: Pode ser mais complicado de implementar e gerenciar.
+		\item \textbf{Consistência Eventual}: Os dados podem não estar sincronizados imediatamente. Nesse casos geralmente essa sincronização é feita a cada um certo tempo conforme foi explicado pelo professor no vídeo disponibilizado.
+	\end{itemize}
+	
+	\subsection*{Quando Usar Comunicação Assíncrona}
+	
+	A comunicação assíncrona é útil em casos como:
+	
+	\begin{itemize}
+		\item \textbf{Processamento de Dados em Lote}: Para tarefas que não exigem uma resposta instantânea, como processamento de pedidos, e-mails ou análise de logs.
+		\item \textbf{Alta Disponibilidade}: Quando você precisa de um sistema resiliente, onde falhas em um serviço não interrompem o funcionamento geral.
+		\item \textbf{Escalabilidade}: Em sistemas que precisam lidar com grandes volumes de eventos ou dados sem sobrecarregar o sistema.
+	\end{itemize}
+	
+
+	\vspace{1cm}
+	%-----------------------------------------------------------------------------------%
+	
+		\noindent\large{3. Descreva o funcionamento das filas e exchanges descritos no protocolo AMQP, abordando como cada um desses componentes contribui para o processamento e roteamento de mensagens dentro de um sistema. Explique como as filas garantem a persistência e a entrega das mensagens. Além disso, analise os diferentes tipos de exchanges disponíveis no AMQP, como "direct", "topic" e fanout". Para cada tipo de exchange, discuta suas características específicas, como elas influenciam o roteamento das mensagens e quais são as suas vantagens e desvantagens em termos de flexibilidade e eficiência}
+	
+	
+	\subsection*{Funcionamento das Filas e Exchanges no AMQP}
+	
+	O AMQP (Advanced Message Queuing Protocol) é um protocolo de mensagens que facilita a comunicação entre sistemas usando um modelo de mensagens. No AMQP, as filas e exchanges desempenham papéis importantes no processamento e roteamento de mensagens.
+	
+	\subsection*{Filas}
+	
+	As filas são onde as mensagens são armazenadas até serem processadas pelos consumidores. Elas garantem a persistência e a entrega das mensagens através de alguns mecanismos, sendo eles:
+	
+	\begin{itemize}
+		\item \textbf{Persistência}: As mensagens podem ser configuradas para persistir no disco, garantindo que não sejam perdidas em caso de falhas do servidor. Isso é feito marcando a fila e as mensagens como persistentes.
+		\item \textbf{Entrega Garantida}: As filas garantem que as mensagens sejam entregues aos consumidores. Se um consumidor falhar, a mensagem permanece na fila até ser processada com sucesso.
+	\end{itemize}
+	
+	\subsection*{Exchanges}
+	
+	As exchanges são responsáveis pelo roteamento das mensagens para uma ou mais filas, com base em regras de roteamento. O AMQP oferece vários tipos de exchanges, cada uma com características diferentes:
+	
+	\begin{itemize}
+		\item \textbf{Direct Exchange}: Roteia mensagens para filas baseando-se em uma chave de roteamento exata. A mensagem é entregue apenas às filas que possuem uma chave de roteamento que corresponde exatamente à chave fornecida. 
+		\begin{itemize}
+			\item \textbf{Vantagens}: Simples e direto, útil quando você precisa de um roteamento específico.
+			\item \textbf{Desvantagens}: Menos flexível para cenários que requerem múltiplos critérios de roteamento.
+		\end{itemize}
+		
+		\item \textbf{Topic Exchange}: Roteia mensagens com base em padrões de chave de roteamento. Permite um roteamento mais complexo e flexível, pois uma única exchange pode roteirizar mensagens para múltiplas filas com base em padrões de tópicos.
+		\begin{itemize}
+			\item \textbf{Vantagens}: Alta flexibilidade e capacidade de roteamento sofisticada. Ideal para cenários onde mensagens precisam ser filtradas por vários critérios.
+			\item \textbf{Desvantagens}: Mais complexo de configurar e gerenciar comparado ao direct exchange.
+		\end{itemize}
+		
+		\item \textbf{Fanout Exchange}: Roteia mensagens para todas as filas vinculadas, sem considerar a chave de roteamento. É como um se fosse "broadcast", então a mensagem é enviada para todas as filas associadas à exchange.
+		\begin{itemize}
+			\item \textbf{Vantagens}: Simples e eficiente quando você precisa que todas as filas recebam a mesma mensagem.
+			\item \textbf{Desvantagens}: Não permite filtragem de mensagens e pode resultar em sobrecarga se muitas filas estiverem associadas.
+		\end{itemize}
+	\end{itemize}
+	
+	\subsection*{Conclusão}
+	
+	As filas garantem a persistência e a entrega das mensagens, enquanto as exchanges determinam como essas mensagens são roteadas para as filas. A escolha do tipo de exchange afeta diretamente como as mensagens são distribuídas e processadas, então a configuração depende da necessidade da aplicação, pois isso acabará influenciando a flexibilidade e eficiência do sistema de mensagens.
+	
+
+	
+\end{document}
