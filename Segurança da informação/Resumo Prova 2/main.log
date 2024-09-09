@@ -1,14 +1,14 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2024.4.23)  9 SEP 2024 02:54
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.9.3)  9 SEP 2024 13:53
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**main.tex
-(./main.tex
+**./main.tex
+(main.tex
 LaTeX2e <2023-11-01> patch level 1
-L3 programming layer <2024-01-22>
-(/usr/share/texlive/texmf-dist/tex/latex/base/report.cls
+L3 programming layer <2024-01-04>
+(C:\Users\João Pedro\AppData\Local\Programs\MiKTeX\tex/latex/base\report.cls
 Document Class: report 2023/05/17 v1.4n Standard LaTeX document class
-(/usr/share/texlive/texmf-dist/tex/latex/base/size10.clo
+(C:\Users\João Pedro\AppData\Local\Programs\MiKTeX\tex/latex/base\size10.clo
 File: size10.clo 2023/05/17 v1.4n Standard LaTeX file (size option)
 )
 \c@part=\count187
@@ -24,23 +24,34 @@ File: size10.clo 2023/05/17 v1.4n Standard LaTeX file (size option)
 \belowcaptionskip=\skip49
 \bibindent=\dimen140
 )
-(/usr/share/texlive/texmf-dist/tex/generic/babel/babel.sty
+(C:\Users\João Pedro\AppData\Local\Programs\MiKTeX\tex/generic/babel\babel.sty
 Package: babel 2024/01/07 v24.1 The Babel package
 \babel@savecnt=\count196
 \U@D=\dimen141
-\l@unhyphenated=\language6
+\l@unhyphenated=\language79
 
-(/usr/share/texlive/texmf-dist/tex/generic/babel/txtbabel.def)
+(C:\Users\João Pedro\AppData\Local\Programs\MiKTeX\tex/generic/babel\txtbabel.
+def)
 \bbl@readstream=\read2
 \bbl@dirlevel=\count197
 
-(/usr/share/texlive/texmf-dist/tex/generic/babel-portuges/brazil.ldf
+*************************************
+* Local config file bblopts.cfg used
+*
+
+(C:\Users\João Pedro\AppData\Local\Programs\MiKTeX\tex/latex/arabi\bblopts.cfg
+File: bblopts.cfg 2005/09/08 v0.1 add Arabic and Farsi to "declared" options of
+ babel
+)
+(C:\Users\João Pedro\AppData\Local\Programs\MiKTeX\tex/latex/babel-portuges\br
+azil.ldf
 Language: portuges 2021/07/09 v1.2t Portuguese support from the babel system
 Package babel Info: Hyphen rules for 'brazil' set to \l@portuguese
-(babel)             (\language5). Reported on input line 111.
+(babel)             (\language56). Reported on input line 111.
 Package babel Info: Making " an active character on input line 143.
 ))
-(/usr/share/texlive/texmf-dist/tex/latex/enumitem/enumitem.sty
+(C:\Users\João Pedro\AppData\Local\Programs\MiKTeX\tex/latex/enumitem\enumitem
+.sty
 Package: enumitem 2019/06/20 v3.9 Customized lists
 \enitkv@toks@=\toks17
 \labelindent=\skip50
@@ -50,18 +61,21 @@ Package: enumitem 2019/06/20 v3.9 Customized lists
 \enit@count@id=\count198
 \enitdp@description=\count199
 )
-(/usr/share/texlive/texmf-dist/tex/latex/xcolor/xcolor.sty
+(C:\Users\João Pedro\AppData\Local\Programs\MiKTeX\tex/latex/xcolor\xcolor.sty
 Package: xcolor 2023/11/15 v3.01 LaTeX color extensions (UK)
 
-(/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/color.cfg
+(C:\Users\João Pedro\AppData\Local\Programs\MiKTeX\tex/latex/graphics-cfg\colo
+r.cfg
 File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
 Package xcolor Info: Driver file: pdftex.def on input line 274.
 
-(/usr/share/texlive/texmf-dist/tex/latex/graphics-def/pdftex.def
+(C:\Users\João Pedro\AppData\Local\Programs\MiKTeX\tex/latex/graphics-def\pdft
+ex.def
 File: pdftex.def 2022/09/22 v1.2b Graphics/color driver for pdftex
 )
-(/usr/share/texlive/texmf-dist/tex/latex/graphics/mathcolor.ltx)
+(C:\Users\João Pedro\AppData\Local\Programs\MiKTeX\tex/latex/graphics\mathcolo
+r.ltx)
 Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1350.
 Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1354.
 Package xcolor Info: Model `RGB' extended on input line 1366.
@@ -72,12 +86,12 @@ Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1371.
 Package xcolor Info: Model `Gray' substituted by `gray' on input line 1372.
 Package xcolor Info: Model `wave' substituted by `hsb' on input line 1373.
 )
-(/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
+(C:\Users\João Pedro\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backe
+nd-pdftex.def
 File: l3backend-pdftex.def 2024-01-04 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count266
 \l__pdf_internal_box=\box52
-)
-(./main.aux)
+) (main.aux)
 \openout1 = `main.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 8.
@@ -94,7 +108,9 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 8.
 LaTeX Font Info:    ... okay on input line 8.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 8.
 LaTeX Font Info:    ... okay on input line 8.
- (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+
+(C:\Users\João Pedro\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-
+pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count267
 \scratchdimen=\dimen143
@@ -120,53 +136,67 @@ LaTeX Warning: No \author given.
 
 [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [1]
-Overfull \hbox (5.22287pt too wide) in paragraph at lines 78--79
+{C:/Users/João Pedro/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}]
+Overfull \hbox (2.50058pt too wide) in paragraph at lines 39--40
+[]\OT1/cmr/m/n/10 Qualquer evento que re-sulte em uma vi-ola^^Xc~ao de qual-que
+r um dos princ^^S^^Ppios
+ []
+
+[1]
+Overfull \hbox (6.4909pt too wide) in paragraph at lines 46--47
+\OT1/cmr/m/n/10 soft-ware para ar-rui-nar o de-sem-pe-nho de ser-vi-do-res re-m
+o-tos. Ou \OT1/cmr/bx/n/10 Inunda^^Xc~ao
+ []
+
+[2] [3]
+Overfull \hbox (5.22287pt too wide) in paragraph at lines 136--137
 []\OT1/cmr/m/n/10 Um(a) []Vul-ne-ra-bi-li-dade[] ^^Se qual-quer fa-lha que torn
 e poss^^S^^Pvel para uma amea^^Xca
  []
 
-[2]
-Overfull \hbox (0.195pt too wide) in paragraph at lines 129--130
+[4] [5]
+Overfull \hbox (0.195pt too wide) in paragraph at lines 187--188
 []\OT1/cmr/m/n/10 Quando acessa uma rede, voc^e re-cebe uma com-bina^^Xc~ao de 
 nome de usu^^Sario,
  []
 
-[3] [4] [5] [6] [7]
-Overfull \hbox (2.91722pt too wide) in paragraph at lines 323--324
+[6] [7] [8] [9]
+Overfull \hbox (2.91722pt too wide) in paragraph at lines 381--382
 []\OT1/cmr/m/n/10 ser ela-bo-rado de forma que pos-si-bi-lite seu fun-ci-o-na-m
 ento em condi^^Xc~oes
  []
 
-
-Overfull \hbox (2.83385pt too wide) in paragraph at lines 338--339
+[10]
+Overfull \hbox (2.83385pt too wide) in paragraph at lines 396--397
 [][]\OT1/cmr/m/n/10 detectar os pe-ri-gos po-ten-ci-ais que pos-sam vir a pre-j
 u-di-car as opera^^Xc~oes
  []
 
-[8] [9] [10] (./main.aux)
+[11] [12] (main.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
-L3 programming layer <2024-01-22>
+L3 programming layer <2024-01-04>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 2795 strings out of 476162
- 45877 string characters out of 5794814
- 1934975 words of memory out of 5000000
- 24836 multiletter control sequences out of 15000+600000
- 562351 words of font info for 50 fonts, out of 8000000 for 9000
- 16 hyphenation exceptions out of 8191
- 42i,6n,52p,421b,363s stack positions out of 10000i,1000n,20000p,200000b,200000s
- </home/joao/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1000.600p
-k></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share
-/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texliv
-e/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb>
-Output written on main.pdf (11 pages, 77589 bytes).
+ 2819 strings out of 474486
+ 47440 string characters out of 5740888
+ 1936542 words of memory out of 5000000
+ 25134 multiletter control sequences out of 15000+600000
+ 562659 words of font info for 51 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 42i,6n,52p,423b,358s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ <C:\Users\João Pedro\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi60
+0\tcrm1000.pk><C:/Users/João Pedro/AppData/Local/Programs/MiKTeX/fonts/type1/p
+ublic/amsfonts/cm/cmbx10.pfb><C:/Users/João Pedro/AppData/Local/Programs/MiKTe
+X/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/João Pedro/AppData/Local
+/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/João Pedro
+/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Use
+rs/João Pedro/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr
+17.pfb>
+Output written on main.pdf (13 pages, 110211 bytes).
 PDF statistics:
- 65 PDF objects out of 1000 (max. 8388607)
- 42 compressed objects within 1 object stream
+ 75 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
