@@ -154,12 +154,15 @@ public class TelaAgendamento extends AppCompatActivity {
             editando = true;
             edCliente.setText(agendamento.getNomeCliente());
             edEndereco.setText(agendamento.getEndereco());
-            txtDataHora.setText(dtFormater.format(agendamento.getDataHora()));
+            if (agendamento.getDataHora() != null) {
+                txtDataHora.setText(dtFormater.format(agendamento.getDataHora()));
+                dataAgendamento = agendamento.getDataHora();
+            }
             carregarItensAgendamento(agendamento.getId());
             btnCancelar.setVisibility(View.VISIBLE);
         }
-
     }
+
 
     public void onStop() {
         bd.close();
@@ -196,7 +199,7 @@ public class TelaAgendamento extends AppCompatActivity {
 
 
     public void adicionar(View v) {
-        if (servicoSelecionado != null && !edQuantidade.getText().toString().isEmpty()) {
+        if (!validarCampos() && !edQuantidade.getText().toString().isEmpty()) {
             double quantidade = Double.parseDouble(edQuantidade.getText().toString());
             double valorUnitario = servicoSelecionado.getValor();
             double valorTotal = quantidade * valorUnitario;
@@ -213,9 +216,7 @@ public class TelaAgendamento extends AppCompatActivity {
 
 
     public void confirmar(View v) {
-        long agendamentoId;
-
-        if (dataAgendamento == null) {
+        if(!validarCampos()){
             return;
         }
 
@@ -224,8 +225,6 @@ public class TelaAgendamento extends AppCompatActivity {
         ag.setEndereco(edEndereco.getText().toString());
         ag.setDataHora(dataAgendamento);
         ag.setValorTotal(calcularValorTotal());
-        agendamentoId = dao.inserir(ag);
-
 
         new Thread() {
             public void run() {
@@ -241,14 +240,16 @@ public class TelaAgendamento extends AppCompatActivity {
                         }
                     }
                 } else {
+                    long agendamentoId = dao.inserir(ag);
+
                     for (ItemAgendamento itemAgendamento : itemAgendamentos) {
                         itemAgendamento.setId_agendamento(agendamentoId);
                         itemDao.inserir(itemAgendamento);
                     }
                 }
+                finish();
             }
         }.start();
-
         limparCampos();
     }
 
@@ -484,6 +485,30 @@ public class TelaAgendamento extends AppCompatActivity {
                 itemDao.remover(item);
             }
         }.start();
+    }
+
+    private boolean validarCampos() {
+        if (dataAgendamento == null) {
+            Toast.makeText(this, "Por favor, selecione a data e hora do agendamento.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (edCliente.getText().toString().trim().isEmpty()) {
+            Toast.makeText(this, "O nome do cliente não pode estar vazio.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (edEndereco.getText().toString().trim().isEmpty()) {
+            Toast.makeText(this, "O endereço não pode estar vazio.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (servicoSelecionado == null) {
+            Toast.makeText(this, "Selecione um serviço.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
     }
 
 

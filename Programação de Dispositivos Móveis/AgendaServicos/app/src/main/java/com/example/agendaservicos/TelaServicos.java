@@ -98,9 +98,7 @@ public class TelaServicos extends AppCompatActivity {
 
             new Thread() {
                 public void run() {
-                    Looper.prepare();
                     dao.inserir(s);
-                    Looper.loop();
                 }
             }.start();
         } else {
@@ -110,9 +108,7 @@ public class TelaServicos extends AppCompatActivity {
 
             new Thread() {
                 public void run() {
-                    Looper.prepare();
                     dao.alterar(servicoAtual);
-                    Looper.loop();
                 }
             }.start();
         }
@@ -134,9 +130,7 @@ public class TelaServicos extends AppCompatActivity {
                 .setPositiveButton("Sim", (dialog, which) -> {
                     new Thread() {
                         public void run() {
-                            Looper.prepare();
                             dao.remover(servico);
-                            Looper.loop();
                         }
                     }.start();
                 })
