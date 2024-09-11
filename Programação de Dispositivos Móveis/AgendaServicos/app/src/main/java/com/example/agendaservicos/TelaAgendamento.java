@@ -220,10 +220,12 @@ public class TelaAgendamento extends AppCompatActivity {
             return;
         }
 
-        Agendamento ag = editando ? agendamento : new Agendamento(edCliente.getText().toString(),
-                edEndereco.getText().toString(),
-                dataAgendamento,
-                calcularValorTotal());
+        Agendamento ag = editando ? agendamento : new Agendamento();
+
+        ag.setNomeCliente(edCliente.getText().toString());
+        ag.setEndereco(edEndereco.getText().toString());
+        ag.setDataHora(dataAgendamento);
+        ag.setValorTotal(calcularValorTotal());
 
         new Thread() {
             public void run() {
