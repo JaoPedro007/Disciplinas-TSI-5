@@ -71,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onStop() {
-        bd.close();
         super.onStop();
     }
 

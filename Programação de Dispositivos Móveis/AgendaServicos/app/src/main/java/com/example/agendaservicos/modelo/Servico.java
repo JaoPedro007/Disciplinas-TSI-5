@@ -10,13 +10,23 @@ import java.util.Objects;
 @Entity
 public class Servico implements Serializable {
 
+    public Servico(){
+
+    }
+
+    public Servico(String descricao, String unidade, double preco){
+        this.descricao = descricao;
+        this.unidadeMedida = unidade;
+        this.valor = preco;
+    }
+
     @PrimaryKey(autoGenerate = true)
     private long id;
 
-    private String descricao; // ex: "Assentamento de piso", "Poda de arvore",...
+    private String descricao;
 
     @ColumnInfo(name = "unidade_medida")
-    private String unidadeMedida; // ex: m2, unidade, kg, hora
+    private String unidadeMedida;
 
     private double valor;
 

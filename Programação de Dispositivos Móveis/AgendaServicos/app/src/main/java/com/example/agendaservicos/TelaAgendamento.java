@@ -93,8 +93,7 @@ public class TelaAgendamento extends AppCompatActivity {
         agendamento = (Agendamento) intent.getSerializableExtra("agendamento");
 
         itemAgendamentos = new ArrayList<>();
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_single_choice,
-                itemAgendamentos);
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_single_choice, itemAgendamentos);
         lista.setAdapter(adapter);
 
         edQuantidade.addTextChangedListener(new TextWatcher() {
@@ -165,7 +164,6 @@ public class TelaAgendamento extends AppCompatActivity {
 
 
     public void onStop() {
-        bd.close();
         super.onStop();
     }
 
@@ -199,32 +197,33 @@ public class TelaAgendamento extends AppCompatActivity {
 
 
     public void adicionar(View v) {
-        if (!validarCampos() && !edQuantidade.getText().toString().isEmpty()) {
-            double quantidade = Double.parseDouble(edQuantidade.getText().toString());
-            double valorUnitario = servicoSelecionado.getValor();
-            double valorTotal = quantidade * valorUnitario;
-            ItemAgendamento itemAgendamento = new ItemAgendamento();
-            itemAgendamento.setId_servico(servicoSelecionado.getId());
-            itemAgendamento.setQuantidade(quantidade);
-            itemAgendamento.setValorItem(valorTotal);
-            itemAgendamento.setServico(servicoSelecionado);
-            itemAgendamentos.add(itemAgendamento);
-            adapter.notifyDataSetChanged();
-            edQuantidade.setText("1");
+        if (edQuantidade.getText().toString().isEmpty()) {
+            Toast.makeText(this, "Deve ser preenchida a quantidade do serviço selecionado", Toast.LENGTH_SHORT).show();
+            return;
         }
+        double quantidade = Double.parseDouble(edQuantidade.getText().toString());
+        double valorUnitario = servicoSelecionado.getValor();
+        double valorTotal = quantidade * valorUnitario;
+        ItemAgendamento itemAgendamento = new ItemAgendamento();
+        itemAgendamento.setId_servico(servicoSelecionado.getId());
+        itemAgendamento.setQuantidade(quantidade);
+        itemAgendamento.setValorItem(valorTotal);
+        itemAgendamento.setServico(servicoSelecionado);
+        itemAgendamentos.add(itemAgendamento);
+        adapter.notifyDataSetChanged();
+        edQuantidade.setText("1");
     }
 
 
     public void confirmar(View v) {
-        if(!validarCampos()){
+        if (!validarCampos()) {
             return;
         }
 
-        Agendamento ag = editando ? agendamento : new Agendamento();
-        ag.setNomeCliente(edCliente.getText().toString());
-        ag.setEndereco(edEndereco.getText().toString());
-        ag.setDataHora(dataAgendamento);
-        ag.setValorTotal(calcularValorTotal());
+        Agendamento ag = editando ? agendamento : new Agendamento(edCliente.getText().toString(),
+                edEndereco.getText().toString(),
+                dataAgendamento,
+                calcularValorTotal());
 
         new Thread() {
             public void run() {
@@ -285,8 +284,7 @@ public class TelaAgendamento extends AppCompatActivity {
         servicoDao.listar().observe(this, new Observer<List<Servico>>() {
             @Override
             public void onChanged(List<Servico> servicos) {
-                ArrayAdapter<Servico> servicosAdapter = new ArrayAdapter<Servico>(TelaAgendamento.this,
-                        android.R.layout.simple_spinner_item, servicos) {
+                ArrayAdapter<Servico> servicosAdapter = new ArrayAdapter<Servico>(TelaAgendamento.this, android.R.layout.simple_spinner_item, servicos) {
                     @Override
                     public View getView(int position, View convertView, ViewGroup parent) {
                         TextView label = (TextView) super.getView(position, convertView, parent);
@@ -416,8 +414,8 @@ public class TelaAgendamento extends AppCompatActivity {
             double valorAtual = agendamento.getRecebido();
 
             agendamento.setRecebido(valorAtual + valorRecebido);
-            new Thread(){
-                public void run(){
+            new Thread() {
+                public void run() {
                     dao.alterar(agendamento);
                 }
             }.start();
@@ -449,7 +447,7 @@ public class TelaAgendamento extends AppCompatActivity {
             executorService.shutdown();
         }
 
-        return (valorTotal - valorRecebido) ; // Retorne o valor total sem subtrair o valor recebido
+        return (valorTotal - valorRecebido);
     }
 
     private void mostrarDialogoRemover(final ItemAgendamento item) {

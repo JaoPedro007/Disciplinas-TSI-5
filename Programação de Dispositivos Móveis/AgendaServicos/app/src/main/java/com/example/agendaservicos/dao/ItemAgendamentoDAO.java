@@ -27,6 +27,9 @@ public interface ItemAgendamentoDAO {
     @Query("select * from itemagendamento")
     public LiveData<List<ItemAgendamento>> listar();
 
+    @Query("SELECT COUNT(*) FROM itemagendamento WHERE id_servico = :idServico")
+    int contarItensPorServico(long idServico);
+
     @Query("SELECT * FROM itemagendamento WHERE id_agendamento = :id")
     LiveData<List<ItemAgendamento>> listarPorAgendamento(long id);
 }

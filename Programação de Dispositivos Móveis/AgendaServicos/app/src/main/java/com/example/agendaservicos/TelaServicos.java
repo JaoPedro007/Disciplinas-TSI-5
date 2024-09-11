@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.example.agendaservicos.banco.Banco;
 import com.example.agendaservicos.banco.DatabaseClient;
+import com.example.agendaservicos.dao.ItemAgendamentoDAO;
 import com.example.agendaservicos.dao.ServicoDAO;
 import com.example.agendaservicos.modelo.Servico;
 
@@ -31,10 +32,12 @@ public class TelaServicos extends AppCompatActivity {
 
     Banco bd;
     ServicoDAO dao;
+    ItemAgendamentoDAO itemDao;
 
     ListView lista;
     EditText edNome, edUnidade, edPreco;
     Servico servicoAtual;
+    boolean editando = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,13 +79,13 @@ public class TelaServicos extends AppCompatActivity {
         super.onStart();
         bd = DatabaseClient.getInstance(this).getDatabase();
         dao = bd.getServicoDAO();
+        itemDao = bd.getItemAgendamentoDAO();
 
         dao.listar().observe(this, new ObservadorServico());
     }
 
     @Override
     public void onStop() {
-        bd.close();
         super.onStop();
     }
 
@@ -90,29 +93,23 @@ public class TelaServicos extends AppCompatActivity {
         if (!validarCampos()) {
             return;
         }
-        if (servicoAtual == null) {
-            Servico s = new Servico();
-            s.setDescricao(edNome.getText().toString());
-            s.setUnidadeMedida(edUnidade.getText().toString());
-            s.setValor(Integer.parseInt(edPreco.getText().toString()));
-
-            new Thread() {
-                public void run() {
+        new Thread() {
+            public void run() {
+                if (editando) {
+                    servicoAtual.setDescricao(edNome.getText().toString());
+                    servicoAtual.setUnidadeMedida(edUnidade.getText().toString());
+                    servicoAtual.setValor(Double.parseDouble(edPreco.getText().toString()));
+                    dao.alterar(servicoAtual);
+                } else {
+                    Servico s = new Servico(edNome.getText().toString(),
+                            edUnidade.getText().toString(),
+                            Double.parseDouble(edPreco.getText().toString()));
                     dao.inserir(s);
                 }
-            }.start();
-        } else {
-            servicoAtual.setDescricao(edNome.getText().toString());
-            servicoAtual.setUnidadeMedida(edUnidade.getText().toString());
-            servicoAtual.setValor(Double.parseDouble(edPreco.getText().toString()));
-
-            new Thread() {
-                public void run() {
-                    dao.alterar(servicoAtual);
-                }
-            }.start();
-        }
-        limparCampos();
+                limparCampos();
+                editando = false;
+            }
+        }.start();
     }
 
 
@@ -121,28 +118,42 @@ public class TelaServicos extends AppCompatActivity {
         edNome.setText(servico.getDescricao());
         edUnidade.setText(servico.getUnidadeMedida());
         edPreco.setText(String.valueOf(servico.getValor()));
+        editando = true;
     }
 
     private void removerServico(Servico servico) {
-        new AlertDialog.Builder(this)
-                .setTitle("Remover Serviço")
-                .setMessage("Tem certeza que deseja remover este serviço?")
-                .setPositiveButton("Sim", (dialog, which) -> {
-                    new Thread() {
-                        public void run() {
-                            dao.remover(servico);
-                        }
-                    }.start();
-                })
-                .setNegativeButton("Não", (dialog, which) -> dialog.dismiss())
-                .show();
+        new Thread(() -> {
+            int count = itemDao.contarItensPorServico(servico.getId());
+            runOnUiThread(() -> {
+                if (count > 0) {
+                    new AlertDialog.Builder(this)
+                            .setTitle("Erro")
+                            .setMessage("Este serviço não pode ser excluído porque está associado a um agendamento.")
+                            .setPositiveButton("OK", (dialog, which) -> dialog.dismiss())
+                            .show();
+                } else {
+                    new AlertDialog.Builder(this)
+                            .setTitle("Remover Serviço")
+                            .setMessage("Tem certeza que deseja remover este serviço?")
+                            .setPositiveButton("Sim", (dialog, which) -> {
+                                new Thread(() -> {
+                                    dao.remover(servico);
+                                }).start();
+                            })
+                            .setNegativeButton("Não", (dialog, which) -> dialog.dismiss())
+                            .show();
+                }
+            });
+        }).start();
     }
 
-    private void limparCampos(){
+
+    private void limparCampos() {
         edNome.setText("");
         edUnidade.setText("");
         edPreco.setText("");
     }
+
     private boolean validarCampos() {
         if (edNome.getText().toString().trim().isEmpty()) {
             mostrarMensagemErro("Nome do serviço é obrigatório.");
@@ -162,11 +173,7 @@ public class TelaServicos extends AppCompatActivity {
     }
 
     private void mostrarMensagemErro(String mensagem) {
-        new AlertDialog.Builder(this)
-                .setTitle("Erro")
-                .setMessage(mensagem)
-                .setPositiveButton("OK", null)
-                .show();
+        new AlertDialog.Builder(this).setTitle("Erro").setMessage(mensagem).setPositiveButton("OK", null).show();
     }
 
 

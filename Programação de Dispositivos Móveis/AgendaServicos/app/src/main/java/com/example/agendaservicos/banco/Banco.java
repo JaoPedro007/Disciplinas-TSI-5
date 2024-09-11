@@ -12,7 +12,7 @@ import com.example.agendaservicos.dao.AgendamentoDAO;
 import com.example.agendaservicos.dao.ItemAgendamentoDAO;
 import com.example.agendaservicos.dao.ServicoDAO;
 
-@Database(entities = {Servico.class, Agendamento.class, ItemAgendamento.class}, version = 3)
+@Database(entities = {Servico.class, Agendamento.class, ItemAgendamento.class}, version = 4)
 @TypeConverters({DateConverter.class})
 public abstract class Banco extends RoomDatabase {
     public abstract AgendamentoDAO getAgendamentoDAO();

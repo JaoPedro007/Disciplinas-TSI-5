@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5sp"
+            android:gravity="center"
+            android:text="Tipos de Serviços"
+            android:textSize="25sp" />
+
+        <EditText
+            android:id="@+id/ed_nome_servico"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nome do serviço" />
+
+        <EditText
+            android:id="@+id/ed_unidade_medida"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Unidade de medida (ex: m2, unidade)" />
+
+        <EditText
+            android:id="@+id/ed_preco"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Preço por unidade" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginTop="20dp"
+            android:onClick="confirmar"
+            android:text="Confirmar" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/lista_tipos_servico"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"/>
+
+</LinearLayout>

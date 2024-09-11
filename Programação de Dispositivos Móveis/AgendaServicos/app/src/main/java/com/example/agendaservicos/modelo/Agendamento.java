@@ -12,6 +12,17 @@ import java.util.Objects;
 @Entity
 public class Agendamento implements Serializable {
 
+    public Agendamento(){
+
+    }
+
+    public Agendamento(String nomeCliente, String endereco, Date data, double valorTotal){
+        this.nomeCliente = nomeCliente;
+        this.endereco = endereco;
+        this.dataHora = data;
+        this.valorTotal = valorTotal;
+    }
+
     @PrimaryKey(autoGenerate = true)
     private long id;
 
@@ -27,6 +38,7 @@ public class Agendamento implements Serializable {
     private double valorTotal;
 
     private double recebido = 0;
+
 
     public long getId() {
         return id;

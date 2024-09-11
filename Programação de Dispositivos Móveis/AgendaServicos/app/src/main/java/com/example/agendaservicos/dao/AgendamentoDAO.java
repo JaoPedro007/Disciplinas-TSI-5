@@ -30,7 +30,4 @@ public interface AgendamentoDAO {
     @Query("SELECT recebido FROM agendamento WHERE id = :id")
     public Double buscarPorValorRecebido(long id);
 
-
-
-
 }
