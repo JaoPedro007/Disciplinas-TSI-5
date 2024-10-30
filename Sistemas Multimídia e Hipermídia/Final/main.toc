@@ -1,0 +1,26 @@
+\babel@toc {brazil}{}\relax 
+\contentsline {section}{\numberline {0.1}Formato MP3}{1}{section.0.1}%
+\contentsline {subsection}{\numberline {0.1.1}Descrição}{1}{subsection.0.1.1}%
+\contentsline {subsection}{\numberline {0.1.2}Características}{2}{subsection.0.1.2}%
+\contentsline {subsection}{\numberline {0.1.3}Algoritmo de Compressão}{2}{subsection.0.1.3}%
+\contentsline {subsection}{\numberline {0.1.4}Qualidade}{2}{subsection.0.1.4}%
+\contentsline {subsection}{\numberline {0.1.5}Usos}{2}{subsection.0.1.5}%
+\contentsline {subsection}{\numberline {0.1.6}Limitações}{2}{subsection.0.1.6}%
+\contentsline {section}{\numberline {0.2}Formato JPEG}{2}{section.0.2}%
+\contentsline {subsection}{\numberline {0.2.1}Descrição}{2}{subsection.0.2.1}%
+\contentsline {subsection}{\numberline {0.2.2}Características}{2}{subsection.0.2.2}%
+\contentsline {subsection}{\numberline {0.2.3}Algoritmo de Compressão}{3}{subsection.0.2.3}%
+\contentsline {subsection}{\numberline {0.2.4}Qualidade}{3}{subsection.0.2.4}%
+\contentsline {subsection}{\numberline {0.2.5}Usos}{3}{subsection.0.2.5}%
+\contentsline {subsection}{\numberline {0.2.6}Limitações}{3}{subsection.0.2.6}%
+\contentsline {section}{\numberline {0.3}Formato MPEG}{3}{section.0.3}%
+\contentsline {subsection}{\numberline {0.3.1}Descrição}{3}{subsection.0.3.1}%
+\contentsline {subsection}{\numberline {0.3.2}Características}{3}{subsection.0.3.2}%
+\contentsline {subsection}{\numberline {0.3.3}Algoritmo de Compressão}{3}{subsection.0.3.3}%
+\contentsline {subsection}{\numberline {0.3.4}Qualidade}{3}{subsection.0.3.4}%
+\contentsline {subsection}{\numberline {0.3.5}Usos}{4}{subsection.0.3.5}%
+\contentsline {subsection}{\numberline {0.3.6}Limitações}{4}{subsection.0.3.6}%
+\contentsline {section}{\numberline {0.4}Características}{4}{section.0.4}%
+\contentsline {section}{\numberline {0.5}Algoritmos de Compressão}{4}{section.0.5}%
+\contentsline {section}{\numberline {0.6}Qualidade}{4}{section.0.6}%
+\contentsline {section}{\numberline {0.7}Usos e Limitações}{5}{section.0.7}%
